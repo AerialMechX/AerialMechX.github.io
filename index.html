@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Shivansh Pratap Singh</title>
+    <title>Shivansh Pratap Singh - Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -16,6 +16,7 @@
             background: #0a0a0a;
             color: #e0e0e0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
@@ -24,15 +25,87 @@
             padding: 0 20px;
         }
 
+        /* Animated Background */
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .robot-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            opacity: 0.15;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-30px); }
+        }
+
+        .robot-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 40px rgba(102, 126, 234, 0.6));
+        }
+
+        /* Animated particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(102, 126, 234, 0.6);
+            border-radius: 50%;
+            animation: particleFloat 8s infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 10, 10, 0.8) 70%, #0a0a0a 100%);
+            pointer-events: none;
+        }
+
         /* Navigation */
         nav {
-            background: rgba(15, 15, 15, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(20px);
             padding: 1.5rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            background: rgba(15, 15, 15, 0.95);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
         }
 
         nav .container {
@@ -48,6 +121,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.5)); }
+            50% { filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.8)); }
         }
 
         nav ul {
@@ -59,7 +138,24 @@
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         nav a:hover {
@@ -68,38 +164,94 @@
 
         /* Hero Section */
         .hero {
-            padding: 6rem 0;
+            position: relative;
+            padding: 8rem 0 6rem;
             text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4.5rem;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: fadeInUp 1s ease-out;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: #999;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
         }
 
         /* Sections */
         section {
-            padding: 4rem 0;
+            padding: 5rem 0;
+            position: relative;
         }
 
         h2 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 3rem;
             text-align: center;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
         }
 
         /* Projects Grid */
@@ -111,32 +263,70 @@
         }
 
         .project-card {
-            background: #1a1a1a;
-            border-radius: 12px;
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.4s;
             cursor: pointer;
-            border: 1px solid #222;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+            border-color: rgba(102, 126, 234, 0.5);
         }
 
         .project-image {
             width: 100%;
-            height: 200px;
+            height: 220px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 4rem;
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: rotate 8s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .project-content {
             padding: 1.5rem;
+            position: relative;
         }
 
         .project-content h3 {
@@ -162,6 +352,7 @@
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             font-size: 0.85rem;
+            border: 1px solid rgba(102, 126, 234, 0.3);
         }
 
         /* Modal */
@@ -172,52 +363,85 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 1000;
             overflow-y: auto;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
-            background: #1a1a1a;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
             max-width: 900px;
             margin: 2rem auto;
-            border-radius: 12px;
+            border-radius: 20px;
             padding: 3rem;
             position: relative;
-            border: 1px solid #333;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            animation: slideUp 0.4s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .close {
             position: absolute;
             top: 1rem;
             right: 1.5rem;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #999;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
 
         .close:hover {
             color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            transform: rotate(90deg);
         }
 
         .modal h3 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             color: #fff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .modal-image {
             width: 100%;
             height: 300px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 8px;
+            border-radius: 15px;
             margin: 1.5rem 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 5rem;
             color: white;
+            position: relative;
+            overflow: hidden;
         }
 
         .modal p {
@@ -229,42 +453,49 @@
         .modal h4 {
             color: #667eea;
             margin: 2rem 0 1rem;
+            font-size: 1.3rem;
         }
 
         /* Contact Section */
         .contact-info {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
-            background: #1a1a1a;
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
             padding: 3rem;
-            border-radius: 12px;
-            border: 1px solid #222;
+            border-radius: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
             margin-bottom: 2rem;
             padding: 1.5rem;
-            background: #0f0f0f;
-            border-radius: 8px;
-            transition: background 0.3s;
+            background: rgba(15, 15, 15, 0.5);
+            border-radius: 15px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
         }
 
         .contact-item:hover {
-            background: #252525;
+            background: rgba(25, 25, 25, 0.8);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateX(10px);
         }
 
         .contact-icon {
             font-size: 2rem;
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            flex-shrink: 0;
         }
 
         .contact-details h3 {
@@ -280,21 +511,43 @@
         .contact-details a {
             color: #667eea;
             text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-details a:hover {
+            color: #764ba2;
         }
 
         /* Footer */
         footer {
-            background: #0f0f0f;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
             padding: 2rem 0;
             text-align: center;
             color: #666;
-            border-top: 1px solid #222;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
             }
 
             nav ul {
@@ -305,14 +558,23 @@
                 margin: 1rem;
                 padding: 2rem;
             }
+
+            .robot-container {
+                width: 400px;
+                height: 400px;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
+    <nav id="navbar">
         <div class="container">
-            <div class="logo">Portfolio</div>
+            <div class="logo">SPS</div>
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -323,52 +585,108 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="container">
+        <div class="hero-background">
+            <div class="robot-container">
+                <svg class="robot-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Robot Head -->
+                    <rect x="70" y="40" width="60" height="50" rx="5" fill="url(#grad1)" stroke="#667eea" stroke-width="2"/>
+                    <!-- Antenna -->
+                    <line x1="100" y1="40" x2="100" y2="25" stroke="#667eea" stroke-width="3"/>
+                    <circle cx="100" cy="23" r="4" fill="#764ba2">
+                        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <!-- Eyes -->
+                    <circle cx="85" cy="60" r="6" fill="#667eea">
+                        <animate attributeName="r" values="6;7;6" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="115" cy="60" r="6" fill="#667eea">
+                        <animate attributeName="r" values="6;7;6" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <!-- Mouth -->
+                    <path d="M 85 75 Q 100 80 115 75" stroke="#667eea" stroke-width="2" fill="none"/>
+                    <!-- Body -->
+                    <rect x="60" y="95" width="80" height="70" rx="8" fill="url(#grad2)" stroke="#667eea" stroke-width="2"/>
+                    <!-- Chest Panel -->
+                    <rect x="75" y="105" width="50" height="40" rx="3" fill="rgba(102, 126, 234, 0.2)" stroke="#667eea" stroke-width="1"/>
+                    <circle cx="90" cy="125" r="3" fill="#764ba2">
+                        <animate attributeName="fill" values="#764ba2;#667eea;#764ba2" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="110" cy="125" r="3" fill="#667eea">
+                        <animate attributeName="fill" values="#667eea;#764ba2;#667eea" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                    <!-- Arms -->
+                    <rect x="40" y="100" width="15" height="50" rx="7" fill="url(#grad1)" stroke="#667eea" stroke-width="2">
+                        <animateTransform attributeName="transform" type="rotate" values="0 47.5 125; -10 47.5 125; 0 47.5 125" dur="4s" repeatCount="indefinite"/>
+                    </rect>
+                    <rect x="145" y="100" width="15" height="50" rx="7" fill="url(#grad1)" stroke="#667eea" stroke-width="2">
+                        <animateTransform attributeName="transform" type="rotate" values="0 152.5 125; 10 152.5 125; 0 152.5 125" dur="4s" repeatCount="indefinite"/>
+                    </rect>
+                    <!-- Legs -->
+                    <rect x="75" y="170" width="18" height="25" rx="5" fill="url(#grad2)" stroke="#667eea" stroke-width="2"/>
+                    <rect x="107" y="170" width="18" height="25" rx="5" fill="url(#grad2)" stroke="#667eea" stroke-width="2"/>
+                    
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#764ba2;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#667eea;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="particles" id="particles"></div>
+            <div class="gradient-overlay"></div>
+        </div>
+        <div class="hero-content container">
             <h1>Shivansh Pratap Singh</h1>
             <p>Robotics Engineer | Programmer | Creative Thinker</p>
+            <a href="#projects" class="cta-button">View My Work</a>
         </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects">
         <div class="container">
-            <h2>My Projects</h2>
+            <h2 class="fade-in">My Projects</h2>
             <div class="projects-grid">
-                <div class="project-card" onclick="openModal('project1')">
-                    <div class="project-image">🚀</div>
+                <div class="project-card fade-in" onclick="openModal('project1')">
+                    <div class="project-image">🤖</div>
                     <div class="project-content">
-                        <h3>E-Commerce Platform</h3>
-                        <p>A full-featured online shopping platform with payment integration</p>
+                        <h3>Autonomous Robot Navigation</h3>
+                        <p>Advanced navigation system using SLAM and computer vision</p>
                         <div class="project-tags">
-                            <span class="tag">React</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">MongoDB</span>
+                            <span class="tag">ROS</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">OpenCV</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="project-card" onclick="openModal('project2')">
-                    <div class="project-image">📱</div>
+                <div class="project-card fade-in" onclick="openModal('project2')">
+                    <div class="project-image">🦾</div>
                     <div class="project-content">
-                        <h3>Mobile Banking App</h3>
-                        <p>Secure and user-friendly mobile banking application</p>
+                        <h3>Robotic Arm Controller</h3>
+                        <p>6-DOF robotic arm with inverse kinematics and path planning</p>
                         <div class="project-tags">
-                            <span class="tag">React Native</span>
-                            <span class="tag">Firebase</span>
-                            <span class="tag">UI/UX</span>
+                            <span class="tag">Arduino</span>
+                            <span class="tag">C++</span>
+                            <span class="tag">Kinematics</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="project-card" onclick="openModal('project3')">
-                    <div class="project-image">🎨</div>
+                <div class="project-card fade-in" onclick="openModal('project3')">
+                    <div class="project-image">🚁</div>
                     <div class="project-content">
-                        <h3>Portfolio Website Builder</h3>
-                        <p>Drag-and-drop website builder for creative professionals</p>
+                        <h3>Drone Flight Controller</h3>
+                        <p>Custom flight controller with autonomous waypoint navigation</p>
                         <div class="project-tags">
-                            <span class="tag">Vue.js</span>
-                            <span class="tag">CSS Grid</span>
-                            <span class="tag">API</span>
+                            <span class="tag">Embedded C</span>
+                            <span class="tag">PID Control</span>
+                            <span class="tag">Sensors</span>
                         </div>
                     </div>
                 </div>
@@ -379,8 +697,8 @@
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <h2>Get In Touch</h2>
-            <div class="contact-info">
+            <h2 class="fade-in">Get In Touch</h2>
+            <div class="contact-info fade-in">
                 <div class="contact-item">
                     <div class="contact-icon">📧</div>
                     <div class="contact-details">
@@ -409,7 +727,7 @@
                     <div class="contact-icon">🐙</div>
                     <div class="contact-details">
                         <h3>GitHub</h3>
-                        <p><a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
+                        <p><a href="https://github.com/AerialMechX" target="_blank">github.com/AerialMechX</a></p>
                     </div>
                 </div>
             </div>
@@ -419,7 +737,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2025 Your Name. All rights reserved.</p>
+            <p>&copy; 2025 Shivansh Pratap Singh. All rights reserved.</p>
         </div>
     </footer>
 
@@ -432,104 +750,87 @@
     </div>
 
     <script>
-        const projects = {
-            project1: {
-                title: 'E-Commerce Platform',
-                icon: '🚀',
-                description: 'A comprehensive e-commerce solution built with modern technologies. This platform includes user authentication, product management, shopping cart, payment processing, and order tracking.',
-                features: [
-                    'Secure user authentication and authorization',
-                    'Real-time inventory management',
-                    'Integrated payment gateway (Stripe/PayPal)',
-                    'Responsive design for all devices',
-                    'Admin dashboard for analytics',
-                    'Email notifications for orders'
-                ],
-                technologies: 'React, Node.js, Express, MongoDB, Stripe API, Redux',
-                duration: 'June 2024 - August 2024',
-                role: 'Full Stack Developer'
-            },
-            project2: {
-                title: 'Mobile Banking App',
-                icon: '📱',
-                description: 'A secure mobile banking application that allows users to manage their finances on the go. Features include account management, fund transfers, bill payments, and transaction history.',
-                features: [
-                    'Biometric authentication (Face ID/Fingerprint)',
-                    'Real-time balance updates',
-                    'Peer-to-peer money transfers',
-                    'Bill payment and scheduling',
-                    'Transaction categorization',
-                    'Push notifications for account activity'
-                ],
-                technologies: 'React Native, Firebase, Redux, Jest, Detox',
-                duration: 'March 2024 - May 2024',
-                role: 'Mobile Developer'
-            },
-            project3: {
-                title: 'Portfolio Website Builder',
-                icon: '🎨',
-                description: 'An intuitive drag-and-drop website builder specifically designed for creative professionals. Users can create stunning portfolio websites without any coding knowledge.',
-                features: [
-                    'Drag-and-drop interface',
-                    'Pre-designed templates',
-                    'Custom domain support',
-                    'Image optimization',
-                    'SEO tools built-in',
-                    'One-click publishing'
-                ],
-                technologies: 'Vue.js, Vuex, CSS Grid, Webpack, REST API',
-                duration: 'January 2024 - February 2024',
-                role: 'Frontend Developer & Designer'
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
+        });
+
+        // Scroll animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
-        function openModal(projectId) {
-            const project = projects[projectId];
-            const modalBody = document.getElementById('modalBody');
-            
-            modalBody.innerHTML = `
-                <h3>${project.title}</h3>
-                <div class="modal-image">${project.icon}</div>
-                <p>${project.description}</p>
-                
-                <h4>Key Features:</h4>
-                <ul style="color: #ccc; margin-left: 1.5rem; margin-bottom: 1.5rem;">
-                    ${project.features.map(f => `<li style="margin-bottom: 0.5rem;">${f}</li>`).join('')}
-                </ul>
-                
-                <h4>Technologies Used:</h4>
-                <p>${project.technologies}</p>
-                
-                <h4>Project Details:</h4>
-                <p><strong>Duration:</strong> ${project.duration}</p>
-                <p><strong>Role:</strong> ${project.role}</p>
-            `;
-            
-            document.getElementById('projectModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('projectModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function closeModalOnOutside(event) {
-            if (event.target.id === 'projectModal') {
-                closeModal();
-            }
-        }
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
             });
-        });
-    </script>
-</body>
-</html>
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const projects = {
+            project1: {
+                title: 'Autonomous Robot Navigation',
+                icon: '🤖',
+                description: 'An advanced autonomous navigation system implementing SLAM (Simultaneous Localization and Mapping) algorithms combined with computer vision for real-time obstacle detection and path planning in dynamic environments.',
+                features: [
+                    'Real-time SLAM using ROS and sensor fusion',
+                    'Computer vision-based obstacle detection',
+                    'Dynamic path planning with A* algorithm',
+                    'Integration with LIDAR and camera sensors',
+                    'Simulation testing in Gazebo',
+                    'ROS-based architecture for modularity'
+                ],
+                technologies: 'ROS (Robot Operating System), Python, OpenCV, NumPy, Gazebo, LIDAR, IMU',
+                duration: 'June 2024 - August 2024',
+                role: 'Robotics Engineer & Developer'
+            },
+            project2: {
+                title: 'Robotic Arm Controller',
+                icon: '🦾',
+                description: 'A sophisticated 6-DOF robotic arm control system featuring inverse kinematics calculations, smooth trajectory planning, and precise servo control for industrial automation applications.',
+                features: [
+                    'Forward and inverse kinematics solver',
+                    'Smooth trajectory generation',
+                    'Real-time servo position control',
+                    'Custom GUI for manual control',
+                    'Task automation sequences',
+                    'Safety collision detection'
+                ],
+                technologies: 'Arduino Mega, C++, Servo Motors, Python (GUI), Serial Communication',
+                duration: 'March 2024 - May 2024',
+                role: 'Embedded Systems Engineer'
+            },
+            project3: {
+                title: 'Drone Flight Controller',
+                icon: '🚁',
+                description: 'Custom quadcopter flight controller with autonomous capabilities including waypoint navigation, altitude hold, and GPS-based return-to-home functionality.',
+                features: [
+                    'PID-based stabilization system',
+                    'GPS waypoint navigation',
+                    'Barometer-based altitude hold',
+                    'Fail-safe return-to-home',
+                    'Real-time telemetry transmission',
+                    'Manual and autonomous flight modes'
+                ],
+                technologies: 'STM32, Embedded C, MPU6050, GPS Module, Barometer, PWM, PID Control',
+                duration
