@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Your Name</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #222;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #999;
+            margin-bottom: 2rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid #222;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .project-content p {
+            color: #999;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            max-width: 900px;
+            margin: 2rem auto;
+            border-radius: 12px;
+            padding: 3rem;
+            position: relative;
+            border: 1px solid #333;
+        }
+
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #667eea;
+        }
+
+        .modal h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .modal p {
+            color: #ccc;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .modal h4 {
+            color: #667eea;
+            margin: 2rem 0 1rem;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid #222;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #0f0f0f;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .contact-item:hover {
+            background: #252525;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-details h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-details p {
+            color: #999;
+        }
+
+        .contact-details a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f0f0f;
+            padding: 2rem 0;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #222;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .modal-content {
+                margin: 1rem;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Portfolio</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Your Name</h1>
+            <p>Web Developer | Designer | Creative Professional</p>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2>My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card" onclick="openModal('project1')">
+                    <div class="project-image">🚀</div>
+                    <div class="project-content">
+                        <h3>E-Commerce Platform</h3>
+                        <p>A full-featured online shopping platform with payment integration</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="openModal('project2')">
+                    <div class="project-image">📱</div>
+                    <div class="project-content">
+                        <h3>Mobile Banking App</h3>
+                        <p>Secure and user-friendly mobile banking application</p>
+                        <div class="project-tags">
+                            <span class="tag">React Native</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">UI/UX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="openModal('project3')">
+                    <div class="project-image">🎨</div>
+                    <div class="project-content">
+                        <h3>Portfolio Website Builder</h3>
+                        <p>Drag-and-drop website builder for creative professionals</p>
+                        <div class="project-tags">
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">CSS Grid</span>
+                            <span class="tag">API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p><a href="mailto:your.email@example.com">your.email@example.com</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-details">
+                        <h3>Phone</h3>
+                        <p><a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">💼</div>
+                    <div class="contact-details">
+                        <h3>LinkedIn</h3>
+                        <p><a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🐙</div>
+                    <div class="contact-details">
+                        <h3>GitHub</h3>
+                        <p><a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Your Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="projectModal" class="modal" onclick="closeModalOnOutside(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const projects = {
+            project1: {
+                title: 'E-Commerce Platform',
+                icon: '🚀',
+                description: 'A comprehensive e-commerce solution built with modern technologies. This platform includes user authentication, product management, shopping cart, payment processing, and order tracking.',
+                features: [
+                    'Secure user authentication and authorization',
+                    'Real-time inventory management',
+                    'Integrated payment gateway (Stripe/PayPal)',
+                    'Responsive design for all devices',
+                    'Admin dashboard for analytics',
+                    'Email notifications for orders'
+                ],
+                technologies: 'React, Node.js, Express, MongoDB, Stripe API, Redux',
+                duration: 'June 2024 - August 2024',
+                role: 'Full Stack Developer'
+            },
+            project2: {
+                title: 'Mobile Banking App',
+                icon: '📱',
+                description: 'A secure mobile banking application that allows users to manage their finances on the go. Features include account management, fund transfers, bill payments, and transaction history.',
+                features: [
+                    'Biometric authentication (Face ID/Fingerprint)',
+                    'Real-time balance updates',
+                    'Peer-to-peer money transfers',
+                    'Bill payment and scheduling',
+                    'Transaction categorization',
+                    'Push notifications for account activity'
+                ],
+                technologies: 'React Native, Firebase, Redux, Jest, Detox',
+                duration: 'March 2024 - May 2024',
+                role: 'Mobile Developer'
+            },
+            project3: {
+                title: 'Portfolio Website Builder',
+                icon: '🎨',
+                description: 'An intuitive drag-and-drop website builder specifically designed for creative professionals. Users can create stunning portfolio websites without any coding knowledge.',
+                features: [
+                    'Drag-and-drop interface',
+                    'Pre-designed templates',
+                    'Custom domain support',
+                    'Image optimization',
+                    'SEO tools built-in',
+                    'One-click publishing'
+                ],
+                technologies: 'Vue.js, Vuex, CSS Grid, Webpack, REST API',
+                duration: 'January 2024 - February 2024',
+                role: 'Frontend Developer & Designer'
+            }
+        };
+
+        function openModal(projectId) {
+            const project = projects[projectId];
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <h3>${project.title}</h3>
+                <div class="modal-image">${project.icon}</div>
+                <p>${project.description}</p>
+                
+                <h4>Key Features:</h4>
+                <ul style="color: #ccc; margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                    ${project.features.map(f => `<li style="margin-bottom: 0.5rem;">${f}</li>`).join('')}
+                </ul>
+                
+                <h4>Technologies Used:</h4>
+                <p>${project.technologies}</p>
+                
+                <h4>Project Details:</h4>
+                <p><strong>Duration:</strong> ${project.duration}</p>
+                <p><strong>Role:</strong> ${project.role}</p>
+            `;
+            
+            document.getElementById('projectModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOnOutside(event) {
+            if (event.target.id === 'projectModal') {
+                closeModal();
+            }
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
