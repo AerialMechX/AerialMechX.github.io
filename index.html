@@ -703,7 +703,7 @@
                     <div class="contact-icon">📧</div>
                     <div class="contact-details">
                         <h3>Email</h3>
-                        <p><a href="mailto:your.email@example.com">your.email@example.com</a></p>
+                        <p><a href="mailto:your.email@example.com">shivansh2172@gmail.com</a></p>
                     </div>
                 </div>
 
@@ -711,7 +711,7 @@
                     <div class="contact-icon">📱</div>
                     <div class="contact-details">
                         <h3>Phone</h3>
-                        <p><a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                        <p><a href="tel:+1234567890">9794734872</a></p>
                     </div>
                 </div>
 
@@ -833,4 +833,47 @@
                     'Manual and autonomous flight modes'
                 ],
                 technologies: 'STM32, Embedded C, MPU6050, GPS Module, Barometer, PWM, PID Control',
-                duration
+                duration: 'January 2024 - February 2024',
+                role: 'Embedded Systems Developer'
+            }
+        };
+
+        function openModal(projectId) {
+            const project = projects[projectId];
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <h3>${project.title}</h3>
+                <div class="modal-image">${project.icon}</div>
+                <p>${project.description}</p>
+                
+                <h4>Key Features:</h4>
+                <ul style="color: #ccc; margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                    ${project.features.map(f => `<li style="margin-bottom: 0.5rem;">${f}</li>`).join('')}
+                </ul>
+                
+                <h4>Technologies Used:</h4>
+                <p>${project.technologies}</p>
+                
+                <h4>Project Details:</h4>
+                <p><strong>Duration:</strong> ${project.duration}</p>
+                <p><strong>Role:</strong> ${project.role}</p>
+            `;
+            
+            document.getElementById('projectModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOnOutside(event) {
+            if (event.target.id === 'projectModal') {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
