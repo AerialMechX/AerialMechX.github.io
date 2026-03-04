@@ -3,48 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050508">
     <title>Shivansh Pratap Singh — Robotics Researcher</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- SPEED: preconnect before fonts load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- SPEED: Only load weights actually used. Inter for body/UI, Space Grotesk for headings (clean & modern like Inter but more personality), JetBrains Mono for code labels -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg: #050508;
-            --bg2: #0c0c12;
-            --surface: #111118;
+            --bg:       #050508;
+            --bg2:      #0c0c12;
+            --surface:  #111118;
             --surface2: #18181f;
-            --accent: #4f8ef7;
-            --accent2: #7c3aed;
-            --accent3: #06b6d4;
-            --text: #e8e8f0;
-            --muted: #6b6b80;
-            --border: rgba(79,142,247,0.15);
-            --card-glow: rgba(79,142,247,0.08);
+            --accent:   #4f8ef7;
+            --accent2:  #7c3aed;
+            --accent3:  #06b6d4;
+            --text:     #e8e8f0;
+            --muted:    #6b6b80;
+            --border:   rgba(79,142,247,0.15);
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            /* Inter as primary — falls back to system-ui (Segoe UI / SF Pro) if font hasn't loaded yet, so page looks good instantly */
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* ─── SCROLLBAR ─── */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 2px; }
 
-        /* ─── CANVAS BG ─── */
         #bg-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.45;
+            opacity: 0.4;
         }
 
         /* ─── NAV ─── */
@@ -57,847 +62,407 @@
         }
 
         nav.scrolled {
-            background: rgba(5,5,8,0.85);
+            background: rgba(5,5,8,0.88);
             backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border);
         }
 
         nav .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+            display: flex; align-items: center; justify-content: space-between;
         }
 
         .logo {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.4rem;
-            letter-spacing: -0.02em;
-            color: var(--accent);
-            position: relative;
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            font-weight: 800; font-size: 1.35rem; letter-spacing: -0.03em; color: var(--accent);
         }
+        .logo span { color: var(--accent2); }
 
-        .logo span {
-            color: var(--accent2);
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2.5rem;
-        }
+        nav ul { list-style: none; display: flex; gap: 2.5rem; }
 
         nav a {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.78rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.3s;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--muted); text-decoration: none; transition: color 0.25s;
         }
-
         nav a:hover { color: var(--text); }
 
         /* ─── HERO ─── */
         .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            z-index: 1;
-            padding: 0 2rem;
+            position: relative; min-height: 100vh;
+            display: flex; align-items: center;
+            z-index: 1; padding: 0 2rem;
         }
 
         .hero .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            width: 100%;
-            padding-top: 5rem;
+            max-width: 1280px; margin: 0 auto; width: 100%; padding-top: 5rem;
         }
 
         .hero-eyebrow {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            opacity: 0;
-            animation: fadeUp 0.8s 0.2s forwards;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 1rem;
+            opacity: 0; animation: fadeUp 0.7s 0.15s forwards;
         }
-
         .hero-eyebrow::before {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 1px;
-            background: var(--accent);
+            content: ''; display: block; width: 36px; height: 1px;
+            background: var(--accent); flex-shrink: 0;
         }
 
         .hero h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(3rem, 7vw, 7rem);
-            font-weight: 800;
-            line-height: 0.95;
-            letter-spacing: -0.03em;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeUp 0.8s 0.35s forwards;
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            font-size: clamp(3rem, 7vw, 7rem); font-weight: 800;
+            line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 2rem;
+            opacity: 0; animation: fadeUp 0.7s 0.28s forwards;
         }
-
-        .hero h1 .line { display: block; overflow: hidden; }
-
+        .hero h1 .line { display: block; }
         .hero h1 em {
             font-style: normal;
             background: linear-gradient(90deg, var(--accent), var(--accent3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
 
         .hero-desc {
-            max-width: 560px;
-            color: var(--muted);
-            font-size: 1.05rem;
-            line-height: 1.75;
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: fadeUp 0.8s 0.5s forwards;
+            max-width: 540px; color: var(--muted); font-size: 1.05rem;
+            font-weight: 400; line-height: 1.75; margin-bottom: 2.75rem;
+            opacity: 0; animation: fadeUp 0.7s 0.42s forwards;
         }
+        .hero-desc strong { color: var(--text); font-weight: 500; }
 
         .hero-cta {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeUp 0.8s 0.65s forwards;
+            display: flex; gap: 1rem; flex-wrap: wrap;
+            opacity: 0; animation: fadeUp 0.7s 0.55s forwards;
         }
 
         .btn-primary {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.9rem 2rem;
-            background: var(--accent);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 3px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+            padding: 0.85rem 1.9rem; background: var(--accent); color: #fff;
+            text-decoration: none; border-radius: 3px;
+            transition: transform 0.25s, box-shadow 0.25s;
+            position: relative; overflow: hidden; display: inline-block;
         }
-
         .btn-primary::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s;
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
+            transform: translateX(-100%); transition: transform 0.45s;
         }
-
         .btn-primary:hover::after { transform: translateX(100%); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(79,142,247,0.4); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(79,142,247,0.38); }
 
         .btn-outline {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.9rem 2rem;
-            border: 1px solid var(--border);
-            color: var(--muted);
-            text-decoration: none;
-            border-radius: 3px;
-            transition: all 0.3s;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+            padding: 0.85rem 1.9rem; border: 1px solid var(--border);
+            color: var(--muted); text-decoration: none; border-radius: 3px;
+            transition: border-color 0.25s, color 0.25s;
         }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-        .btn-outline:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        /* hero status bar */
         .status-bar {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 3rem;
-            opacity: 0;
-            animation: fadeUp 0.8s 1s forwards;
+            position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 3rem;
+            opacity: 0; animation: fadeUp 0.7s 0.85s forwards; white-space: nowrap;
         }
-
-        .stat {
-            text-align: center;
-        }
-
+        .stat { text-align: center; }
         .stat-num {
-            font-family: 'Syne', sans-serif;
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--accent);
-            display: block;
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            font-size: 2rem; font-weight: 800; color: var(--accent);
+            display: block; letter-spacing: -0.03em;
         }
-
         .stat-label {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
         }
 
-        /* ─── SECTION COMMON ─── */
-        section {
-            position: relative;
-            z-index: 1;
-        }
+        /* ─── SHARED ─── */
+        section { position: relative; z-index: 1; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
 
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: baseline;
-            gap: 1.5rem;
-            margin-bottom: 4rem;
-        }
-
+        .section-header { display: flex; align-items: baseline; gap: 1.25rem; margin-bottom: 3.5rem; }
         .section-num {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--accent);
-            letter-spacing: 0.1em;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.72rem; color: var(--accent); letter-spacing: 0.1em; flex-shrink: 0;
         }
-
         .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1;
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            font-size: clamp(1.9rem, 4vw, 3.2rem); font-weight: 800;
+            letter-spacing: -0.03em; line-height: 1;
         }
 
-        /* ─── ABOUT / STATUS ─── */
-        #about {
-            padding: 6rem 0;
-            border-top: 1px solid var(--border);
-        }
+        /* ─── ABOUT ─── */
+        #about { padding: 6rem 0; border-top: 1px solid var(--border); }
 
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
 
         .about-text p {
-            color: var(--muted);
-            line-height: 1.85;
-            margin-bottom: 1.25rem;
-            font-size: 1rem;
+            color: var(--muted); font-size: 0.975rem; line-height: 1.85; margin-bottom: 1.1rem;
         }
-
-        .about-text p strong {
-            color: var(--text);
-            font-weight: 500;
-        }
+        .about-text p strong { color: var(--text); font-weight: 500; }
 
         .goal-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-top: 2rem;
-            position: relative;
-            overflow: hidden;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1.75rem; margin-top: 1.75rem;
+            position: relative; overflow: hidden;
         }
-
         .goal-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--accent), var(--accent2));
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 3px; height: 100%; background: linear-gradient(180deg, var(--accent), var(--accent2));
         }
-
         .goal-card h4 {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 0.65rem;
         }
+        .goal-card p { color: var(--muted); font-size: 0.925rem; line-height: 1.75; margin: 0; }
 
-        .goal-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
-            line-height: 1.75;
-        }
-
-        .skills-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .skill-row {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .skill-row-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        .skills-panel { display: flex; flex-direction: column; gap: 1.2rem; }
+        .skill-row { display: flex; flex-direction: column; gap: 0.45rem; }
+        .skill-row-header { display: flex; justify-content: space-between; align-items: center; }
         .skill-row-header span:first-child {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text);
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.82rem; font-weight: 500; color: var(--text);
         }
-
         .skill-row-header span:last-child {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--muted);
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.68rem; color: var(--muted);
         }
-
-        .skill-bar-bg {
-            height: 3px;
-            background: var(--surface2);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
+        .skill-bar-bg { height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
         .skill-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent3));
-            border-radius: 2px;
-            width: 0;
-            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent3));
+            border-radius: 2px; width: 0; transition: width 1.1s cubic-bezier(0.4,0,0.2,1);
         }
 
         /* ─── PROJECTS ─── */
-        #projects {
-            padding: 6rem 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .projects-list {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
+        #projects { padding: 6rem 0; border-top: 1px solid var(--border); }
+        .projects-list { display: flex; flex-direction: column; gap: 2px; }
 
         .project-item {
-            background: var(--surface);
-            border: 1px solid transparent;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+            background: var(--surface); border: 1px solid transparent;
+            border-radius: 8px; overflow: hidden; cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
         }
-
-        .project-item:hover {
-            border-color: var(--border);
-            background: var(--surface2);
-        }
-
-        .project-item.open {
-            border-color: rgba(79,142,247,0.3);
-            background: var(--surface2);
-        }
+        .project-item:hover { border-color: var(--border); background: var(--surface2); }
+        .project-item.open { border-color: rgba(79,142,247,0.28); background: var(--surface2); }
 
         .project-header {
-            display: grid;
-            grid-template-columns: 60px 1fr auto auto;
-            align-items: center;
-            gap: 1.5rem;
-            padding: 1.75rem 2rem;
+            display: grid; grid-template-columns: 52px 1fr auto auto;
+            align-items: center; gap: 1.5rem; padding: 1.6rem 2rem;
         }
 
         .project-index {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--accent);
-            letter-spacing: 0.1em;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em;
         }
 
         .project-title-group h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.25rem;
-            transition: color 0.3s;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em;
+            margin-bottom: 0.3rem; transition: color 0.25s;
         }
-
         .project-item:hover .project-title-group h3,
-        .project-item.open .project-title-group h3 {
-            color: var(--accent);
-        }
+        .project-item.open .project-title-group h3 { color: var(--accent); }
 
-        .project-title-group .tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
+        .project-title-group .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 
         .tag {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 0.2rem 0.6rem;
-            background: rgba(79,142,247,0.1);
-            color: var(--accent);
-            border-radius: 2px;
-            border: 1px solid rgba(79,142,247,0.2);
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase;
+            padding: 0.18rem 0.55rem;
+            background: rgba(79,142,247,0.08); color: var(--accent);
+            border-radius: 2px; border: 1px solid rgba(79,142,247,0.18);
         }
 
         .project-status {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.08em;
-            padding: 0.3rem 0.75rem;
-            border-radius: 20px;
-            white-space: nowrap;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.67rem; letter-spacing: 0.07em;
+            padding: 0.28rem 0.7rem; border-radius: 20px; white-space: nowrap;
         }
-
-        .status-active {
-            background: rgba(6,182,212,0.1);
-            color: var(--accent3);
-            border: 1px solid rgba(6,182,212,0.3);
-        }
-
-        .status-completed {
-            background: rgba(79,142,247,0.1);
-            color: var(--accent);
-            border: 1px solid rgba(79,142,247,0.3);
-        }
+        .status-active   { background: rgba(6,182,212,0.09); color: var(--accent3); border: 1px solid rgba(6,182,212,0.25); }
+        .status-completed{ background: rgba(79,142,247,0.09); color: var(--accent);  border: 1px solid rgba(79,142,247,0.25); }
 
         .project-toggle {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            transition: all 0.3s;
-            flex-shrink: 0;
+            width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--border); border-radius: 50%;
+            transition: background 0.25s, border-color 0.25s, transform 0.3s; flex-shrink: 0;
         }
+        .project-item.open .project-toggle { background: var(--accent); border-color: var(--accent); transform: rotate(45deg); }
+        .project-toggle svg { width: 13px; height: 13px; stroke: var(--muted); transition: stroke 0.25s; }
+        .project-item.open .project-toggle svg { stroke: #fff; }
 
-        .project-item.open .project-toggle {
-            background: var(--accent);
-            border-color: var(--accent);
-            transform: rotate(45deg);
-        }
-
-        .project-toggle svg {
-            width: 14px;
-            height: 14px;
-            stroke: var(--muted);
-            transition: stroke 0.3s;
-        }
-
-        .project-item.open .project-toggle svg {
-            stroke: #fff;
-        }
-
-        /* ─── PROJECT DETAIL ─── */
-        .project-detail {
-            display: none;
-            padding: 0 2rem 2.5rem;
-        }
-
-        .project-item.open .project-detail {
-            display: block;
-            animation: expandDown 0.4s ease forwards;
-        }
+        .project-detail { display: none; padding: 0 2rem 2.5rem; }
+        .project-item.open .project-detail { display: block; animation: expandDown 0.35s ease forwards; }
 
         @keyframes expandDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            border-top: 1px solid var(--border);
-            padding-top: 2rem;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+            border-top: 1px solid var(--border); padding-top: 2rem;
         }
-
-        .detail-left {}
 
         .detail-video {
-            position: relative;
-            background: #000;
-            border-radius: 8px;
-            overflow: hidden;
-            aspect-ratio: 16/9;
-            border: 1px solid var(--border);
-            margin-bottom: 1.25rem;
+            position: relative; background: #000; border-radius: 8px;
+            overflow: hidden; aspect-ratio: 16/9;
+            border: 1px solid var(--border); margin-bottom: 1.25rem;
         }
-
         .video-placeholder {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: linear-gradient(135deg, #0c0c18, #111128);
-            cursor: pointer;
-            transition: all 0.3s;
-            gap: 1rem;
-            text-decoration: none;
+            cursor: pointer; transition: background 0.3s; gap: 0.85rem; text-decoration: none;
         }
-
-        .video-placeholder:hover { background: linear-gradient(135deg, #111128, #161634); }
+        .video-placeholder:hover { background: linear-gradient(135deg, #111128, #16163a); }
 
         .play-btn {
-            width: 56px;
-            height: 56px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 0 30px rgba(79,142,247,0.4);
+            width: 52px; height: 52px; background: var(--accent);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: transform 0.25s, box-shadow 0.25s;
+            box-shadow: 0 0 28px rgba(79,142,247,0.38);
         }
-
-        .video-placeholder:hover .play-btn {
-            transform: scale(1.1);
-            box-shadow: 0 0 50px rgba(79,142,247,0.6);
-        }
-
-        .play-btn svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+        .video-placeholder:hover .play-btn { transform: scale(1.1); box-shadow: 0 0 44px rgba(79,142,247,0.55); }
+        .play-btn svg { width: 20px; height: 20px; fill: #fff; margin-left: 3px; }
 
         .video-label {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.73rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
         }
-
         .video-sublabel {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.3);
-            margin-top: -0.5rem;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.76rem; color: rgba(255,255,255,0.22); margin-top: -0.4rem;
         }
 
-        .detail-desc {
-            color: var(--muted);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
+        .detail-desc { font-size: 0.925rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.25rem; }
 
         .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--accent);
-            text-decoration: none;
-            border: 1px solid rgba(79,142,247,0.3);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-            transition: all 0.3s;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase;
+            color: var(--accent); text-decoration: none;
+            border: 1px solid rgba(79,142,247,0.28); padding: 0.45rem 0.95rem;
+            border-radius: 3px; transition: background 0.25s;
         }
+        .github-link:hover { background: rgba(79,142,247,0.09); }
+        .github-link svg { width: 13px; height: 13px; flex-shrink: 0; }
 
-        .github-link:hover {
-            background: rgba(79,142,247,0.1);
-        }
-
-        .github-link svg { width: 14px; height: 14px; }
-
-        .detail-right {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
+        .detail-right { display: flex; flex-direction: column; gap: 1.1rem; }
 
         .detail-block {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1.25rem 1.5rem;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 6px; padding: 1.15rem 1.4rem;
         }
-
         .detail-block h5 {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 0.7rem;
         }
-
-        .detail-block ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
+        .detail-block ul { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
         .detail-block ul li {
-            font-size: 0.875rem;
-            color: var(--muted);
-            display: flex;
-            gap: 0.75rem;
-            line-height: 1.5;
+            font-size: 0.855rem; color: var(--muted);
+            display: flex; gap: 0.7rem; line-height: 1.55;
         }
-
         .detail-block ul li::before {
-            content: '→';
-            color: var(--accent);
-            flex-shrink: 0;
-            font-size: 0.8rem;
-            margin-top: 0.1rem;
+            content: '→'; color: var(--accent); flex-shrink: 0; font-size: 0.78rem; margin-top: 0.1rem;
         }
-
-        .detail-block p {
-            font-size: 0.875rem;
-            color: var(--muted);
-            line-height: 1.7;
-        }
+        .detail-block p { font-size: 0.855rem; color: var(--muted); line-height: 1.72; }
 
         .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.08em;
+            display: inline-flex; align-items: center; gap: 0.45rem;
+            font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.72rem;
         }
+        .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+        .dot-active  { background: var(--accent3); box-shadow: 0 0 7px var(--accent3); animation: blink 2s infinite; }
+        .dot-complete{ background: var(--accent); }
 
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .dot-active {
-            background: var(--accent3);
-            box-shadow: 0 0 8px var(--accent3);
-            animation: pulse 2s infinite;
-        }
-
-        .dot-complete { background: var(--accent); }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
+        @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.35} }
 
         /* ─── PUBLICATIONS ─── */
-        #publications {
-            padding: 6rem 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .pub-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+        #publications { padding: 6rem 0; border-top: 1px solid var(--border); }
+        .pub-list { display: flex; flex-direction: column; gap: 1.4rem; }
 
         .pub-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2rem;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1.85rem 2rem;
+            transition: border-color 0.3s; position: relative; overflow: hidden;
         }
-
         .pub-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent), var(--accent3));
-            transition: width 0.4s;
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent3)); transition: width 0.4s;
         }
-
         .pub-card:hover::after { width: 100%; }
         .pub-card:hover { border-color: rgba(79,142,247,0.3); }
 
         .pub-year {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--accent);
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em;
+            text-transform: uppercase; margin-bottom: 0.5rem;
         }
-
         .pub-card h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 1rem; font-weight: 600; letter-spacing: -0.01em;
+            margin-bottom: 0.7rem; line-height: 1.45;
         }
-
-        .pub-card p {
-            color: var(--muted);
-            font-size: 0.875rem;
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-
+        .pub-card p { color: var(--muted); font-size: 0.875rem; line-height: 1.72; margin-bottom: 0.9rem; }
         .pub-authors {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--muted);
-            letter-spacing: 0.05em;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.7rem; color: var(--muted); letter-spacing: 0.04em; margin: 0;
         }
-
-        .pub-authors strong {
-            color: var(--accent);
-        }
+        .pub-authors strong { color: var(--accent); }
 
         /* ─── CONTACT ─── */
-        #contact {
-            padding: 6rem 0;
-            border-top: 1px solid var(--border);
-        }
+        #contact { padding: 6rem 0; border-top: 1px solid var(--border); }
 
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
 
         .contact-left h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            font-size: 1.85rem; font-weight: 800; letter-spacing: -0.03em;
+            margin-bottom: 0.9rem; line-height: 1.25;
         }
+        .contact-left p { color: var(--muted); line-height: 1.78; margin-bottom: 1.75rem; font-size: 0.975rem; }
 
-        .contact-left p {
-            color: var(--muted);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .contact-links {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+        .contact-links { display: flex; flex-direction: column; gap: 0.85rem; }
 
         .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.25rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            text-decoration: none;
-            transition: all 0.3s;
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.9rem 1.15rem; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 6px;
+            text-decoration: none; transition: border-color 0.25s, background 0.25s, transform 0.25s;
         }
-
-        .contact-link:hover {
-            border-color: rgba(79,142,247,0.4);
-            background: var(--surface2);
-            transform: translateX(6px);
-        }
+        .contact-link:hover { border-color: rgba(79,142,247,0.38); background: var(--surface2); transform: translateX(5px); }
 
         .contact-link-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(79,142,247,0.1);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
+            width: 38px; height: 38px; background: rgba(79,142,247,0.09); border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;
         }
-
-        .contact-link-text h4 {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 0.15rem;
-        }
-
+        .contact-link-text h4 { font-size: 0.85rem; font-weight: 500; color: var(--text); margin-bottom: 0.12rem; }
         .contact-link-text p {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--muted);
-            margin: 0;
-            letter-spacing: 0.05em;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.7rem; color: var(--muted); margin: 0; letter-spacing: 0.04em;
         }
 
         /* ─── FOOTER ─── */
         footer {
-            border-top: 1px solid var(--border);
-            padding: 2rem;
+            border-top: 1px solid var(--border); padding: 1.75rem 2rem;
             text-align: center;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.08em;
-            color: var(--muted);
-            position: relative;
-            z-index: 1;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.7rem; letter-spacing: 0.08em; color: var(--muted);
+            position: relative; z-index: 1;
         }
 
         /* ─── ANIMATIONS ─── */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s, transform 0.7s;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s, transform 0.65s; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 900px) {
@@ -905,7 +470,6 @@
             .project-header { grid-template-columns: 40px 1fr auto; }
             .project-status { display: none; }
         }
-
         @media (max-width: 640px) {
             .project-header { grid-template-columns: 1fr auto; }
             .project-index { display: none; }
@@ -940,8 +504,8 @@
             <span class="line">Pratap <em>Singh</em></span>
         </h1>
         <p class="hero-desc">
-            Robotics researcher specializing in <strong>nonlinear control</strong>, 
-            <strong>aerial manipulation</strong>, and <strong>learning-based autonomous systems</strong>. 
+            Robotics researcher specializing in <strong>nonlinear control</strong>,
+            <strong>aerial manipulation</strong>, and <strong>learning-based autonomous systems</strong>.
             Building Physical AI that keeps humans away from danger.
         </p>
         <div class="hero-cta">
@@ -950,22 +514,10 @@
         </div>
     </div>
     <div class="status-bar">
-        <div class="stat">
-            <span class="stat-num">9.6</span>
-            <span class="stat-label">GPA / 10</span>
-        </div>
-        <div class="stat">
-            <span class="stat-num">5</span>
-            <span class="stat-label">Active Projects</span>
-        </div>
-        <div class="stat">
-            <span class="stat-num">2</span>
-            <span class="stat-label">Publications</span>
-        </div>
-        <div class="stat">
-            <span class="stat-num">2+</span>
-            <span class="stat-label">Years Research</span>
-        </div>
+        <div class="stat"><span class="stat-num">9.6</span><span class="stat-label">GPA / 10</span></div>
+        <div class="stat"><span class="stat-num">5</span><span class="stat-label">Active Projects</span></div>
+        <div class="stat"><span class="stat-num">2</span><span class="stat-label">Publications</span></div>
+        <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Yrs Research</span></div>
     </div>
 </section>
 
@@ -979,60 +531,44 @@
         <div class="about-grid">
             <div class="about-text reveal">
                 <p>I'm a Master's student in Robotics at <strong>IIIT Hyderabad</strong>, working at the intersection of control theory and intelligent autonomy. My research focuses on making aerial robots capable of physically interacting with the world — not just flying through it.</p>
-                <p>Before joining IIIT, I spent a year at <strong>Arka Aerospace</strong> designing autonomous UAV navigation systems, multi-drone coordination algorithms, and precision landing pipelines with 2–3 cm accuracy.</p>
-                <p>I believe the next frontier of robotics is <strong>Physical AI</strong> — systems that combine rigorous control theory with learned perception to operate reliably in unstructured, dynamic environments without human oversight.</p>
+                <p>Before joining IIIT, I spent a year at <strong>Arka Aerospace</strong> designing autonomous UAV navigation systems, multi-drone coordination algorithms, and precision landing pipelines achieving <strong>2–3 cm accuracy</strong> in real-world flight conditions.</p>
+                <p>I believe the next frontier is <strong>Physical AI</strong> — systems that combine rigorous control theory with learned perception to operate reliably in unstructured, dynamic environments without human oversight.</p>
                 <div class="goal-card">
                     <h4>Long-Term Goal</h4>
-                    <p>Develop aerial robotic systems capable of autonomous physical intervention in hazardous environments — disaster response, infrastructure inspection, and remote manipulation — eliminating the need for human presence in dangerous situations.</p>
+                    <p>Develop aerial robotic systems capable of autonomous physical intervention in hazardous environments — disaster response, infrastructure inspection, and remote manipulation — eliminating human presence in dangerous situations.</p>
                 </div>
             </div>
             <div class="skills-panel reveal">
                 <div class="skill-row">
-                    <div class="skill-row-header">
-                        <span>ROS 2 / Embedded Systems</span><span>Expert</span>
-                    </div>
+                    <div class="skill-row-header"><span>ROS 2 / Embedded Systems</span><span>Expert</span></div>
                     <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92"></div></div>
                 </div>
                 <div class="skill-row">
-                    <div class="skill-row-header">
-                        <span>Nonlinear & Adaptive Control</span><span>Advanced</span>
-                    </div>
+                    <div class="skill-row-header"><span>Nonlinear & Adaptive Control</span><span>Advanced</span></div>
                     <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div>
                 </div>
                 <div class="skill-row">
-                    <div class="skill-row-header">
-                        <span>Reinforcement Learning (PPO / SAC)</span><span>Advanced</span>
-                    </div>
+                    <div class="skill-row-header"><span>Reinforcement Learning (PPO / SAC)</span><span>Advanced</span></div>
                     <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div>
                 </div>
                 <div class="skill-row">
-                    <div class="skill-row-header">
-                        <span>C++ (Eigen, Ceres)</span><span>Advanced</span>
-                    </div>
+                    <div class="skill-row-header"><span>C++ (Eigen, Ceres)</span><span>Advanced</span></div>
                     <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
                 </div>
                 <div class="skill-row">
-                    <div class="skill-row-header">
-                        <span>Python (NumPy, SciPy, PyTorch)</span><span>Advanced</span>
-                    </div>
+                    <div class="skill-row-header"><span>Python (NumPy, SciPy, PyTorch)</span><span>Advanced</span></div>
                     <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="87"></div></div>
                 </div>
                 <div class="skill-row">
-                    <div class="skill-row-header">
-                        <span>Model Predictive Control (MPC)</span><span>Proficient</span>
-                    </div>
+                    <div class="skill-row-header"><span>Model Predictive Control (MPC)</span><span>Proficient</span></div>
                     <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78"></div></div>
                 </div>
                 <div class="skill-row">
-                    <div class="skill-row-header">
-                        <span>Computer Vision (OpenCV, Open3D)</span><span>Proficient</span>
-                    </div>
+                    <div class="skill-row-header"><span>Computer Vision (OpenCV, Open3D)</span><span>Proficient</span></div>
                     <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75"></div></div>
                 </div>
                 <div class="skill-row">
-                    <div class="skill-row-header">
-                        <span>PX4 / ArduPilot / SITL</span><span>Expert</span>
-                    </div>
+                    <div class="skill-row-header"><span>PX4 / ArduPilot / SITL</span><span>Expert</span></div>
                     <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div>
                 </div>
             </div>
@@ -1049,17 +585,14 @@
         </div>
         <div class="projects-list">
 
-            <!-- PROJECT 1 -->
             <div class="project-item reveal" onclick="toggleProject(this)">
                 <div class="project-header">
                     <span class="project-index">01</span>
                     <div class="project-title-group">
                         <h3>Hierarchical RL + Adaptive INDI for Aerial Manipulation</h3>
                         <div class="tags">
-                            <span class="tag">Reinforcement Learning</span>
-                            <span class="tag">INDI Control</span>
-                            <span class="tag">ROS 2</span>
-                            <span class="tag">PPO</span>
+                            <span class="tag">Reinforcement Learning</span><span class="tag">INDI Control</span>
+                            <span class="tag">ROS 2</span><span class="tag">PPO</span>
                         </div>
                     </div>
                     <span class="project-status status-active">Active — Jan 2026</span>
@@ -1072,11 +605,9 @@
                         <div class="detail-left">
                             <div class="detail-video">
                                 <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
-                                    <div class="play-btn">
-                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                    </div>
+                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
                                     <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                    <span class="video-sublabel">Replace href with your YouTube link</span>
                                 </a>
                             </div>
                             <p class="detail-desc">A hierarchical flight-control stack for an underactuated aerial manipulator. An outer-loop RL policy outputs thrust and body-rate commands, while the inner-loop Adaptive INDI (running at 250 Hz) handles rapid attitude stabilization and disturbance rejection during manipulation transients.</p>
@@ -1089,15 +620,15 @@
                             <div class="detail-block">
                                 <h5>Key Achievements</h5>
                                 <ul>
-                                    <li>Domain-randomized PPO policy (payload mass, inertia, actuator variation)</li>
+                                    <li>Domain-randomized PPO (payload mass, inertia, actuator variation)</li>
                                     <li>Online control-effectiveness adaptation via filtered angular-acceleration feedback</li>
-                                    <li>Real-world grasp-and-drop validation with max 20 cm end-effector error</li>
+                                    <li>Real-world grasp-and-drop validation — max 20 cm end-effector error</li>
                                     <li>Robust sim-to-real transfer across manipulation transients</li>
                                 </ul>
                             </div>
                             <div class="detail-block">
                                 <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active development</span> — Conducting real-world flight tests. Currently refining reward shaping for smoother grasp transitions and reducing tracking error below 15 cm.</p>
+                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active development</span> — Real-world flight tests ongoing. Refining reward shaping for smoother grasp transitions; targeting sub-15 cm tracking error.</p>
                             </div>
                             <div class="detail-block">
                                 <h5>Future Goals</h5>
@@ -1112,17 +643,14 @@
                 </div>
             </div>
 
-            <!-- PROJECT 2 -->
             <div class="project-item reveal" onclick="toggleProject(this)">
                 <div class="project-header">
                     <span class="project-index">02</span>
                     <div class="project-title-group">
                         <h3>Autonomous Language-Guided Aerial Grasping</h3>
                         <div class="tags">
-                            <span class="tag">Vision-Language</span>
-                            <span class="tag">CNN-ViT</span>
-                            <span class="tag">SAM-3</span>
-                            <span class="tag">6-DoF Grasping</span>
+                            <span class="tag">Vision-Language</span><span class="tag">CNN-ViT</span>
+                            <span class="tag">SAM-3</span><span class="tag">6-DoF Grasping</span>
                         </div>
                     </div>
                     <span class="project-status status-active">Active — Jan 2026</span>
@@ -1135,14 +663,12 @@
                         <div class="detail-left">
                             <div class="detail-video">
                                 <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
-                                    <div class="play-btn">
-                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                    </div>
+                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
                                     <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                    <span class="video-sublabel">Replace href with your YouTube link</span>
                                 </a>
                             </div>
-                            <p class="detail-desc">A modular framework enabling aerial manipulators to carry out language-guided grasping in cluttered, unstructured environments. The system processes natural language commands to identify, localize, and grasp target objects — autonomously handling occlusions via orbital search maneuvers.</p>
+                            <p class="detail-desc">A modular framework enabling aerial manipulators to carry out language-guided grasping in cluttered, unstructured environments. Processes natural language commands to identify, localize, and grasp target objects — autonomously handling occlusions via orbital search maneuvers.</p>
                         </div>
                         <div class="detail-right">
                             <div class="detail-block">
@@ -1150,19 +676,19 @@
                                 <ul>
                                     <li>Lightweight hybrid CNN-ViT predicts 6-DoF grasp poses in under 38 ms</li>
                                     <li>Hierarchical Risk-Aware Decision Framework filters kinematic reachability</li>
-                                    <li>Real-time SAM-3 tracking with autonomous occlusion-clearing search</li>
+                                    <li>Real-time SAM-3 tracking with autonomous occlusion-clearing orbital search</li>
                                     <li>End-to-end pipeline from language input to physical grasp execution</li>
                                 </ul>
                             </div>
                             <div class="detail-block">
                                 <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active development</span> — Integrating language model front-end with grasp prediction pipeline. Conducting cluttered-environment validation tests.</p>
+                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active development</span> — Integrating language model front-end with grasp prediction pipeline. Cluttered-environment validation in progress.</p>
                             </div>
                             <div class="detail-block">
                                 <h5>Future Goals</h5>
                                 <ul>
                                     <li>Generalize to open-vocabulary object categories</li>
-                                    <li>Deploy on resource-constrained onboard compute (Jetson Orin)</li>
+                                    <li>Deploy on onboard Jetson Orin compute</li>
                                     <li>Enable multi-step, dialog-driven manipulation tasks</li>
                                 </ul>
                             </div>
@@ -1171,17 +697,14 @@
                 </div>
             </div>
 
-            <!-- PROJECT 3 -->
             <div class="project-item reveal" onclick="toggleProject(this)">
                 <div class="project-header">
                     <span class="project-index">03</span>
                     <div class="project-title-group">
                         <h3>Adaptive Control for Multi-Quadrotor Formations</h3>
                         <div class="tags">
-                            <span class="tag">Distributed Control</span>
-                            <span class="tag">Adaptive Laws</span>
-                            <span class="tag">Multi-UAV</span>
-                            <span class="tag">UUB Stability</span>
+                            <span class="tag">Distributed Control</span><span class="tag">Adaptive Laws</span>
+                            <span class="tag">Multi-UAV</span><span class="tag">UUB Stability</span>
                         </div>
                     </div>
                     <span class="project-status status-active">Active — Jul 2025</span>
@@ -1194,11 +717,9 @@
                         <div class="detail-left">
                             <div class="detail-video">
                                 <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
-                                    <div class="play-btn">
-                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                    </div>
+                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
                                     <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                    <span class="video-sublabel">Replace href with your YouTube link</span>
                                 </a>
                             </div>
                             <p class="detail-desc">A distributed adaptive control strategy for multi-quadrotor formations encountering strong, unknown interconnection forces. Nonlinear adaptive laws handle state-dependent uncertainties including rotor downwash and aerodynamic drag — without requiring prior model knowledge or boundedness assumptions.</p>
@@ -1208,14 +729,14 @@
                                 <h5>Key Achievements</h5>
                                 <ul>
                                     <li>Proven Uniformly Ultimately Bounded (UUB) stability for entire closed-loop system</li>
-                                    <li>Real-world cooperative aerial transportation experiments</li>
+                                    <li>Real-world cooperative aerial transportation experiments validated</li>
                                     <li>No prior boundedness or model structure required</li>
                                     <li>Handles rotor downwash and complex aerodynamic coupling</li>
                                 </ul>
                             </div>
                             <div class="detail-block">
                                 <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active</span> — Scaling to 3+ UAV formations. Preparing real-world payload transportation experiments with varying load distributions.</p>
+                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active</span> — Scaling to 3+ UAV formations. Real-world payload transportation experiments with varying load distributions in progress.</p>
                             </div>
                             <div class="detail-block">
                                 <h5>Future Goals</h5>
@@ -1230,17 +751,14 @@
                 </div>
             </div>
 
-            <!-- PROJECT 4 -->
             <div class="project-item reveal" onclick="toggleProject(this)">
                 <div class="project-header">
                     <span class="project-index">04</span>
                     <div class="project-title-group">
                         <h3>RRT + MPC Quadrotor Autonomy Stack</h3>
                         <div class="tags">
-                            <span class="tag">Model Predictive Control</span>
-                            <span class="tag">RRT Planning</span>
-                            <span class="tag">100 Hz Control</span>
-                            <span class="tag">Aggressive Flight</span>
+                            <span class="tag">Model Predictive Control</span><span class="tag">RRT Planning</span>
+                            <span class="tag">100 Hz Control</span><span class="tag">Aggressive Flight</span>
                         </div>
                     </div>
                     <span class="project-status status-completed">Feb – May 2025</span>
@@ -1253,35 +771,33 @@
                         <div class="detail-left">
                             <div class="detail-video">
                                 <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
-                                    <div class="play-btn">
-                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                    </div>
+                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
                                     <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                    <span class="video-sublabel">Replace href with your YouTube link</span>
                                 </a>
                             </div>
-                            <p class="detail-desc">A layered autonomy stack where RRT generates collision-free geometric routes, a trajectory module converts them into time-parameterized references suitable for aggressive flight, and a real-time MPC controller optimizes collective thrust and body-rate commands within actuator limits — achieving stable tracking at 100 Hz.</p>
+                            <p class="detail-desc">A layered autonomy stack where RRT generates collision-free geometric routes, a trajectory module converts them into time-parameterized references for aggressive flight, and a real-time MPC controller optimizes commands within actuator limits — achieving stable tracking at 100 Hz on hardware.</p>
                         </div>
                         <div class="detail-right">
                             <div class="detail-block">
                                 <h5>Key Achievements</h5>
                                 <ul>
-                                    <li>100 Hz closed-loop MPC optimization on hardware</li>
-                                    <li>Stable tracking of aggressive maneuvers (tight turns, fast accelerations)</li>
-                                    <li>Efficient warm-starting and simplified dynamics for real-time performance</li>
+                                    <li>100 Hz closed-loop MPC optimization running on hardware</li>
+                                    <li>Stable tracking of tight turns and fast accelerations</li>
+                                    <li>Efficient warm-starting and simplified dynamics for real-time use</li>
                                     <li>Full end-to-end collision-free planning to execution pipeline</li>
                                 </ul>
                             </div>
                             <div class="detail-block">
                                 <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-complete"></span>Completed</span> — Core system validated. Results informing the hierarchical RL + INDI project's inner-loop architecture.</p>
+                                <p><span class="status-badge"><span class="status-dot dot-complete"></span>Completed</span> — Core system validated. Results now informing the hierarchical RL + INDI project's inner-loop architecture.</p>
                             </div>
                             <div class="detail-block">
                                 <h5>Future Goals</h5>
                                 <ul>
                                     <li>Integrate learning-based dynamics models into MPC prediction</li>
                                     <li>Extend RRT to dynamic obstacle environments</li>
-                                    <li>Apply to indoor inspection scenarios with GPS denial</li>
+                                    <li>Apply to indoor inspection with GPS denial</li>
                                 </ul>
                             </div>
                         </div>
@@ -1289,17 +805,14 @@
                 </div>
             </div>
 
-            <!-- PROJECT 5 -->
             <div class="project-item reveal" onclick="toggleProject(this)">
                 <div class="project-header">
                     <span class="project-index">05</span>
                     <div class="project-title-group">
                         <h3>Autonomous Ball Catcher — "The Robotic Dustbin"</h3>
                         <div class="tags">
-                            <span class="tag">Stereo Vision</span>
-                            <span class="tag">RANSAC</span>
-                            <span class="tag">PID Drive</span>
-                            <span class="tag">UDP Streaming</span>
+                            <span class="tag">Stereo Vision</span><span class="tag">RANSAC</span>
+                            <span class="tag">PID Drive</span><span class="tag">UDP Streaming</span>
                         </div>
                     </div>
                     <span class="project-status status-completed">Oct – Dec 2025</span>
@@ -1312,14 +825,12 @@
                         <div class="detail-left">
                             <div class="detail-video">
                                 <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
-                                    <div class="play-btn">
-                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                    </div>
+                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
                                     <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                    <span class="video-sublabel">Replace href with your YouTube link</span>
                                 </a>
                             </div>
-                            <p class="detail-desc">An autonomous mobile robot that intercepts thrown balls in real time using an external multi-camera 3D world frame — no onboard vision required. HSV-based detection, stereo triangulation, and physics-based RANSAC trajectory estimation predict landing coordinates. The robot drives to the impact point via 30 Hz UDP-streamed commands before the ball lands.</p>
+                            <p class="detail-desc">An autonomous mobile robot that intercepts thrown balls in real time using an external multi-camera 3D world frame — no onboard vision required. HSV detection, stereo triangulation, and physics-based RANSAC predict landing coordinates. Drives to the impact point via 30 Hz UDP-streamed commands before the ball lands.</p>
                             <a href="https://github.com/AerialMechX/AerialMechX-Autonomous_ball_catcher.git" target="_blank" class="github-link">
                                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
                                 View on GitHub
@@ -1332,12 +843,12 @@
                                     <li>Real-time stereo triangulation with HSV ball detection</li>
                                     <li>Physics-based RANSAC estimation robust to noisy measurements</li>
                                     <li>Low-latency 30 Hz UDP control loop (Raspberry Pi + Arduino)</li>
-                                    <li>PID-controlled differential-drive motion for accurate interception</li>
+                                    <li>PID-controlled differential-drive for accurate interception</li>
                                 </ul>
                             </div>
                             <div class="detail-block">
                                 <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-complete"></span>Completed</span> — System validated in real-world tests. Achieves reliable interception across a range of throw speeds and trajectories.</p>
+                                <p><span class="status-badge"><span class="status-dot dot-complete"></span>Completed</span> — Validated across a range of throw speeds and trajectories in real-world tests.</p>
                             </div>
                             <div class="detail-block">
                                 <h5>Future Goals</h5>
@@ -1373,7 +884,7 @@
             <div class="pub-card reveal">
                 <p class="pub-year">2025 — Preprint / Under Review</p>
                 <h3>AERMANI-Diffusion: Regime-Conditioned Diffusion for Dynamics Learning in Aerial Manipulators</h3>
-                <p>Created AERMANI-Diffusion — a regime-conditioned diffusion model capturing non-stationary dynamics of aerial manipulators under environmental changes. A time-of-day encoded module rapidly predicts residual forces under varying loading conditions. Validated through real-world flight tests demonstrating enhanced tracking accuracy and stability during high-acceleration dynamic scenarios.</p>
+                <p>Created AERMANI-Diffusion — a regime-conditioned diffusion model capturing non-stationary dynamics of aerial manipulators under environmental changes. A time-of-day encoded module rapidly predicts residual forces under varying loading conditions. Validated through real-world flight tests showing enhanced tracking accuracy and stability during high-acceleration dynamic scenarios.</p>
                 <p class="pub-authors"><strong>Shared First Author:</strong> Samaksh Ujjawal* · <strong>Shivansh Pratap Singh*</strong> · Naveen Sudheer · Rishabh Dev Yadav · Wei Pan · Spandan Roy</p>
             </div>
         </div>
@@ -1390,44 +901,29 @@
         <div class="contact-grid">
             <div class="contact-left reveal">
                 <h3>Open to collaborations, research discussions & opportunities.</h3>
-                <p>Whether you're working on aerial robotics, autonomous systems, or want to discuss potential research collaborations — I'd love to hear from you.</p>
-                <a href="mailto:shivansh.singh@research.iiit.ac.in" class="btn-primary" style="display:inline-block;">Send Email →</a>
+                <p>Whether you're working on aerial robotics, autonomous systems, or want to discuss research collaborations — I'd love to hear from you.</p>
+                <a href="mailto:shivansh.singh@research.iiit.ac.in" class="btn-primary">Send Email →</a>
             </div>
             <div class="contact-links reveal">
                 <a href="mailto:shivansh.singh@research.iiit.ac.in" class="contact-link">
                     <div class="contact-link-icon">✉</div>
-                    <div class="contact-link-text">
-                        <h4>Email</h4>
-                        <p>shivansh.singh@research.iiit.ac.in</p>
-                    </div>
+                    <div class="contact-link-text"><h4>Institute Email</h4><p>shivansh.singh@research.iiit.ac.in</p></div>
                 </a>
                 <a href="mailto:shivansh2172@gmail.com" class="contact-link">
                     <div class="contact-link-icon">📬</div>
-                    <div class="contact-link-text">
-                        <h4>Personal Email</h4>
-                        <p>shivansh2172@gmail.com</p>
-                    </div>
+                    <div class="contact-link-text"><h4>Personal Email</h4><p>shivansh2172@gmail.com</p></div>
                 </a>
                 <a href="https://github.com/AerialMechX" target="_blank" class="contact-link">
                     <div class="contact-link-icon">🐙</div>
-                    <div class="contact-link-text">
-                        <h4>GitHub</h4>
-                        <p>github.com/AerialMechX</p>
-                    </div>
+                    <div class="contact-link-text"><h4>GitHub</h4><p>github.com/AerialMechX</p></div>
                 </a>
                 <a href="https://aerialmechx.github.io/" target="_blank" class="contact-link">
                     <div class="contact-link-icon">🌐</div>
-                    <div class="contact-link-text">
-                        <h4>Website</h4>
-                        <p>aerialmechx.github.io</p>
-                    </div>
+                    <div class="contact-link-text"><h4>Portfolio</h4><p>aerialmechx.github.io</p></div>
                 </a>
                 <a href="tel:+919794734872" class="contact-link">
                     <div class="contact-link-icon">📱</div>
-                    <div class="contact-link-text">
-                        <h4>Phone</h4>
-                        <p>+91 9794734872</p>
-                    </div>
+                    <div class="contact-link-text"><h4>Phone</h4><p>+91 9794734872</p></div>
                 </a>
             </div>
         </div>
@@ -1439,96 +935,90 @@
 </footer>
 
 <script>
-    // ─── CANVAS NEURAL NETWORK BACKGROUND ───
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let W, H, nodes = [], animId;
+    // ─── SPEED: Canvas starts only after full page has loaded ───
+    window.addEventListener('load', () => {
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let W, H, nodes = [];
 
-    function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-    }
-
-    function initNodes() {
-        nodes = [];
-        const count = Math.floor((W * H) / 14000);
-        for (let i = 0; i < count; i++) {
-            nodes.push({
-                x: Math.random() * W,
-                y: Math.random() * H,
-                vx: (Math.random() - 0.5) * 0.35,
-                vy: (Math.random() - 0.5) * 0.35,
-                r: Math.random() * 1.5 + 0.5
-            });
+        function resize() {
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
         }
-    }
 
-    function drawFrame() {
-        ctx.clearRect(0, 0, W, H);
-        for (let i = 0; i < nodes.length; i++) {
-            const n = nodes[i];
-            n.x += n.vx; n.y += n.vy;
-            if (n.x < 0 || n.x > W) n.vx *= -1;
-            if (n.y < 0 || n.y > H) n.vy *= -1;
-            for (let j = i + 1; j < nodes.length; j++) {
-                const m = nodes[j];
-                const dx = n.x - m.x, dy = n.y - m.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 140) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(79,142,247,${(1 - dist / 140) * 0.25})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.moveTo(n.x, n.y);
-                    ctx.lineTo(m.x, m.y);
-                    ctx.stroke();
-                }
+        function initNodes() {
+            nodes = [];
+            // SPEED: reduced density vs original
+            const count = Math.floor((W * H) / 22000);
+            for (let i = 0; i < count; i++) {
+                nodes.push({
+                    x: Math.random() * W, y: Math.random() * H,
+                    vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+                    r: Math.random() * 1.4 + 0.4
+                });
             }
-            ctx.beginPath();
-            ctx.fillStyle = `rgba(79,142,247,0.6)`;
-            ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-            ctx.fill();
         }
-        animId = requestAnimationFrame(drawFrame);
-    }
 
-    resize();
-    initNodes();
-    drawFrame();
-    window.addEventListener('resize', () => { resize(); initNodes(); });
+        // SPEED: avoid sqrt per pair — use squared distance comparison
+        const MAX_DIST = 130, MAX_DIST_SQ = MAX_DIST * MAX_DIST;
 
-    // ─── NAV SCROLL ───
-    window.addEventListener('scroll', () => {
-        document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+        function drawFrame() {
+            ctx.clearRect(0, 0, W, H);
+            for (let i = 0; i < nodes.length; i++) {
+                const n = nodes[i];
+                n.x += n.vx; n.y += n.vy;
+                if (n.x < 0 || n.x > W) n.vx *= -1;
+                if (n.y < 0 || n.y > H) n.vy *= -1;
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const m = nodes[j];
+                    const dx = n.x - m.x, dy = n.y - m.y;
+                    const dSq = dx * dx + dy * dy;
+                    if (dSq < MAX_DIST_SQ) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(79,142,247,${(1 - Math.sqrt(dSq) / MAX_DIST) * 0.22})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y);
+                        ctx.stroke();
+                    }
+                }
+                ctx.beginPath();
+                ctx.fillStyle = 'rgba(79,142,247,0.55)';
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            requestAnimationFrame(drawFrame);
+        }
+
+        resize(); initNodes(); drawFrame();
+        window.addEventListener('resize', () => { resize(); initNodes(); });
     });
 
-    // ─── SCROLL REVEAL ───
+    // SPEED: passive scroll listener — doesn't block rendering
+    window.addEventListener('scroll', () => {
+        document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Scroll reveal
     const revealEls = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((e, i) => {
-            if (e.isIntersecting) {
-                setTimeout(() => e.target.classList.add('visible'), 80 * (Array.from(revealEls).indexOf(e.target) % 4));
-                revealObserver.unobserve(e.target);
-            }
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
     revealEls.forEach(el => revealObserver.observe(el));
 
-    // ─── SKILL BARS ───
+    // Skill bars
     const barObserver = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) {
-                e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
-                    bar.style.width = bar.dataset.width + '%';
-                });
+                e.target.querySelectorAll('.skill-bar-fill').forEach(b => { b.style.width = b.dataset.width + '%'; });
                 barObserver.unobserve(e.target);
             }
         });
-    }, { threshold: 0.3 });
-
+    }, { threshold: 0.25 });
     document.querySelectorAll('.skills-panel').forEach(el => barObserver.observe(el));
 
-    // ─── PROJECT ACCORDION ───
+    // Project accordion
     function toggleProject(el) {
         const isOpen = el.classList.contains('open');
         document.querySelectorAll('.project-item.open').forEach(p => p.classList.remove('open'));
