@@ -3,877 +3,1537 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shivansh Pratap Singh - Portfolio</title>
+    <title>Shivansh Pratap Singh — Robotics Researcher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #050508;
+            --bg2: #0c0c12;
+            --surface: #111118;
+            --surface2: #18181f;
+            --accent: #4f8ef7;
+            --accent2: #7c3aed;
+            --accent3: #06b6d4;
+            --text: #e8e8f0;
+            --muted: #6b6b80;
+            --border: rgba(79,142,247,0.15);
+            --card-glow: rgba(79,142,247,0.08);
         }
 
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 2px; }
 
-        /* Animated Background */
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
+        /* ─── CANVAS BG ─── */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 0;
-        }
-
-        .robot-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            opacity: 0.15;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
-            50% { transform: translate(-50%, -50%) translateY(-30px); }
-        }
-
-        .robot-svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 40px rgba(102, 126, 234, 0.6));
-        }
-
-        /* Animated particles */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(102, 126, 234, 0.6);
-            border-radius: 50%;
-            animation: particleFloat 8s infinite;
-        }
-
-        @keyframes particleFloat {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
-        }
-
-        .gradient-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 10, 10, 0.8) 70%, #0a0a0a 100%);
             pointer-events: none;
+            opacity: 0.45;
         }
 
-        /* Navigation */
+        /* ─── NAV ─── */
         nav {
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(20px);
-            padding: 1.5rem 0;
-            position: sticky;
-            top: 0;
+            position: fixed;
+            top: 0; left: 0; right: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
-            transition: all 0.3s;
+            padding: 1.25rem 0;
+            transition: all 0.4s;
         }
 
         nav.scrolled {
-            background: rgba(15, 15, 15, 0.95);
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+            background: rgba(5,5,8,0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
         }
 
         nav .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: -0.02em;
+            color: var(--accent);
+            position: relative;
+        }
+
+        .logo span {
+            color: var(--accent2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: var(--text); }
+
+        /* ─── HERO ─── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            z-index: 1;
+            padding: 0 2rem;
+        }
+
+        .hero .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            padding-top: 5rem;
+        }
+
+        .hero-eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.2s forwards;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 7vw, 7rem);
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.35s forwards;
+        }
+
+        .hero h1 .line { display: block; overflow: hidden; }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--accent), var(--accent3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            max-width: 560px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.5s forwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.65s forwards;
+        }
+
+        .btn-primary {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.9rem 2rem;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .btn-primary:hover::after { transform: translateX(100%); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(79,142,247,0.4); }
+
+        .btn-outline {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.9rem 2rem;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            text-decoration: none;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* hero status bar */
+        .status-bar {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 1s forwards;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ─── SECTION COMMON ─── */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-num {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        /* ─── ABOUT / STATUS ─── */
+        #about {
+            padding: 6rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-text p {
+            color: var(--muted);
+            line-height: 1.85;
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+        }
+
+        .about-text p strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .goal-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .goal-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent), var(--accent2));
+        }
+
+        .goal-card h4 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .goal-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.75;
+        }
+
+        .skills-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .skill-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .skill-row-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: glow 2s ease-in-out infinite;
+        .skill-row-header span:first-child {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text);
         }
 
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.5)); }
-            50% { filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.8)); }
+        .skill-row-header span:last-child {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
         }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
+        .skill-bar-bg {
+            height: 3px;
+            background: var(--surface2);
+            border-radius: 2px;
+            overflow: hidden;
         }
 
-        nav a {
-            color: #e0e0e0;
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
+        .skill-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent3));
+            border-radius: 2px;
             width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        nav a:hover::after {
-            width: 100%;
+        /* ─── PROJECTS ─── */
+        #projects {
+            padding: 6rem 0;
+            border-top: 1px solid var(--border);
         }
 
-        nav a:hover {
-            color: #667eea;
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
-        /* Hero Section */
-        .hero {
+        .project-item {
+            background: var(--surface);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            padding: 8rem 0 6rem;
-            text-align: center;
-            min-height: 100vh;
+        }
+
+        .project-item:hover {
+            border-color: var(--border);
+            background: var(--surface2);
+        }
+
+        .project-item.open {
+            border-color: rgba(79,142,247,0.3);
+            background: var(--surface2);
+        }
+
+        .project-header {
+            display: grid;
+            grid-template-columns: 60px 1fr auto auto;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.75rem 2rem;
+        }
+
+        .project-index {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+        }
+
+        .project-title-group h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
+            transition: color 0.3s;
+        }
+
+        .project-item:hover .project-title-group h3,
+        .project-item.open .project-title-group h3 {
+            color: var(--accent);
+        }
+
+        .project-title-group .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            background: rgba(79,142,247,0.1);
+            color: var(--accent);
+            border-radius: 2px;
+            border: 1px solid rgba(79,142,247,0.2);
+        }
+
+        .project-status {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .status-active {
+            background: rgba(6,182,212,0.1);
+            color: var(--accent3);
+            border: 1px solid rgba(6,182,212,0.3);
+        }
+
+        .status-completed {
+            background: rgba(79,142,247,0.1);
+            color: var(--accent);
+            border: 1px solid rgba(79,142,247,0.3);
+        }
+
+        .project-toggle {
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            transition: all 0.3s;
+            flex-shrink: 0;
         }
 
-        .hero-content {
+        .project-item.open .project-toggle {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: rotate(45deg);
+        }
+
+        .project-toggle svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--muted);
+            transition: stroke 0.3s;
+        }
+
+        .project-item.open .project-toggle svg {
+            stroke: #fff;
+        }
+
+        /* ─── PROJECT DETAIL ─── */
+        .project-detail {
+            display: none;
+            padding: 0 2rem 2.5rem;
+        }
+
+        .project-item.open .project-detail {
+            display: block;
+            animation: expandDown 0.4s ease forwards;
+        }
+
+        @keyframes expandDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+        }
+
+        .detail-left {}
+
+        .detail-video {
+            position: relative;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            border: 1px solid var(--border);
+            margin-bottom: 1.25rem;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0c0c18, #111128);
+            cursor: pointer;
+            transition: all 0.3s;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .video-placeholder:hover { background: linear-gradient(135deg, #111128, #161634); }
+
+        .play-btn {
+            width: 56px;
+            height: 56px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(79,142,247,0.4);
+        }
+
+        .video-placeholder:hover .play-btn {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(79,142,247,0.6);
+        }
+
+        .play-btn svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+
+        .video-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .video-sublabel {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+            margin-top: -0.5rem;
+        }
+
+        .detail-desc {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            text-decoration: none;
+            border: 1px solid rgba(79,142,247,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .github-link:hover {
+            background: rgba(79,142,247,0.1);
+        }
+
+        .github-link svg { width: 14px; height: 14px; }
+
+        .detail-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .detail-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .detail-block h5 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .detail-block ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .detail-block ul li {
+            font-size: 0.875rem;
+            color: var(--muted);
+            display: flex;
+            gap: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .detail-block ul li::before {
+            content: '→';
+            color: var(--accent);
+            flex-shrink: 0;
+            font-size: 0.8rem;
+            margin-top: 0.1rem;
+        }
+
+        .detail-block p {
+            font-size: 0.875rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-active {
+            background: var(--accent3);
+            box-shadow: 0 0 8px var(--accent3);
+            animation: pulse 2s infinite;
+        }
+
+        .dot-complete { background: var(--accent); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ─── PUBLICATIONS ─── */
+        #publications {
+            padding: 6rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .pub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .pub-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pub-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent3));
+            transition: width 0.4s;
+        }
+
+        .pub-card:hover::after { width: 100%; }
+        .pub-card:hover { border-color: rgba(79,142,247,0.3); }
+
+        .pub-year {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .pub-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .pub-card p {
+            color: var(--muted);
+            font-size: 0.875rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .pub-authors {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+        }
+
+        .pub-authors strong {
+            color: var(--accent);
+        }
+
+        /* ─── CONTACT ─── */
+        #contact {
+            padding: 6rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-left h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .contact-left p {
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            border-color: rgba(79,142,247,0.4);
+            background: var(--surface2);
+            transform: translateX(6px);
+        }
+
+        .contact-link-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(79,142,247,0.1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-link-text h4 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.15rem;
+        }
+
+        .contact-link-text p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin: 0;
+            letter-spacing: 0.05em;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            color: var(--muted);
             position: relative;
             z-index: 1;
         }
 
-        .hero h1 {
-            font-size: 4.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease-out;
-            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .hero p {
-            font-size: 1.5rem;
-            color: #999;
-            margin-bottom: 3rem;
-            animation: fadeInUp 1s ease-out 0.2s backwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s;
-            animation: fadeInUp 1s ease-out 0.4s backwards;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-        }
-
-        /* Sections */
-        section {
-            padding: 5rem 0;
-            position: relative;
-        }
-
-        h2 {
-            font-size: 3rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 2px;
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .project-card {
-            background: rgba(26, 26, 26, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s;
-            cursor: pointer;
-            border: 1px solid rgba(102, 126, 234, 0.2);
-            position: relative;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        .reveal {
             opacity: 0;
-            transition: opacity 0.4s;
+            transform: translateY(24px);
+            transition: opacity 0.7s, transform 0.7s;
         }
 
-        .project-card:hover::before {
-            opacity: 1;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
-            border-color: rgba(102, 126, 234, 0.5);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            animation: rotate 8s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .project-content {
-            padding: 1.5rem;
-            position: relative;
-        }
-
-        .project-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-
-        .project-content p {
-            color: #999;
-            margin-bottom: 1rem;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tag {
-            background: rgba(102, 126, 234, 0.2);
-            color: #667eea;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            border: 1px solid rgba(102, 126, 234, 0.3);
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            overflow-y: auto;
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(20px);
-            max-width: 900px;
-            margin: 2rem auto;
-            border-radius: 20px;
-            padding: 3rem;
-            position: relative;
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            animation: slideUp 0.4s;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .close {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 2.5rem;
-            color: #999;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .close:hover {
-            color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-            transform: rotate(90deg);
-        }
-
-        .modal h3 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #fff;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .modal-image {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            margin: 1.5rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal p {
-            color: #ccc;
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
-
-        .modal h4 {
-            color: #667eea;
-            margin: 2rem 0 1rem;
-            font-size: 1.3rem;
-        }
-
-        /* Contact Section */
-        .contact-info {
-            max-width: 700px;
-            margin: 0 auto;
-            background: rgba(26, 26, 26, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 3rem;
-            border-radius: 20px;
-            border: 1px solid rgba(102, 126, 234, 0.2);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: rgba(15, 15, 15, 0.5);
-            border-radius: 15px;
-            transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-
-        .contact-item:hover {
-            background: rgba(25, 25, 25, 0.8);
-            border-color: rgba(102, 126, 234, 0.3);
-            transform: translateX(10px);
-        }
-
-        .contact-icon {
-            font-size: 2rem;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            flex-shrink: 0;
-        }
-
-        .contact-details h3 {
-            font-size: 1.2rem;
-            color: #fff;
-            margin-bottom: 0.3rem;
-        }
-
-        .contact-details p {
-            color: #999;
-        }
-
-        .contact-details a {
-            color: #667eea;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .contact-details a:hover {
-            color: #764ba2;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 2rem 0;
-            text-align: center;
-            color: #666;
-            border-top: 1px solid rgba(102, 126, 234, 0.2);
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s;
-        }
-
-        .fade-in.visible {
+        .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .about-grid, .detail-grid, .contact-grid { grid-template-columns: 1fr; }
+            .project-header { grid-template-columns: 40px 1fr auto; }
+            .project-status { display: none; }
+        }
 
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .modal-content {
-                margin: 1rem;
-                padding: 2rem;
-            }
-
-            .robot-container {
-                width: 400px;
-                height: 400px;
-            }
-
-            h2 {
-                font-size: 2rem;
-            }
+        @media (max-width: 640px) {
+            .project-header { grid-template-columns: 1fr auto; }
+            .project-index { display: none; }
+            .hero h1 { font-size: 2.8rem; }
+            .status-bar { gap: 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="container">
-            <div class="logo">SPS</div>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="robot-container">
-                <svg class="robot-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Robot Head -->
-                    <rect x="70" y="40" width="60" height="50" rx="5" fill="url(#grad1)" stroke="#667eea" stroke-width="2"/>
-                    <!-- Antenna -->
-                    <line x1="100" y1="40" x2="100" y2="25" stroke="#667eea" stroke-width="3"/>
-                    <circle cx="100" cy="23" r="4" fill="#764ba2">
-                        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
-                    </circle>
-                    <!-- Eyes -->
-                    <circle cx="85" cy="60" r="6" fill="#667eea">
-                        <animate attributeName="r" values="6;7;6" dur="3s" repeatCount="indefinite"/>
-                    </circle>
-                    <circle cx="115" cy="60" r="6" fill="#667eea">
-                        <animate attributeName="r" values="6;7;6" dur="3s" repeatCount="indefinite"/>
-                    </circle>
-                    <!-- Mouth -->
-                    <path d="M 85 75 Q 100 80 115 75" stroke="#667eea" stroke-width="2" fill="none"/>
-                    <!-- Body -->
-                    <rect x="60" y="95" width="80" height="70" rx="8" fill="url(#grad2)" stroke="#667eea" stroke-width="2"/>
-                    <!-- Chest Panel -->
-                    <rect x="75" y="105" width="50" height="40" rx="3" fill="rgba(102, 126, 234, 0.2)" stroke="#667eea" stroke-width="1"/>
-                    <circle cx="90" cy="125" r="3" fill="#764ba2">
-                        <animate attributeName="fill" values="#764ba2;#667eea;#764ba2" dur="1.5s" repeatCount="indefinite"/>
-                    </circle>
-                    <circle cx="110" cy="125" r="3" fill="#667eea">
-                        <animate attributeName="fill" values="#667eea;#764ba2;#667eea" dur="1.5s" repeatCount="indefinite"/>
-                    </circle>
-                    <!-- Arms -->
-                    <rect x="40" y="100" width="15" height="50" rx="7" fill="url(#grad1)" stroke="#667eea" stroke-width="2">
-                        <animateTransform attributeName="transform" type="rotate" values="0 47.5 125; -10 47.5 125; 0 47.5 125" dur="4s" repeatCount="indefinite"/>
-                    </rect>
-                    <rect x="145" y="100" width="15" height="50" rx="7" fill="url(#grad1)" stroke="#667eea" stroke-width="2">
-                        <animateTransform attributeName="transform" type="rotate" values="0 152.5 125; 10 152.5 125; 0 152.5 125" dur="4s" repeatCount="indefinite"/>
-                    </rect>
-                    <!-- Legs -->
-                    <rect x="75" y="170" width="18" height="25" rx="5" fill="url(#grad2)" stroke="#667eea" stroke-width="2"/>
-                    <rect x="107" y="170" width="18" height="25" rx="5" fill="url(#grad2)" stroke="#667eea" stroke-width="2"/>
-                    
-                    <defs>
-                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
-                        </linearGradient>
-                        <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#764ba2;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#667eea;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </div>
-            <div class="particles" id="particles"></div>
-            <div class="gradient-overlay"></div>
-        </div>
-        <div class="hero-content container">
-            <h1>Shivansh Pratap Singh</h1>
-            <p>Robotics Engineer | Programmer | Creative Thinker</p>
-            <a href="#projects" class="cta-button">View My Work</a>
-        </div>
-    </section>
+<canvas id="bg-canvas"></canvas>
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <h2 class="fade-in">My Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card fade-in" onclick="openModal('project1')">
-                    <div class="project-image">🤖</div>
-                    <div class="project-content">
-                        <h3>Autonomous Robot Navigation</h3>
-                        <p>Advanced navigation system using SLAM and computer vision</p>
-                        <div class="project-tags">
-                            <span class="tag">ROS</span>
-                            <span class="tag">Python</span>
-                            <span class="tag">OpenCV</span>
-                        </div>
-                    </div>
-                </div>
+<!-- NAV -->
+<nav id="nav">
+    <div class="container">
+        <div class="logo">S<span>.</span>P<span>.</span>S</div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#publications">Papers</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
 
-                <div class="project-card fade-in" onclick="openModal('project2')">
-                    <div class="project-image">🦾</div>
-                    <div class="project-content">
-                        <h3>Robotic Arm Controller</h3>
-                        <p>6-DOF robotic arm with inverse kinematics and path planning</p>
-                        <div class="project-tags">
-                            <span class="tag">Arduino</span>
-                            <span class="tag">C++</span>
-                            <span class="tag">Kinematics</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card fade-in" onclick="openModal('project3')">
-                    <div class="project-image">🚁</div>
-                    <div class="project-content">
-                        <h3>Drone Flight Controller</h3>
-                        <p>Custom flight controller with autonomous waypoint navigation</p>
-                        <div class="project-tags">
-                            <span class="tag">Embedded C</span>
-                            <span class="tag">PID Control</span>
-                            <span class="tag">Sensors</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2 class="fade-in">Get In Touch</h2>
-            <div class="contact-info fade-in">
-                <div class="contact-item">
-                    <div class="contact-icon">📧</div>
-                    <div class="contact-details">
-                        <h3>Email</h3>
-                        <p><a href="mailto:your.email@example.com">shivansh2172@gmail.com</a></p>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon">📱</div>
-                    <div class="contact-details">
-                        <h3>Phone</h3>
-                        <p><a href="tel:+1234567890">9794734872</a></p>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon">💼</div>
-                    <div class="contact-details">
-                        <h3>LinkedIn</h3>
-                        <p><a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></p>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon">🐙</div>
-                    <div class="contact-details">
-                        <h3>GitHub</h3>
-                        <p><a href="https://github.com/AerialMechX" target="_blank">github.com/AerialMechX</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Shivansh Pratap Singh. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Modal -->
-    <div id="projectModal" class="modal" onclick="closeModalOnOutside(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modalBody"></div>
+<!-- HERO -->
+<section id="home" class="hero">
+    <div class="container">
+        <p class="hero-eyebrow">MS by Research — IIIT Hyderabad</p>
+        <h1>
+            <span class="line">Shivansh</span>
+            <span class="line">Pratap <em>Singh</em></span>
+        </h1>
+        <p class="hero-desc">
+            Robotics researcher specializing in <strong>nonlinear control</strong>, 
+            <strong>aerial manipulation</strong>, and <strong>learning-based autonomous systems</strong>. 
+            Building Physical AI that keeps humans away from danger.
+        </p>
+        <div class="hero-cta">
+            <a href="#projects" class="btn-primary">Explore Research</a>
+            <a href="https://github.com/AerialMechX" target="_blank" class="btn-outline">GitHub →</a>
         </div>
     </div>
+    <div class="status-bar">
+        <div class="stat">
+            <span class="stat-num">9.6</span>
+            <span class="stat-label">GPA / 10</span>
+        </div>
+        <div class="stat">
+            <span class="stat-num">5</span>
+            <span class="stat-label">Active Projects</span>
+        </div>
+        <div class="stat">
+            <span class="stat-num">2</span>
+            <span class="stat-label">Publications</span>
+        </div>
+        <div class="stat">
+            <span class="stat-num">2+</span>
+            <span class="stat-label">Years Research</span>
+        </div>
+    </div>
+</section>
 
-    <script>
-        // Create particles
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 8 + 's';
-            particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
-            particlesContainer.appendChild(particle);
+<!-- ABOUT -->
+<section id="about">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-num">01</span>
+            <h2 class="section-title">About & Vision</h2>
+        </div>
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <p>I'm a Master's student in Robotics at <strong>IIIT Hyderabad</strong>, working at the intersection of control theory and intelligent autonomy. My research focuses on making aerial robots capable of physically interacting with the world — not just flying through it.</p>
+                <p>Before joining IIIT, I spent a year at <strong>Arka Aerospace</strong> designing autonomous UAV navigation systems, multi-drone coordination algorithms, and precision landing pipelines with 2–3 cm accuracy.</p>
+                <p>I believe the next frontier of robotics is <strong>Physical AI</strong> — systems that combine rigorous control theory with learned perception to operate reliably in unstructured, dynamic environments without human oversight.</p>
+                <div class="goal-card">
+                    <h4>Long-Term Goal</h4>
+                    <p>Develop aerial robotic systems capable of autonomous physical intervention in hazardous environments — disaster response, infrastructure inspection, and remote manipulation — eliminating the need for human presence in dangerous situations.</p>
+                </div>
+            </div>
+            <div class="skills-panel reveal">
+                <div class="skill-row">
+                    <div class="skill-row-header">
+                        <span>ROS 2 / Embedded Systems</span><span>Expert</span>
+                    </div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92"></div></div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-row-header">
+                        <span>Nonlinear & Adaptive Control</span><span>Advanced</span>
+                    </div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-row-header">
+                        <span>Reinforcement Learning (PPO / SAC)</span><span>Advanced</span>
+                    </div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-row-header">
+                        <span>C++ (Eigen, Ceres)</span><span>Advanced</span>
+                    </div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-row-header">
+                        <span>Python (NumPy, SciPy, PyTorch)</span><span>Advanced</span>
+                    </div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="87"></div></div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-row-header">
+                        <span>Model Predictive Control (MPC)</span><span>Proficient</span>
+                    </div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78"></div></div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-row-header">
+                        <span>Computer Vision (OpenCV, Open3D)</span><span>Proficient</span>
+                    </div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75"></div></div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-row-header">
+                        <span>PX4 / ArduPilot / SITL</span><span>Expert</span>
+                    </div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-num">02</span>
+            <h2 class="section-title">Research Projects</h2>
+        </div>
+        <div class="projects-list">
+
+            <!-- PROJECT 1 -->
+            <div class="project-item reveal" onclick="toggleProject(this)">
+                <div class="project-header">
+                    <span class="project-index">01</span>
+                    <div class="project-title-group">
+                        <h3>Hierarchical RL + Adaptive INDI for Aerial Manipulation</h3>
+                        <div class="tags">
+                            <span class="tag">Reinforcement Learning</span>
+                            <span class="tag">INDI Control</span>
+                            <span class="tag">ROS 2</span>
+                            <span class="tag">PPO</span>
+                        </div>
+                    </div>
+                    <span class="project-status status-active">Active — Jan 2026</span>
+                    <div class="project-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </div>
+                </div>
+                <div class="project-detail">
+                    <div class="detail-grid">
+                        <div class="detail-left">
+                            <div class="detail-video">
+                                <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
+                                    <div class="play-btn">
+                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                    <span class="video-label">Watch Demo</span>
+                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                </a>
+                            </div>
+                            <p class="detail-desc">A hierarchical flight-control stack for an underactuated aerial manipulator. An outer-loop RL policy outputs thrust and body-rate commands, while the inner-loop Adaptive INDI (running at 250 Hz) handles rapid attitude stabilization and disturbance rejection during manipulation transients.</p>
+                            <a href="https://github.com/AerialMechX/RL-adaptive_Aerial_manipulation.git" target="_blank" class="github-link">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                                View on GitHub
+                            </a>
+                        </div>
+                        <div class="detail-right">
+                            <div class="detail-block">
+                                <h5>Key Achievements</h5>
+                                <ul>
+                                    <li>Domain-randomized PPO policy (payload mass, inertia, actuator variation)</li>
+                                    <li>Online control-effectiveness adaptation via filtered angular-acceleration feedback</li>
+                                    <li>Real-world grasp-and-drop validation with max 20 cm end-effector error</li>
+                                    <li>Robust sim-to-real transfer across manipulation transients</li>
+                                </ul>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Current Status</h5>
+                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active development</span> — Conducting real-world flight tests. Currently refining reward shaping for smoother grasp transitions and reducing tracking error below 15 cm.</p>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Future Goals</h5>
+                                <ul>
+                                    <li>Extend to multi-arm configurations on a single UAV</li>
+                                    <li>Incorporate force/torque sensing for contact-rich manipulation</li>
+                                    <li>Target submission to IROS / RA-L 2026</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 2 -->
+            <div class="project-item reveal" onclick="toggleProject(this)">
+                <div class="project-header">
+                    <span class="project-index">02</span>
+                    <div class="project-title-group">
+                        <h3>Autonomous Language-Guided Aerial Grasping</h3>
+                        <div class="tags">
+                            <span class="tag">Vision-Language</span>
+                            <span class="tag">CNN-ViT</span>
+                            <span class="tag">SAM-3</span>
+                            <span class="tag">6-DoF Grasping</span>
+                        </div>
+                    </div>
+                    <span class="project-status status-active">Active — Jan 2026</span>
+                    <div class="project-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </div>
+                </div>
+                <div class="project-detail">
+                    <div class="detail-grid">
+                        <div class="detail-left">
+                            <div class="detail-video">
+                                <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
+                                    <div class="play-btn">
+                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                    <span class="video-label">Watch Demo</span>
+                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                </a>
+                            </div>
+                            <p class="detail-desc">A modular framework enabling aerial manipulators to carry out language-guided grasping in cluttered, unstructured environments. The system processes natural language commands to identify, localize, and grasp target objects — autonomously handling occlusions via orbital search maneuvers.</p>
+                        </div>
+                        <div class="detail-right">
+                            <div class="detail-block">
+                                <h5>Key Achievements</h5>
+                                <ul>
+                                    <li>Lightweight hybrid CNN-ViT predicts 6-DoF grasp poses in under 38 ms</li>
+                                    <li>Hierarchical Risk-Aware Decision Framework filters kinematic reachability</li>
+                                    <li>Real-time SAM-3 tracking with autonomous occlusion-clearing search</li>
+                                    <li>End-to-end pipeline from language input to physical grasp execution</li>
+                                </ul>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Current Status</h5>
+                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active development</span> — Integrating language model front-end with grasp prediction pipeline. Conducting cluttered-environment validation tests.</p>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Future Goals</h5>
+                                <ul>
+                                    <li>Generalize to open-vocabulary object categories</li>
+                                    <li>Deploy on resource-constrained onboard compute (Jetson Orin)</li>
+                                    <li>Enable multi-step, dialog-driven manipulation tasks</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 3 -->
+            <div class="project-item reveal" onclick="toggleProject(this)">
+                <div class="project-header">
+                    <span class="project-index">03</span>
+                    <div class="project-title-group">
+                        <h3>Adaptive Control for Multi-Quadrotor Formations</h3>
+                        <div class="tags">
+                            <span class="tag">Distributed Control</span>
+                            <span class="tag">Adaptive Laws</span>
+                            <span class="tag">Multi-UAV</span>
+                            <span class="tag">UUB Stability</span>
+                        </div>
+                    </div>
+                    <span class="project-status status-active">Active — Jul 2025</span>
+                    <div class="project-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </div>
+                </div>
+                <div class="project-detail">
+                    <div class="detail-grid">
+                        <div class="detail-left">
+                            <div class="detail-video">
+                                <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
+                                    <div class="play-btn">
+                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                    <span class="video-label">Watch Demo</span>
+                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                </a>
+                            </div>
+                            <p class="detail-desc">A distributed adaptive control strategy for multi-quadrotor formations encountering strong, unknown interconnection forces. Nonlinear adaptive laws handle state-dependent uncertainties including rotor downwash and aerodynamic drag — without requiring prior model knowledge or boundedness assumptions.</p>
+                        </div>
+                        <div class="detail-right">
+                            <div class="detail-block">
+                                <h5>Key Achievements</h5>
+                                <ul>
+                                    <li>Proven Uniformly Ultimately Bounded (UUB) stability for entire closed-loop system</li>
+                                    <li>Real-world cooperative aerial transportation experiments</li>
+                                    <li>No prior boundedness or model structure required</li>
+                                    <li>Handles rotor downwash and complex aerodynamic coupling</li>
+                                </ul>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Current Status</h5>
+                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active</span> — Scaling to 3+ UAV formations. Preparing real-world payload transportation experiments with varying load distributions.</p>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Future Goals</h5>
+                                <ul>
+                                    <li>Scale to heterogeneous swarms (fixed-wing + multirotor)</li>
+                                    <li>Add communication-delay robustness</li>
+                                    <li>Apply to large-structure aerial assembly tasks</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 4 -->
+            <div class="project-item reveal" onclick="toggleProject(this)">
+                <div class="project-header">
+                    <span class="project-index">04</span>
+                    <div class="project-title-group">
+                        <h3>RRT + MPC Quadrotor Autonomy Stack</h3>
+                        <div class="tags">
+                            <span class="tag">Model Predictive Control</span>
+                            <span class="tag">RRT Planning</span>
+                            <span class="tag">100 Hz Control</span>
+                            <span class="tag">Aggressive Flight</span>
+                        </div>
+                    </div>
+                    <span class="project-status status-completed">Feb – May 2025</span>
+                    <div class="project-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </div>
+                </div>
+                <div class="project-detail">
+                    <div class="detail-grid">
+                        <div class="detail-left">
+                            <div class="detail-video">
+                                <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
+                                    <div class="play-btn">
+                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                    <span class="video-label">Watch Demo</span>
+                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                </a>
+                            </div>
+                            <p class="detail-desc">A layered autonomy stack where RRT generates collision-free geometric routes, a trajectory module converts them into time-parameterized references suitable for aggressive flight, and a real-time MPC controller optimizes collective thrust and body-rate commands within actuator limits — achieving stable tracking at 100 Hz.</p>
+                        </div>
+                        <div class="detail-right">
+                            <div class="detail-block">
+                                <h5>Key Achievements</h5>
+                                <ul>
+                                    <li>100 Hz closed-loop MPC optimization on hardware</li>
+                                    <li>Stable tracking of aggressive maneuvers (tight turns, fast accelerations)</li>
+                                    <li>Efficient warm-starting and simplified dynamics for real-time performance</li>
+                                    <li>Full end-to-end collision-free planning to execution pipeline</li>
+                                </ul>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Current Status</h5>
+                                <p><span class="status-badge"><span class="status-dot dot-complete"></span>Completed</span> — Core system validated. Results informing the hierarchical RL + INDI project's inner-loop architecture.</p>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Future Goals</h5>
+                                <ul>
+                                    <li>Integrate learning-based dynamics models into MPC prediction</li>
+                                    <li>Extend RRT to dynamic obstacle environments</li>
+                                    <li>Apply to indoor inspection scenarios with GPS denial</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 5 -->
+            <div class="project-item reveal" onclick="toggleProject(this)">
+                <div class="project-header">
+                    <span class="project-index">05</span>
+                    <div class="project-title-group">
+                        <h3>Autonomous Ball Catcher — "The Robotic Dustbin"</h3>
+                        <div class="tags">
+                            <span class="tag">Stereo Vision</span>
+                            <span class="tag">RANSAC</span>
+                            <span class="tag">PID Drive</span>
+                            <span class="tag">UDP Streaming</span>
+                        </div>
+                    </div>
+                    <span class="project-status status-completed">Oct – Dec 2025</span>
+                    <div class="project-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </div>
+                </div>
+                <div class="project-detail">
+                    <div class="detail-grid">
+                        <div class="detail-left">
+                            <div class="detail-video">
+                                <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
+                                    <div class="play-btn">
+                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                    <span class="video-label">Watch Demo</span>
+                                    <span class="video-sublabel">Add YouTube link to activate</span>
+                                </a>
+                            </div>
+                            <p class="detail-desc">An autonomous mobile robot that intercepts thrown balls in real time using an external multi-camera 3D world frame — no onboard vision required. HSV-based detection, stereo triangulation, and physics-based RANSAC trajectory estimation predict landing coordinates. The robot drives to the impact point via 30 Hz UDP-streamed commands before the ball lands.</p>
+                            <a href="https://github.com/AerialMechX/AerialMechX-Autonomous_ball_catcher.git" target="_blank" class="github-link">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                                View on GitHub
+                            </a>
+                        </div>
+                        <div class="detail-right">
+                            <div class="detail-block">
+                                <h5>Key Achievements</h5>
+                                <ul>
+                                    <li>Real-time stereo triangulation with HSV ball detection</li>
+                                    <li>Physics-based RANSAC estimation robust to noisy measurements</li>
+                                    <li>Low-latency 30 Hz UDP control loop (Raspberry Pi + Arduino)</li>
+                                    <li>PID-controlled differential-drive motion for accurate interception</li>
+                                </ul>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Current Status</h5>
+                                <p><span class="status-badge"><span class="status-dot dot-complete"></span>Completed</span> — System validated in real-world tests. Achieves reliable interception across a range of throw speeds and trajectories.</p>
+                            </div>
+                            <div class="detail-block">
+                                <h5>Future Goals</h5>
+                                <ul>
+                                    <li>Move to onboard vision for full autonomy</li>
+                                    <li>Extend to multiple simultaneous projectile tracking</li>
+                                    <li>Apply estimation framework to aerial catching with UAVs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-num">03</span>
+            <h2 class="section-title">Publications</h2>
+        </div>
+        <div class="pub-list">
+            <div class="pub-card reveal">
+                <p class="pub-year">2025 — ICCAS · International Conference on Control, Automation and Systems</p>
+                <h3>Impedance and Stability Targeted Adaptation for Aerial Manipulator with Unknown Coupling Dynamics</h3>
+                <p>Developed an adaptive impedance control system for unknown coupling forces and non-linear dynamics during contact-based aerial tasks. Introduced a novel adaptation law ensuring compliant behavior in unstructured environments without accurate vehicle-arm interaction models. Demonstrates high-performance stability in aerial perching and object-catching scenarios where conventional controllers fail.</p>
+                <p class="pub-authors">Amitabh Sharma · Saksham Gupta · <strong>Shivansh Pratap Singh</strong> · Rishabh Dev Yadav · Hongyu Song · Wei Pan · Spandan Roy · Simone Baldi</p>
+            </div>
+            <div class="pub-card reveal">
+                <p class="pub-year">2025 — Preprint / Under Review</p>
+                <h3>AERMANI-Diffusion: Regime-Conditioned Diffusion for Dynamics Learning in Aerial Manipulators</h3>
+                <p>Created AERMANI-Diffusion — a regime-conditioned diffusion model capturing non-stationary dynamics of aerial manipulators under environmental changes. A time-of-day encoded module rapidly predicts residual forces under varying loading conditions. Validated through real-world flight tests demonstrating enhanced tracking accuracy and stability during high-acceleration dynamic scenarios.</p>
+                <p class="pub-authors"><strong>Shared First Author:</strong> Samaksh Ujjawal* · <strong>Shivansh Pratap Singh*</strong> · Naveen Sudheer · Rishabh Dev Yadav · Wei Pan · Spandan Roy</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-num">04</span>
+            <h2 class="section-title">Get In Touch</h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-left reveal">
+                <h3>Open to collaborations, research discussions & opportunities.</h3>
+                <p>Whether you're working on aerial robotics, autonomous systems, or want to discuss potential research collaborations — I'd love to hear from you.</p>
+                <a href="mailto:shivansh.singh@research.iiit.ac.in" class="btn-primary" style="display:inline-block;">Send Email →</a>
+            </div>
+            <div class="contact-links reveal">
+                <a href="mailto:shivansh.singh@research.iiit.ac.in" class="contact-link">
+                    <div class="contact-link-icon">✉</div>
+                    <div class="contact-link-text">
+                        <h4>Email</h4>
+                        <p>shivansh.singh@research.iiit.ac.in</p>
+                    </div>
+                </a>
+                <a href="mailto:shivansh2172@gmail.com" class="contact-link">
+                    <div class="contact-link-icon">📬</div>
+                    <div class="contact-link-text">
+                        <h4>Personal Email</h4>
+                        <p>shivansh2172@gmail.com</p>
+                    </div>
+                </a>
+                <a href="https://github.com/AerialMechX" target="_blank" class="contact-link">
+                    <div class="contact-link-icon">🐙</div>
+                    <div class="contact-link-text">
+                        <h4>GitHub</h4>
+                        <p>github.com/AerialMechX</p>
+                    </div>
+                </a>
+                <a href="https://aerialmechx.github.io/" target="_blank" class="contact-link">
+                    <div class="contact-link-icon">🌐</div>
+                    <div class="contact-link-text">
+                        <h4>Website</h4>
+                        <p>aerialmechx.github.io</p>
+                    </div>
+                </a>
+                <a href="tel:+919794734872" class="contact-link">
+                    <div class="contact-link-icon">📱</div>
+                    <div class="contact-link-text">
+                        <h4>Phone</h4>
+                        <p>+91 9794734872</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 Shivansh Pratap Singh &nbsp;·&nbsp; IIIT Hyderabad &nbsp;·&nbsp; Robotics Research</p>
+</footer>
+
+<script>
+    // ─── CANVAS NEURAL NETWORK BACKGROUND ───
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, nodes = [], animId;
+
+    function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+
+    function initNodes() {
+        nodes = [];
+        const count = Math.floor((W * H) / 14000);
+        for (let i = 0; i < count; i++) {
+            nodes.push({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: (Math.random() - 0.5) * 0.35,
+                r: Math.random() * 1.5 + 0.5
+            });
         }
+    }
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+    function drawFrame() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = 0; i < nodes.length; i++) {
+            const n = nodes[i];
+            n.x += n.vx; n.y += n.vy;
+            if (n.x < 0 || n.x > W) n.vx *= -1;
+            if (n.y < 0 || n.y > H) n.vy *= -1;
+            for (let j = i + 1; j < nodes.length; j++) {
+                const m = nodes[j];
+                const dx = n.x - m.x, dy = n.y - m.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 140) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(79,142,247,${(1 - dist / 140) * 0.25})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(n.x, n.y);
+                    ctx.lineTo(m.x, m.y);
+                    ctx.stroke();
+                }
+            }
+            ctx.beginPath();
+            ctx.fillStyle = `rgba(79,142,247,0.6)`;
+            ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        animId = requestAnimationFrame(drawFrame);
+    }
+
+    resize();
+    initNodes();
+    drawFrame();
+    window.addEventListener('resize', () => { resize(); initNodes(); });
+
+    // ─── NAV SCROLL ───
+    window.addEventListener('scroll', () => {
+        document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ─── SCROLL REVEAL ───
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => e.target.classList.add('visible'), 80 * (Array.from(revealEls).indexOf(e.target) % 4));
+                revealObserver.unobserve(e.target);
             }
         });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-        // Scroll animation observer
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+    revealEls.forEach(el => revealObserver.observe(el));
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        const projects = {
-            project1: {
-                title: 'Autonomous Robot Navigation',
-                icon: '🤖',
-                description: 'An advanced autonomous navigation system implementing SLAM (Simultaneous Localization and Mapping) algorithms combined with computer vision for real-time obstacle detection and path planning in dynamic environments.',
-                features: [
-                    'Real-time SLAM using ROS and sensor fusion',
-                    'Computer vision-based obstacle detection',
-                    'Dynamic path planning with A* algorithm',
-                    'Integration with LIDAR and camera sensors',
-                    'Simulation testing in Gazebo',
-                    'ROS-based architecture for modularity'
-                ],
-                technologies: 'ROS (Robot Operating System), Python, OpenCV, NumPy, Gazebo, LIDAR, IMU',
-                duration: 'June 2024 - August 2024',
-                role: 'Robotics Engineer & Developer'
-            },
-            project2: {
-                title: 'Robotic Arm Controller',
-                icon: '🦾',
-                description: 'A sophisticated 6-DOF robotic arm control system featuring inverse kinematics calculations, smooth trajectory planning, and precise servo control for industrial automation applications.',
-                features: [
-                    'Forward and inverse kinematics solver',
-                    'Smooth trajectory generation',
-                    'Real-time servo position control',
-                    'Custom GUI for manual control',
-                    'Task automation sequences',
-                    'Safety collision detection'
-                ],
-                technologies: 'Arduino Mega, C++, Servo Motors, Python (GUI), Serial Communication',
-                duration: 'March 2024 - May 2024',
-                role: 'Embedded Systems Engineer'
-            },
-            project3: {
-                title: 'Drone Flight Controller',
-                icon: '🚁',
-                description: 'Custom quadcopter flight controller with autonomous capabilities including waypoint navigation, altitude hold, and GPS-based return-to-home functionality.',
-                features: [
-                    'PID-based stabilization system',
-                    'GPS waypoint navigation',
-                    'Barometer-based altitude hold',
-                    'Fail-safe return-to-home',
-                    'Real-time telemetry transmission',
-                    'Manual and autonomous flight modes'
-                ],
-                technologies: 'STM32, Embedded C, MPU6050, GPS Module, Barometer, PWM, PID Control',
-                duration: 'January 2024 - February 2024',
-                role: 'Embedded Systems Developer'
+    // ─── SKILL BARS ───
+    const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width + '%';
+                });
+                barObserver.unobserve(e.target);
             }
-        };
+        });
+    }, { threshold: 0.3 });
 
-        function openModal(projectId) {
-            const project = projects[projectId];
-            const modalBody = document.getElementById('modalBody');
-            
-            modalBody.innerHTML = `
-                <h3>${project.title}</h3>
-                <div class="modal-image">${project.icon}</div>
-                <p>${project.description}</p>
-                
-                <h4>Key Features:</h4>
-                <ul style="color: #ccc; margin-left: 1.5rem; margin-bottom: 1.5rem;">
-                    ${project.features.map(f => `<li style="margin-bottom: 0.5rem;">${f}</li>`).join('')}
-                </ul>
-                
-                <h4>Technologies Used:</h4>
-                <p>${project.technologies}</p>
-                
-                <h4>Project Details:</h4>
-                <p><strong>Duration:</strong> ${project.duration}</p>
-                <p><strong>Role:</strong> ${project.role}</p>
-            `;
-            
-            document.getElementById('projectModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
+    document.querySelectorAll('.skills-panel').forEach(el => barObserver.observe(el));
 
-        function closeModal() {
-            document.getElementById('projectModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function closeModalOnOutside(event) {
-            if (event.target.id === 'projectModal') {
-                closeModal();
-            }
-        }
-    </script>
+    // ─── PROJECT ACCORDION ───
+    function toggleProject(el) {
+        const isOpen = el.classList.contains('open');
+        document.querySelectorAll('.project-item.open').forEach(p => p.classList.remove('open'));
+        if (!isOpen) el.classList.add('open');
+    }
+</script>
 </body>
 </html>
