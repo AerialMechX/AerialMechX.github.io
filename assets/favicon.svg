@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .bg { fill: #f5f6f7; } .o { fill: #1a1d22; }
+    @media (prefers-color-scheme: dark) { .bg { fill: #1b1f24; } .o { fill: #e7e9ec; } }
+  </style>
+  <rect class="bg" width="32" height="32" rx="7"/>
+  <g fill="none" stroke-width="2.6" stroke-linecap="round">
+    <path d="M9 23V7.5" stroke="#2d6bd6"/>
+    <path d="M9 23l7.4-7.4" stroke="#2e9e57"/>
+    <path d="M9 23h15" stroke="#d4462a"/>
+  </g>
+  <circle class="o" cx="9" cy="23" r="2.4"/>
+</svg>

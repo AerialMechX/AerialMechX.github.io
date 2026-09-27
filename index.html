@@ -1,1029 +1,787 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050508">
-    <title>Shivansh Pratap Singh — Robotics Researcher</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
+    Research portfolio of Shivansh Pratap Singh. Plain HTML/CSS/JS, no build step.
+    Before publishing, search this file for three markers:
+      REPLACE  a file path or URL you still need to supply
+      EDIT     wording only you can confirm (your exact contribution, captions, dates)
+      VERIFY   a claim merged from your CV and your old site; check it is exact
+  -->
+  <title>Shivansh Pratap Singh | Aerial Robotics, Robot Learning, Learning-Based Control</title>
+  <meta name="description" content="Shivansh Pratap Singh, M.S. by Research student at IIIT Hyderabad, works on learning and control for aerial robots: latent world models, dynamics learning, adaptive and learning-based control, and aerial manipulation. Robotics Student Fellow at ASL, ETH Zürich (2026).">
+  <meta name="author" content="Shivansh Pratap Singh">
+  <link rel="canonical" href="https://aerialmechx.github.io/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f5f6f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15181c" media="(prefers-color-scheme: dark)">
 
-    <!-- SPEED: preconnect before fonts load -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Link previews (LinkedIn, Slack, X, email clients) -->
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Shivansh Pratap Singh">
+  <meta property="og:title" content="Shivansh Pratap Singh | Aerial robotics and robot learning">
+  <meta property="og:description" content="Learning and control for aerial robots with uncertain, changing dynamics. M.S. by Research, IIIT Hyderabad; Robotics Student Fellow, ASL ETH Zürich 2026.">
+  <meta property="og:url" content="https://aerialmechx.github.io/">
+  <meta property="og:image" content="https://aerialmechx.github.io/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Shivansh Pratap Singh: learning and control for aerial robots">
+  <meta name="twitter:card" content="summary_large_image">
 
-    <!-- SPEED: Only load weights actually used. Inter for body/UI, Space Grotesk for headings (clean & modern like Inter but more personality), JetBrains Mono for code labels -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-    <style>
-        :root {
-            --bg:       #050508;
-            --bg2:      #0c0c12;
-            --surface:  #111118;
-            --surface2: #18181f;
-            --accent:   #4f8ef7;
-            --accent2:  #7c3aed;
-            --accent3:  #06b6d4;
-            --text:     #e8e8f0;
-            --muted:    #6b6b80;
-            --border:   rgba(79,142,247,0.15);
-        }
+  <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            /* Inter as primary — falls back to system-ui (Segoe UI / SF Pro) if font hasn't loaded yet, so page looks good instantly */
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 2px; }
-
-        #bg-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-
-        /* ─── NAV ─── */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            padding: 1.25rem 0;
-            transition: all 0.4s;
-        }
-
-        nav.scrolled {
-            background: rgba(5,5,8,0.88);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        nav .container {
-            max-width: 1280px; margin: 0 auto; padding: 0 2rem;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-
-        .logo {
-            font-family: 'Space Grotesk', system-ui, sans-serif;
-            font-weight: 800; font-size: 1.35rem; letter-spacing: -0.03em; color: var(--accent);
-        }
-        .logo span { color: var(--accent2); }
-
-        nav ul { list-style: none; display: flex; gap: 2.5rem; }
-
-        nav a {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase;
-            color: var(--muted); text-decoration: none; transition: color 0.25s;
-        }
-        nav a:hover { color: var(--text); }
-
-        /* ─── HERO ─── */
-        .hero {
-            position: relative; min-height: 100vh;
-            display: flex; align-items: center;
-            z-index: 1; padding: 0 2rem;
-        }
-
-        .hero .container {
-            max-width: 1280px; margin: 0 auto; width: 100%; padding-top: 5rem;
-        }
-
-        .hero-eyebrow {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase;
-            color: var(--accent); margin-bottom: 1.5rem;
-            display: flex; align-items: center; gap: 1rem;
-            opacity: 0; animation: fadeUp 0.7s 0.15s forwards;
-        }
-        .hero-eyebrow::before {
-            content: ''; display: block; width: 36px; height: 1px;
-            background: var(--accent); flex-shrink: 0;
-        }
-
-        .hero h1 {
-            font-family: 'Space Grotesk', system-ui, sans-serif;
-            font-size: clamp(3rem, 7vw, 7rem); font-weight: 800;
-            line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 2rem;
-            opacity: 0; animation: fadeUp 0.7s 0.28s forwards;
-        }
-        .hero h1 .line { display: block; }
-        .hero h1 em {
-            font-style: normal;
-            background: linear-gradient(90deg, var(--accent), var(--accent3));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-
-        .hero-desc {
-            max-width: 540px; color: var(--muted); font-size: 1.05rem;
-            font-weight: 400; line-height: 1.75; margin-bottom: 2.75rem;
-            opacity: 0; animation: fadeUp 0.7s 0.42s forwards;
-        }
-        .hero-desc strong { color: var(--text); font-weight: 500; }
-
-        .hero-cta {
-            display: flex; gap: 1rem; flex-wrap: wrap;
-            opacity: 0; animation: fadeUp 0.7s 0.55s forwards;
-        }
-
-        .btn-primary {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
-            padding: 0.85rem 1.9rem; background: var(--accent); color: #fff;
-            text-decoration: none; border-radius: 3px;
-            transition: transform 0.25s, box-shadow 0.25s;
-            position: relative; overflow: hidden; display: inline-block;
-        }
-        .btn-primary::after {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
-            transform: translateX(-100%); transition: transform 0.45s;
-        }
-        .btn-primary:hover::after { transform: translateX(100%); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(79,142,247,0.38); }
-
-        .btn-outline {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
-            padding: 0.85rem 1.9rem; border: 1px solid var(--border);
-            color: var(--muted); text-decoration: none; border-radius: 3px;
-            transition: border-color 0.25s, color 0.25s;
-        }
-        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
-        .status-bar {
-            position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 3rem;
-            opacity: 0; animation: fadeUp 0.7s 0.85s forwards; white-space: nowrap;
-        }
-        .stat { text-align: center; }
-        .stat-num {
-            font-family: 'Space Grotesk', system-ui, sans-serif;
-            font-size: 2rem; font-weight: 800; color: var(--accent);
-            display: block; letter-spacing: -0.03em;
-        }
-        .stat-label {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-        }
-
-        /* ─── SHARED ─── */
-        section { position: relative; z-index: 1; }
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
-
-        .section-header { display: flex; align-items: baseline; gap: 1.25rem; margin-bottom: 3.5rem; }
-        .section-num {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.72rem; color: var(--accent); letter-spacing: 0.1em; flex-shrink: 0;
-        }
-        .section-title {
-            font-family: 'Space Grotesk', system-ui, sans-serif;
-            font-size: clamp(1.9rem, 4vw, 3.2rem); font-weight: 800;
-            letter-spacing: -0.03em; line-height: 1;
-        }
-
-        /* ─── ABOUT ─── */
-        #about { padding: 6rem 0; border-top: 1px solid var(--border); }
-
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-
-        .about-text p {
-            color: var(--muted); font-size: 0.975rem; line-height: 1.85; margin-bottom: 1.1rem;
-        }
-        .about-text p strong { color: var(--text); font-weight: 500; }
-
-        .goal-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1.75rem; margin-top: 1.75rem;
-            position: relative; overflow: hidden;
-        }
-        .goal-card::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 3px; height: 100%; background: linear-gradient(180deg, var(--accent), var(--accent2));
-        }
-        .goal-card h4 {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
-            color: var(--accent); margin-bottom: 0.65rem;
-        }
-        .goal-card p { color: var(--muted); font-size: 0.925rem; line-height: 1.75; margin: 0; }
-
-        .skills-panel { display: flex; flex-direction: column; gap: 1.2rem; }
-        .skill-row { display: flex; flex-direction: column; gap: 0.45rem; }
-        .skill-row-header { display: flex; justify-content: space-between; align-items: center; }
-        .skill-row-header span:first-child {
-            font-family: 'Inter', system-ui, sans-serif;
-            font-size: 0.82rem; font-weight: 500; color: var(--text);
-        }
-        .skill-row-header span:last-child {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.68rem; color: var(--muted);
-        }
-        .skill-bar-bg { height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
-        .skill-bar-fill {
-            height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent3));
-            border-radius: 2px; width: 0; transition: width 1.1s cubic-bezier(0.4,0,0.2,1);
-        }
-
-        /* ─── PROJECTS ─── */
-        #projects { padding: 6rem 0; border-top: 1px solid var(--border); }
-        .projects-list { display: flex; flex-direction: column; gap: 2px; }
-
-        .project-item {
-            background: var(--surface); border: 1px solid transparent;
-            border-radius: 8px; overflow: hidden; cursor: pointer;
-            transition: background 0.3s, border-color 0.3s;
-        }
-        .project-item:hover { border-color: var(--border); background: var(--surface2); }
-        .project-item.open { border-color: rgba(79,142,247,0.28); background: var(--surface2); }
-
-        .project-header {
-            display: grid; grid-template-columns: 52px 1fr auto auto;
-            align-items: center; gap: 1.5rem; padding: 1.6rem 2rem;
-        }
-
-        .project-index {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em;
-        }
-
-        .project-title-group h3 {
-            font-family: 'Inter', system-ui, sans-serif;
-            font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em;
-            margin-bottom: 0.3rem; transition: color 0.25s;
-        }
-        .project-item:hover .project-title-group h3,
-        .project-item.open .project-title-group h3 { color: var(--accent); }
-
-        .project-title-group .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-
-        .tag {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase;
-            padding: 0.18rem 0.55rem;
-            background: rgba(79,142,247,0.08); color: var(--accent);
-            border-radius: 2px; border: 1px solid rgba(79,142,247,0.18);
-        }
-
-        .project-status {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.67rem; letter-spacing: 0.07em;
-            padding: 0.28rem 0.7rem; border-radius: 20px; white-space: nowrap;
-        }
-        .status-active   { background: rgba(6,182,212,0.09); color: var(--accent3); border: 1px solid rgba(6,182,212,0.25); }
-        .status-completed{ background: rgba(79,142,247,0.09); color: var(--accent);  border: 1px solid rgba(79,142,247,0.25); }
-
-        .project-toggle {
-            width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-            border: 1px solid var(--border); border-radius: 50%;
-            transition: background 0.25s, border-color 0.25s, transform 0.3s; flex-shrink: 0;
-        }
-        .project-item.open .project-toggle { background: var(--accent); border-color: var(--accent); transform: rotate(45deg); }
-        .project-toggle svg { width: 13px; height: 13px; stroke: var(--muted); transition: stroke 0.25s; }
-        .project-item.open .project-toggle svg { stroke: #fff; }
-
-        .project-detail { display: none; padding: 0 2rem 2.5rem; }
-        .project-item.open .project-detail { display: block; animation: expandDown 0.35s ease forwards; }
-
-        @keyframes expandDown {
-            from { opacity: 0; transform: translateY(-8px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .detail-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
-            border-top: 1px solid var(--border); padding-top: 2rem;
-        }
-
-        .detail-video {
-            position: relative; background: #000; border-radius: 8px;
-            overflow: hidden; aspect-ratio: 16/9;
-            border: 1px solid var(--border); margin-bottom: 1.25rem;
-        }
-        .video-placeholder {
-            position: absolute; inset: 0;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, #0c0c18, #111128);
-            cursor: pointer; transition: background 0.3s; gap: 0.85rem; text-decoration: none;
-        }
-        .video-placeholder:hover { background: linear-gradient(135deg, #111128, #16163a); }
-
-        .play-btn {
-            width: 52px; height: 52px; background: var(--accent);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            transition: transform 0.25s, box-shadow 0.25s;
-            box-shadow: 0 0 28px rgba(79,142,247,0.38);
-        }
-        .video-placeholder:hover .play-btn { transform: scale(1.1); box-shadow: 0 0 44px rgba(79,142,247,0.55); }
-        .play-btn svg { width: 20px; height: 20px; fill: #fff; margin-left: 3px; }
-
-        .video-label {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.73rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-        }
-        .video-sublabel {
-            font-family: 'Inter', system-ui, sans-serif;
-            font-size: 0.76rem; color: rgba(255,255,255,0.22); margin-top: -0.4rem;
-        }
-
-        .detail-desc { font-size: 0.925rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.25rem; }
-
-        .github-link {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase;
-            color: var(--accent); text-decoration: none;
-            border: 1px solid rgba(79,142,247,0.28); padding: 0.45rem 0.95rem;
-            border-radius: 3px; transition: background 0.25s;
-        }
-        .github-link:hover { background: rgba(79,142,247,0.09); }
-        .github-link svg { width: 13px; height: 13px; flex-shrink: 0; }
-
-        .detail-right { display: flex; flex-direction: column; gap: 1.1rem; }
-
-        .detail-block {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 6px; padding: 1.15rem 1.4rem;
-        }
-        .detail-block h5 {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-            color: var(--accent); margin-bottom: 0.7rem;
-        }
-        .detail-block ul { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
-        .detail-block ul li {
-            font-size: 0.855rem; color: var(--muted);
-            display: flex; gap: 0.7rem; line-height: 1.55;
-        }
-        .detail-block ul li::before {
-            content: '→'; color: var(--accent); flex-shrink: 0; font-size: 0.78rem; margin-top: 0.1rem;
-        }
-        .detail-block p { font-size: 0.855rem; color: var(--muted); line-height: 1.72; }
-
-        .status-badge {
-            display: inline-flex; align-items: center; gap: 0.45rem;
-            font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.72rem;
-        }
-        .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-        .dot-active  { background: var(--accent3); box-shadow: 0 0 7px var(--accent3); animation: blink 2s infinite; }
-        .dot-complete{ background: var(--accent); }
-
-        @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.35} }
-
-        /* ─── PUBLICATIONS ─── */
-        #publications { padding: 6rem 0; border-top: 1px solid var(--border); }
-        .pub-list { display: flex; flex-direction: column; gap: 1.4rem; }
-
-        .pub-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1.85rem 2rem;
-            transition: border-color 0.3s; position: relative; overflow: hidden;
-        }
-        .pub-card::after {
-            content: ''; position: absolute; bottom: 0; left: 0;
-            width: 0; height: 2px;
-            background: linear-gradient(90deg, var(--accent), var(--accent3)); transition: width 0.4s;
-        }
-        .pub-card:hover::after { width: 100%; }
-        .pub-card:hover { border-color: rgba(79,142,247,0.3); }
-
-        .pub-year {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em;
-            text-transform: uppercase; margin-bottom: 0.5rem;
-        }
-        .pub-card h3 {
-            font-family: 'Inter', system-ui, sans-serif;
-            font-size: 1rem; font-weight: 600; letter-spacing: -0.01em;
-            margin-bottom: 0.7rem; line-height: 1.45;
-        }
-        .pub-card p { color: var(--muted); font-size: 0.875rem; line-height: 1.72; margin-bottom: 0.9rem; }
-        .pub-authors {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.7rem; color: var(--muted); letter-spacing: 0.04em; margin: 0;
-        }
-        .pub-authors strong { color: var(--accent); }
-
-        /* ─── CONTACT ─── */
-        #contact { padding: 6rem 0; border-top: 1px solid var(--border); }
-
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-
-        .contact-left h3 {
-            font-family: 'Space Grotesk', system-ui, sans-serif;
-            font-size: 1.85rem; font-weight: 800; letter-spacing: -0.03em;
-            margin-bottom: 0.9rem; line-height: 1.25;
-        }
-        .contact-left p { color: var(--muted); line-height: 1.78; margin-bottom: 1.75rem; font-size: 0.975rem; }
-
-        .contact-links { display: flex; flex-direction: column; gap: 0.85rem; }
-
-        .contact-link {
-            display: flex; align-items: center; gap: 1rem;
-            padding: 0.9rem 1.15rem; background: var(--surface);
-            border: 1px solid var(--border); border-radius: 6px;
-            text-decoration: none; transition: border-color 0.25s, background 0.25s, transform 0.25s;
-        }
-        .contact-link:hover { border-color: rgba(79,142,247,0.38); background: var(--surface2); transform: translateX(5px); }
-
-        .contact-link-icon {
-            width: 38px; height: 38px; background: rgba(79,142,247,0.09); border-radius: 6px;
-            display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;
-        }
-        .contact-link-text h4 { font-size: 0.85rem; font-weight: 500; color: var(--text); margin-bottom: 0.12rem; }
-        .contact-link-text p {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.7rem; color: var(--muted); margin: 0; letter-spacing: 0.04em;
-        }
-
-        /* ─── FOOTER ─── */
-        footer {
-            border-top: 1px solid var(--border); padding: 1.75rem 2rem;
-            text-align: center;
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 0.7rem; letter-spacing: 0.08em; color: var(--muted);
-            position: relative; z-index: 1;
-        }
-
-        /* ─── ANIMATIONS ─── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(18px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s, transform 0.65s; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 900px) {
-            .about-grid, .detail-grid, .contact-grid { grid-template-columns: 1fr; }
-            .project-header { grid-template-columns: 40px 1fr auto; }
-            .project-status { display: none; }
-        }
-        @media (max-width: 640px) {
-            .project-header { grid-template-columns: 1fr auto; }
-            .project-index { display: none; }
-            .hero h1 { font-size: 2.8rem; }
-            .status-bar { gap: 1.5rem; }
-        }
-    </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Shivansh Pratap Singh",
+    "url": "https://aerialmechx.github.io/",
+    "email": "mailto:shivansh.singh@research.iiit.ac.in",
+    "jobTitle": "Graduate researcher (M.S. by Research), robotics",
+    "affiliation": {
+      "@type": "CollegeOrUniversity",
+      "name": "International Institute of Information Technology, Hyderabad",
+      "url": "https://www.iiit.ac.in/"
+    },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Bundelkhand Institute of Engineering and Technology, Jhansi"
+    },
+    "knowsAbout": ["Aerial robotics", "Aerial manipulation", "Robot learning", "World models", "Dynamics learning", "Learning-based control", "Adaptive control", "Reinforcement learning"],
+    "sameAs": [
+      "https://scholar.google.com/citations?user=wUdlS-EAAAAJ",
+      "https://github.com/AerialMechX",
+      "https://www.linkedin.com/in/shiva2023/"
+    ]
+  }
+  </script>
 </head>
+
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-<canvas id="bg-canvas"></canvas>
+  <!-- Icon sprite: each icon is defined once and reused with <use href="#…">. -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></g></symbol>
+    <symbol id="i-scholar" viewBox="0 0 24 24"><path fill="currentColor" d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></g></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.9-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M7 5h3.5v14H7zm6.5 0H17v14h-3.5z"/></symbol>
+  </svg>
 
-<!-- NAV -->
-<nav id="nav">
-    <div class="container">
-        <div class="logo">S<span>.</span>P<span>.</span>S</div>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#publications">Papers</a></li>
-            <li><a href="#contact">Contact</a></li>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="#main" aria-label="Shivansh Pratap Singh, back to top">
+        <svg class="brand__mark frame-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path class="ax-z" d="M5 19V4.5"/>
+          <path class="ax-y" d="M5 19l7.2-7.2"/>
+          <path class="ax-x" d="M5 19h14.5"/>
+          <circle cx="5" cy="19" r="1.9"/>
+        </svg>
+        <span class="brand__name">Shivansh Pratap Singh</span>
+      </a>
+      <nav class="site-nav" aria-label="Sections">
+        <ul role="list">
+          <li><a href="#research">Research</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="assets/cv/Shivansh_Pratap_Singh_CV.pdf">CV</a></li>
         </ul>
+      </nav>
     </div>
-</nav>
+  </header>
 
-<!-- HERO -->
-<section id="home" class="hero">
-    <div class="container">
-        <p class="hero-eyebrow">MS by Research — IIIT Hyderabad</p>
-        <h1>
-            <span class="line">Shivansh</span>
-            <span class="line">Pratap <em>Singh</em></span>
-        </h1>
-        <p class="hero-desc">
-            Robotics researcher specializing in <strong>nonlinear control</strong>,
-            <strong>aerial manipulation</strong>, and <strong>learning-based autonomous systems</strong>.
-            Building Physical AI that keeps humans away from danger.
-        </p>
-        <div class="hero-cta">
-            <a href="#projects" class="btn-primary">Explore Research</a>
-            <a href="https://github.com/AerialMechX" target="_blank" class="btn-outline">GitHub →</a>
+  <main id="main">
+
+    <!-- ============================== Intro ============================== -->
+    <section class="hero" aria-labelledby="name">
+      <div class="wrap hero__grid">
+        <div class="hero__text">
+          <h1 id="name" class="hero__name">Shivansh Pratap Singh</h1>
+          <p class="hero__lede">Learning and control for aerial robots whose dynamics are uncertain, changing, or hard to model.</p>
+
+          <div class="hero__intro">
+            <p>I’m a second-year M.S. by Research student at the Robotics Research Center, IIIT Hyderabad, advised by Prof. Spandan Roy. I build learned dynamics models and latent world models that work alongside nonlinear and adaptive controllers, and I test them on real aerial manipulators through payload changes, contact, and high-dynamic maneuvers.</p>
+            <p>In summer 2026 I was a Robotics Student Fellow at the <a href="https://asl.ethz.ch/">Autonomous Systems Lab, ETH Zürich</a>. I have five papers: two at IROS 2026 and one each at the IFAC World Congress 2026, IEEE CASE 2026, and ICCAS 2025, three of them as first or co-first author.</p>
+          </div>
+
+          <!-- EDIT: add your intended start term if you like, e.g. "…to PhD programs starting fall 2027 …" -->
+          <p class="hero__status">I’m applying to PhD programs and am open to research internships.</p>
+
+          <ul class="actions" role="list">
+            <li><a class="btn btn--primary" href="assets/cv/Shivansh_Pratap_Singh_CV.pdf" type="application/pdf"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg>CV</a></li>
+            <li><a class="btn" href="https://scholar.google.com/citations?user=wUdlS-EAAAAJ"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scholar"/></svg>Google Scholar</a></li>
+            <li><a class="btn" href="https://github.com/AerialMechX"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg>GitHub</a></li>
+            <li><a class="btn" href="https://www.linkedin.com/in/shiva2023/"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg>LinkedIn</a></li>
+            <li><a class="btn" href="mailto:shivansh.singh@research.iiit.ac.in"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg>Email</a></li>
+          </ul>
+          <!-- OPTIONAL headshot: add assets/images/profile.jpg (square, ~480 px, < 60 KB) and uncomment.
+          <img class="hero__photo" src="assets/images/profile.jpg" alt="Shivansh Pratap Singh" width="240" height="240" decoding="async">
+          -->
         </div>
-    </div>
-    <div class="status-bar">
-        <div class="stat"><span class="stat-num">9.6</span><span class="stat-label">GPA / 10</span></div>
-        <div class="stat"><span class="stat-num">5</span><span class="stat-label">Active Projects</span></div>
-        <div class="stat"><span class="stat-num">2</span><span class="stat-label">Publications</span></div>
-        <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Yrs Research</span></div>
-    </div>
-</section>
 
-<!-- ABOUT -->
-<section id="about">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-num">01</span>
-            <h2 class="section-title">About & Vision</h2>
-        </div>
-        <div class="about-grid">
-            <div class="about-text reveal">
-                <p>I'm a Master's student in Robotics at <strong>IIIT Hyderabad</strong>, working at the intersection of control theory and intelligent autonomy. My research focuses on making aerial robots capable of physically interacting with the world — not just flying through it.</p>
-                <p>Before joining IIIT, I spent a year at <strong>Arka Aerospace</strong> designing autonomous UAV navigation systems, multi-drone coordination algorithms, and precision landing pipelines achieving <strong>2–3 cm accuracy</strong> in real-world flight conditions.</p>
-                <p>I believe the next frontier is <strong>Physical AI</strong> — systems that combine rigorous control theory with learned perception to operate reliably in unstructured, dynamic environments without human oversight.</p>
-                <div class="goal-card">
-                    <h4>Long-Term Goal</h4>
-                    <p>Develop aerial robotic systems capable of autonomous physical intervention in hazardous environments — disaster response, infrastructure inspection, and remote manipulation — eliminating human presence in dangerous situations.</p>
-                </div>
-            </div>
-            <div class="skills-panel reveal">
-                <div class="skill-row">
-                    <div class="skill-row-header"><span>ROS 2 / Embedded Systems</span><span>Expert</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92"></div></div>
-                </div>
-                <div class="skill-row">
-                    <div class="skill-row-header"><span>Nonlinear & Adaptive Control</span><span>Advanced</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div>
-                </div>
-                <div class="skill-row">
-                    <div class="skill-row-header"><span>Reinforcement Learning (PPO / SAC)</span><span>Advanced</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div>
-                </div>
-                <div class="skill-row">
-                    <div class="skill-row-header"><span>C++ (Eigen, Ceres)</span><span>Advanced</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
-                </div>
-                <div class="skill-row">
-                    <div class="skill-row-header"><span>Python (NumPy, SciPy, PyTorch)</span><span>Advanced</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="87"></div></div>
-                </div>
-                <div class="skill-row">
-                    <div class="skill-row-header"><span>Model Predictive Control (MPC)</span><span>Proficient</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78"></div></div>
-                </div>
-                <div class="skill-row">
-                    <div class="skill-row-header"><span>Computer Vision (OpenCV, Open3D)</span><span>Proficient</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75"></div></div>
-                </div>
-                <div class="skill-row">
-                    <div class="skill-row-header"><span>PX4 / ArduPilot / SITL</span><span>Expert</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        <!-- Fig. 1: a closed-loop block diagram that doubles as a map of the research. Blocks link to projects. -->
+        <figure class="loop">
+          <svg class="loop__svg" viewBox="0 0 460 324" role="group" aria-labelledby="loop-title">
+            <title id="loop-title">Block diagram of my research: perception sets the target, a controller drives the aerial robot, and a learned dynamics model estimates the residual wrench from state and input history and feeds it to the controller.</title>
+            <defs>
+              <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ink" d="M0 1 9 5 0 9z"/></marker>
+              <marker id="ah-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-acc" d="M0 1 9 5 0 9z"/></marker>
+            </defs>
 
-<!-- PROJECTS -->
-<section id="projects">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-num">02</span>
-            <h2 class="section-title">Research Projects</h2>
-        </div>
-        <div class="projects-list">
+            <!-- disturbance -->
+            <text class="note" x="452" y="30" text-anchor="end">payload, contact, tether, aerodynamics</text>
+            <path class="wire" d="M340 40V124" marker-end="url(#ah)"/>
+            <text class="sym" x="348" y="92">d</text>
 
-            <div class="project-item reveal" onclick="toggleProject(this)">
-                <div class="project-header">
-                    <span class="project-index">01</span>
-                    <div class="project-title-group">
-                        <h3>Hierarchical RL + Adaptive INDI for Aerial Manipulation</h3>
-                        <div class="tags">
-                            <span class="tag">Reinforcement Learning</span><span class="tag">INDI Control</span>
-                            <span class="tag">ROS 2</span><span class="tag">PPO</span>
-                        </div>
-                    </div>
-                    <span class="project-status status-active">Active — Jan 2026</span>
-                    <div class="project-toggle">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </div>
-                </div>
-                <div class="project-detail">
-                    <div class="detail-grid">
-                        <div class="detail-left">
-                            <div class="detail-video">
-                                <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
-                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-                                    <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Experiment</span>
-                                </a>
-                            </div>
-                            <p class="detail-desc">A hierarchical flight-control stack for an underactuated aerial manipulator. An outer-loop RL policy outputs thrust and body-rate commands, while the inner-loop Adaptive INDI (running at 250 Hz) handles rapid attitude stabilization and disturbance rejection during manipulation transients.</p>
-                            <a href="https://github.com/AerialMechX/RL-adaptive_Aerial_manipulation.git" target="_blank" class="github-link">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                                View on GitHub
-                            </a>
-                        </div>
-                        <div class="detail-right">
-                            <div class="detail-block">
-                                <h5>Key Achievements</h5>
-                                <ul>
-                                    <li>Domain-randomized PPO (payload mass, inertia, actuator variation)</li>
-                                    <li>Online control-effectiveness adaptation via filtered angular-acceleration feedback</li>
-                                    <li>Real-world grasp-and-drop validation — max 20 cm end-effector error</li>
-                                    <li>Robust sim-to-real transfer across manipulation transients</li>
-                                </ul>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active development</span> — Real-world flight tests ongoing. Refining reward shaping for smoother grasp transitions; targeting sub-15 cm tracking error.</p>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Future Goals</h5>
-                                <ul>
-                                    <li>Extend to multi-arm configurations on a single UAV</li>
-                                    <li>Incorporate force/torque sensing for contact-rich manipulation</li>
-                                    <li>Target submission to IROS / RA-L 2026</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- perception → reference -->
+            <a class="blk" href="#aerograb" aria-label="Perception: target and 6-DoF grasp selection. Go to the AeroGrab project.">
+              <rect x="8" y="12" width="176" height="52" rx="6"/>
+              <text class="blk-title" x="22" y="35">Perception</text>
+              <text class="blk-sub" x="22" y="53">target, 6-DoF grasp</text>
+            </a>
+            <path class="wire" d="M44 64V135" marker-end="url(#ah)"/>
+            <text class="sym" x="52" y="106">r</text>
 
-            <div class="project-item reveal" onclick="toggleProject(this)">
-                <div class="project-header">
-                    <span class="project-index">02</span>
-                    <div class="project-title-group">
-                        <h3>Autonomous Language-Guided Aerial Grasping</h3>
-                        <div class="tags">
-                            <span class="tag">Vision-Language</span><span class="tag">CNN-ViT</span>
-                            <span class="tag">SAM-3</span><span class="tag">6-DoF Grasping</span>
-                        </div>
-                    </div>
-                    <span class="project-status status-active">Active — Jan 2026</span>
-                    <div class="project-toggle">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </div>
-                </div>
-                <div class="project-detail">
-                    <div class="detail-grid">
-                        <div class="detail-left">
-                            <div class="detail-video">
-                                <a href="https://youtu.be/aSCQm8HdasI" target="_blank" class="video-placeholder">
-                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-                                    <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Experiment</span>
-                                </a>
-                            </div>
-                            <p class="detail-desc">A modular framework enabling aerial manipulators to carry out language-guided grasping in cluttered, unstructured environments. Processes natural language commands to identify, localize, and grasp target objects — autonomously handling occlusions via orbital search maneuvers.</p>
-                        </div>
-                        <div class="detail-right">
-                            <div class="detail-block">
-                                <h5>Key Achievements</h5>
-                                <ul>
-                                    <li>Lightweight hybrid CNN-ViT predicts 6-DoF grasp poses in under 38 ms</li>
-                                    <li>Hierarchical Risk-Aware Decision Framework filters kinematic reachability</li>
-                                    <li>Real-time SAM-3 tracking with autonomous occlusion-clearing orbital search</li>
-                                    <li>End-to-end pipeline from language input to physical grasp execution</li>
-                                </ul>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active development</span> — Integrating language model front-end with grasp prediction pipeline. Cluttered-environment validation in progress.</p>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Future Goals</h5>
-                                <ul>
-                                    <li>Generalize to open-vocabulary object categories</li>
-                                    <li>Deploy on onboard Jetson Orin compute</li>
-                                    <li>Enable multi-step, dialog-driven manipulation tasks</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- summing junction -->
+            <circle class="sum" cx="44" cy="151" r="14"/>
+            <text class="sign" x="54" y="131">+</text>
+            <text class="sign" x="28" y="186">−</text>
+            <path class="wire" d="M58 151H78" marker-end="url(#ah)"/>
 
-            <div class="project-item reveal" onclick="toggleProject(this)">
-                <div class="project-header">
-                    <span class="project-index">03</span>
-                    <div class="project-title-group">
-                        <h3>Adaptive Control for Multi-Quadrotor Formations</h3>
-                        <div class="tags">
-                            <span class="tag">Distributed Control</span><span class="tag">Adaptive Laws</span>
-                            <span class="tag">Multi-UAV</span><span class="tag">UUB Stability</span>
-                        </div>
-                    </div>
-                    <span class="project-status status-active">Active — Jul 2025</span>
-                    <div class="project-toggle">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </div>
-                </div>
-                <div class="project-detail">
-                    <div class="detail-grid">
-                        <div class="detail-left">
-                            <div class="detail-video">
-                                <a href="https://youtu.be/RzWLFABjTLg" target="_blank" class="video-placeholder">
-                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-                                    <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Experiment</span>
-                                </a>
-                            </div>
-                            <p class="detail-desc">A distributed adaptive control strategy for multi-quadrotor formations encountering strong, unknown interconnection forces. Nonlinear adaptive laws handle state-dependent uncertainties including rotor downwash and aerodynamic drag — without requiring prior model knowledge or boundedness assumptions.</p>
-                        </div>
-                        <div class="detail-right">
-                            <div class="detail-block">
-                                <h5>Key Achievements</h5>
-                                <ul>
-                                    <li>Proven Uniformly Ultimately Bounded (UUB) stability for entire closed-loop system</li>
-                                    <li>Real-world cooperative aerial transportation experiments validated</li>
-                                    <li>No prior boundedness or model structure required</li>
-                                    <li>Handles rotor downwash and complex aerodynamic coupling</li>
-                                </ul>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-active"></span>Active</span> — Scaling to 3+ UAV formations. Real-world payload transportation experiments with varying load distributions in progress.</p>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Future Goals</h5>
-                                <ul>
-                                    <li>Scale to heterogeneous swarms (fixed-wing + multirotor)</li>
-                                    <li>Add communication-delay robustness</li>
-                                    <li>Apply to large-structure aerial assembly tasks</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- controller -->
+            <a class="blk" href="#rl-estimator" aria-label="Controller: adaptive, INDI and reinforcement learning. Go to the reinforcement-learning project.">
+              <rect x="80" y="126" width="146" height="50" rx="6"/>
+              <text class="blk-title" x="94" y="148">Controller</text>
+              <text class="blk-sub" x="94" y="166">adaptive, INDI, RL</text>
+            </a>
+            <path class="wire" d="M226 151H258" marker-end="url(#ah)"/>
+            <text class="sym" x="229" y="143">u</text>
+            <circle class="node" cx="242" cy="151" r="2.6"/>
 
-            <div class="project-item reveal" onclick="toggleProject(this)">
-                <div class="project-header">
-                    <span class="project-index">04</span>
-                    <div class="project-title-group">
-                        <h3>RRT + MPC Quadrotor Autonomy Stack</h3>
-                        <div class="tags">
-                            <span class="tag">Model Predictive Control</span><span class="tag">RRT Planning</span>
-                            <span class="tag">100 Hz Control</span><span class="tag">Aggressive Flight</span>
-                        </div>
-                    </div>
-                    <span class="project-status status-completed">Feb – May 2025</span>
-                    <div class="project-toggle">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </div>
-                </div>
-                <div class="project-detail">
-                    <div class="detail-grid">
-                        <div class="detail-left">
-                            <div class="detail-video">
-                                <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
-                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-                                    <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Experiment</span>
-                                </a>
-                            </div>
-                            <p class="detail-desc">A layered autonomy stack where RRT generates collision-free geometric routes, a trajectory module converts them into time-parameterized references for aggressive flight, and a real-time MPC controller optimizes commands within actuator limits — achieving stable tracking at 100 Hz on hardware.</p>
-                        </div>
-                        <div class="detail-right">
-                            <div class="detail-block">
-                                <h5>Key Achievements</h5>
-                                <ul>
-                                    <li>100 Hz closed-loop MPC optimization running on hardware</li>
-                                    <li>Stable tracking of tight turns and fast accelerations</li>
-                                    <li>Efficient warm-starting and simplified dynamics for real-time use</li>
-                                    <li>Full end-to-end collision-free planning to execution pipeline</li>
-                                </ul>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-complete"></span>Completed</span> — Core system validated. Results now informing the hierarchical RL + INDI project's inner-loop architecture.</p>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Future Goals</h5>
-                                <ul>
-                                    <li>Integrate learning-based dynamics models into MPC prediction</li>
-                                    <li>Extend RRT to dynamic obstacle environments</li>
-                                    <li>Apply to indoor inspection with GPS denial</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- plant -->
+            <g class="blk blk--plant">
+              <rect x="260" y="126" width="168" height="50" rx="6"/>
+              <text class="blk-title" x="274" y="148">Aerial robot</text>
+              <text class="blk-sub" x="274" y="166">manipulator, tilt-rotor</text>
+            </g>
+            <path class="wire" d="M428 151H454" marker-end="url(#ah)"/>
+            <text class="sym" x="436" y="143">x</text>
+            <circle class="node" cx="442" cy="151" r="2.6"/>
 
-            <div class="project-item reveal" onclick="toggleProject(this)">
-                <div class="project-header">
-                    <span class="project-index">05</span>
-                    <div class="project-title-group">
-                        <h3>Autonomous Ball Catcher — "The Robotic Dustbin"</h3>
-                        <div class="tags">
-                            <span class="tag">Stereo Vision</span><span class="tag">RANSAC</span>
-                            <span class="tag">PID Drive</span><span class="tag">UDP Streaming</span>
-                        </div>
-                    </div>
-                    <span class="project-status status-completed">Oct – Dec 2025</span>
-                    <div class="project-toggle">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </div>
-                </div>
-                <div class="project-detail">
-                    <div class="detail-grid">
-                        <div class="detail-left">
-                            <div class="detail-video">
-                                <a href="YOUR_YOUTUBE_LINK_HERE" target="_blank" class="video-placeholder">
-                                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-                                    <span class="video-label">Watch Demo</span>
-                                    <span class="video-sublabel">Experiment</span>
-                                </a>
-                            </div>
-                            <p class="detail-desc">An autonomous mobile robot that intercepts thrown balls in real time using an external multi-camera 3D world frame — no onboard vision required. HSV detection, stereo triangulation, and physics-based RANSAC predict landing coordinates. Drives to the impact point via 30 Hz UDP-streamed commands before the ball lands.</p>
-                            <a href="https://github.com/AerialMechX/AerialMechX-Autonomous_ball_catcher.git" target="_blank" class="github-link">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                                View on GitHub
-                            </a>
-                        </div>
-                        <div class="detail-right">
-                            <div class="detail-block">
-                                <h5>Key Achievements</h5>
-                                <ul>
-                                    <li>Real-time stereo triangulation with HSV ball detection</li>
-                                    <li>Physics-based RANSAC estimation robust to noisy measurements</li>
-                                    <li>Low-latency 30 Hz UDP control loop (Raspberry Pi + Arduino)</li>
-                                    <li>PID-controlled differential-drive for accurate interception</li>
-                                </ul>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Current Status</h5>
-                                <p><span class="status-badge"><span class="status-dot dot-complete"></span>Completed</span> — Validated across a range of throw speeds and trajectories in real-world tests.</p>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Future Goals</h5>
-                                <ul>
-                                    <li>Move to onboard vision for full autonomy</li>
-                                    <li>Extend to multiple simultaneous projectile tracking</li>
-                                    <li>Apply estimation framework to aerial catching with UAVs</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- feedback -->
+            <path class="wire" d="M442 151V308H44V167" marker-end="url(#ah)"/>
 
-        </div>
-    </div>
-</section>
+            <!-- learned dynamics (the part my work adds) -->
+            <path class="wire" d="M242 151V220" marker-end="url(#ah)"/>
+            <circle class="node" cx="376" cy="308" r="2.6"/>
+            <path class="wire" d="M376 308V274" marker-end="url(#ah)"/>
+            <a class="blk blk--learned" href="#world-models" aria-label="Learned dynamics: latent world models and diffusion models. Go to the world-model project.">
+              <rect x="196" y="222" width="206" height="50" rx="6"/>
+              <text class="blk-title" x="210" y="244">Learned dynamics</text>
+              <text class="blk-sub" x="210" y="262">world models, diffusion</text>
+            </a>
+            <path class="wire wire--learned" d="M196 247H154V178" marker-end="url(#ah-acc)"/>
+            <text class="note note--learned" x="146" y="214" text-anchor="end">residual</text>
+            <text class="note note--learned" x="146" y="229" text-anchor="end">wrench</text>
+          </svg>
+          <figcaption><span class="fig-no">Fig. 1.</span> Where my projects sit in the loop. Perception sets the target, a learned model of the robot’s dynamics feeds the controller, and everything is tested on the physical robot. Select a block to jump to the related work.</figcaption>
+        </figure>
+      </div>
+    </section>
 
-<!-- PUBLICATIONS -->
-<section id="publications">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-num">03</span>
-            <h2 class="section-title">Publications</h2>
-        </div>
-        <div class="pub-list">
-            <div class="pub-card reveal">
-                <p class="pub-year">2025 — ICCAS · International Conference on Control, Automation and Systems</p>
-                <h3>Impedance and Stability Targeted Adaptation for Aerial Manipulator with Unknown Coupling Dynamics</h3>
-                <p>Developed an adaptive impedance control system for unknown coupling forces and non-linear dynamics during contact-based aerial tasks. Introduced a novel adaptation law ensuring compliant behavior in unstructured environments without accurate vehicle-arm interaction models. Demonstrates high-performance stability in aerial perching and object-catching scenarios where conventional controllers fail.</p>
-                <p class="pub-authors">Amitabh Sharma · Saksham Gupta · <strong>Shivansh Pratap Singh</strong> · Rishabh Dev Yadav · Hongyu Song · Wei Pan · Spandan Roy · Simone Baldi</p>
-            </div>
-            <div class="pub-card reveal">
-                <p class="pub-year">2025 — Preprint / Under Review</p>
-                <h3>AERMANI-Diffusion: Regime-Conditioned Diffusion for Dynamics Learning in Aerial Manipulators</h3>
-                <p>Created AERMANI-Diffusion — a regime-conditioned diffusion model capturing non-stationary dynamics of aerial manipulators under environmental changes. A time-of-day encoded module rapidly predicts residual forces under varying loading conditions. Validated through real-world flight tests showing enhanced tracking accuracy and stability during high-acceleration dynamic scenarios.</p>
-                <p class="pub-authors"><strong>Shared First Author:</strong> Samaksh Ujjawal* · <strong>Shivansh Pratap Singh*</strong> · Naveen Sudheer · Rishabh Dev Yadav · Wei Pan · Spandan Roy</p>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- CONTACT -->
-<section id="contact">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-num">04</span>
-            <h2 class="section-title">Get In Touch</h2>
-        </div>
-        <div class="contact-grid">
-            <div class="contact-left reveal">
-                <h3>Open to collaborations, research discussions & opportunities.</h3>
-                <p>Whether you're working on aerial robotics, autonomous systems, or want to discuss research collaborations — I'd love to hear from you.</p>
-                <a href="mailto:shivansh.singh@research.iiit.ac.in" class="btn-primary">Send Email →</a>
+    <!-- ========================= Selected research ========================= -->
+    <section id="research" class="section" aria-labelledby="research-title">
+      <div class="wrap">
+        <header class="section__head">
+          <h2 id="research-title" class="section__title">Selected research</h2>
+          <p class="section__lede">Four projects, each summarized as the problem, the approach, my role, and the result.</p>
+        </header>
+      </div>
+
+      <!-- Featured: ETH Zürich, Autonomous Systems Lab -->
+      <div class="band">
+        <article class="wrap feature" id="world-models" aria-labelledby="world-models-title">
+          <header class="feature__head">
+            <h3 id="world-models-title" class="feature__title">Sim-to-real latent world models for a tethered tilt-rotor aerial robot</h3>
+            <p class="meta"><span class="badge">ETH Zürich</span><span>Robotics Student Fellowship, Autonomous Systems Lab, Jul–Aug 2026</span></p>
+            <p class="feature__question">Can a world model trained only in simulation capture the aerodynamic, actuator, and tether effects of a real aerial robot, and still run fast enough for onboard control?</p>
+          </header>
+
+          <div class="feature__grid">
+            <figure class="media">
+              <!-- REPLACE: your ETH clip. Export with tools/convert-media.sh → assets/videos/eth-world-model.mp4
+                   (+ poster assets/images/eth-world-model-poster.webp). Non-16:9 clip? add style="--ar: 4 / 3" to the frame. -->
+              <div class="media__frame" data-video>
+                <video muted loop playsinline preload="none" controls width="1280" height="720"
+                       data-poster="assets/images/eth-world-model-poster.webp"
+                       aria-label="Real-flight clip of the tethered tilt-rotor aerial robot">
+                  <!-- Optional WebM (VP9), often 20–40% smaller. Browsers use the first source they support.
+                  <source src="assets/videos/eth-world-model.webm" type="video/webm"> -->
+                  <source src="assets/videos/eth-world-model.mp4" type="video/mp4">
+                </video>
+                <button class="media__play" type="button" aria-label="Play video"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
+                <button class="media__toggle" type="button" aria-label="Pause video"><svg class="icon icon--pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="icon icon--play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
+                <p class="media__empty">Flight video coming soon</p>
+              </div>
+              <!-- EDIT: say what the clip shows, e.g. "Real flight with the tether attached; predicted vs. measured wrench overlaid." -->
+              <figcaption>Tethered tilt-rotor aerial robot used for the real-flight evaluation.</figcaption>
+            </figure>
+
+            <ol class="steps" role="list">
+              <li class="step">
+                <h4 class="step__label">Problem</h4>
+                <p>Real flights involve aerodynamic effects and external disturbances that are hard to model precisely. On this omnidirectional tilt-rotor platform, the tether adds forces and moments that change during flight.</p>
+              </li>
+              <li class="step">
+                <h4 class="step__label">Approach</h4>
+                <p>Train a latent world model only on domain-randomized simulation data, so it learns a compact representation of the robot’s dynamics and predicts how the system evolves. Probe that representation for physical quantities: velocity, attitude, actuator behavior, mass, inertia, and external force and torque. For onboard use, a compact fixed-history MLP trained with a JEPA-style objective plus a residual force-and-torque objective.</p>
+              </li>
+              <li class="step">
+                <h4 class="step__label">Result</h4>
+                <p>The model transferred to unseen real-flight data. Probing showed that reliable estimation of physical parameters depends on sufficiently informative training motions. The compact model improved disturbance estimation on real-flight data and cut inference time from about 3–4&nbsp;ms to 0.7&nbsp;ms.</p>
+              </li>
+            </ol>
+          </div>
+
+          <dl class="facts">
+            <div>
+              <dt>Training data</dt>
+              <dd class="facts__value">Simulation only</dd>
+              <dd class="facts__note">physics-based domain randomization</dd>
             </div>
-            <div class="contact-links reveal">
-                <a href="mailto:shivansh.singh@research.iiit.ac.in" class="contact-link">
-                    <div class="contact-link-icon">✉</div>
-                    <div class="contact-link-text"><h4>Institute Email</h4><p>shivansh.singh@research.iiit.ac.in</p></div>
+            <div>
+              <dt>Evaluation</dt>
+              <dd class="facts__value">Unseen real flights</dd>
+              <dd class="facts__note">tethered tilt-rotor platform</dd>
+            </div>
+            <div>
+              <dt>Estimated</dt>
+              <dd class="facts__value">Residual force and torque</dd>
+              <dd class="facts__note">disturbance estimation improved on real data</dd>
+            </div>
+            <div>
+              <dt>Inference</dt>
+              <!-- VERIFY: if 0.7 ms was measured on the Jetson, say so here ("0.7 ms on Jetson …"); if not, keep as is. -->
+              <dd class="facts__value">0.7 ms</dd>
+              <dd class="facts__note">down from about 3–4 ms</dd>
+            </div>
+          </dl>
+
+          <div class="feature__foot">
+            <!-- EDIT: confirm the split of work and add supervisors, e.g. "Supervised by … and …". -->
+            <p class="role"><strong>My role.</strong> Fellowship project at ASL. I built the domain-randomized sim-to-real training pipeline, trained and probed the latent world models, developed the compact JEPA-style model with the residual force-and-torque objective, and profiled deployment and inference on NVIDIA Jetson.</p>
+            <div class="feature__aside">
+              <ul class="tags" role="list" aria-label="Topics">
+                <li>World models</li><li>JEPA</li><li>Dynamics learning</li><li>Sim-to-real</li><li>Real-time inference</li>
+              </ul>
+              <ul class="links" role="list">
+                <li><a href="https://asl.ethz.ch/">ASL, ETH Zürich</a></li>
+                <!-- REPLACE (optional): <li><a href="…">Report</a></li> <li><a href="…">Slides</a></li> <li><a href="…">Project page</a></li> -->
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="wrap">
+        <div class="projects">
+
+          <!-- AeroGrab (IROS 2026) -->
+          <article class="project" id="aerograb" aria-labelledby="aerograb-title">
+            <header class="project__head">
+              <h3 id="aerograb-title" class="project__title">AeroGrab: autonomous aerial grasping in cluttered environments</h3>
+              <p class="meta"><span class="badge">IROS 2026</span><span>First author</span><span>Robotics Research Center, IIIT Hyderabad</span></p>
+            </header>
+
+            <figure class="media project__media">
+              <!-- YouTube "facade": only a thumbnail loads; the player loads after a click. Without JavaScript this is a normal link.
+                   VERIFY: this is the AeroGrab demo (it was linked as "language-guided aerial grasping" on your old site). -->
+              <div class="media__frame">
+                <a class="yt" href="https://www.youtube.com/watch?v=aSCQm8HdasI" data-youtube="aSCQm8HdasI" data-title="AeroGrab demo video" aria-label="Play the AeroGrab demo video (loads YouTube)">
+                  <img src="https://i.ytimg.com/vi/aSCQm8HdasI/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+                  <span class="yt__play" aria-hidden="true"><svg class="icon" focusable="false"><use href="#i-play"/></svg></span>
+                  <span class="yt__badge" aria-hidden="true">YouTube</span>
                 </a>
-                <a href="mailto:shivansh2172@gmail.com" class="contact-link">
-                    <div class="contact-link-icon">📬</div>
-                    <div class="contact-link-text"><h4>Personal Email</h4><p>shivansh2172@gmail.com</p></div>
-                </a>
-                <a href="https://github.com/AerialMechX" target="_blank" class="contact-link">
-                    <div class="contact-link-icon">🐙</div>
-                    <div class="contact-link-text"><h4>GitHub</h4><p>github.com/AerialMechX</p></div>
-                </a>
-                <a href="https://aerialmechx.github.io/" target="_blank" class="contact-link">
-                    <div class="contact-link-icon">🌐</div>
-                    <div class="contact-link-text"><h4>Portfolio</h4><p>aerialmechx.github.io</p></div>
-                </a>
-                <a href="tel:+919794734872" class="contact-link">
-                    <div class="contact-link-icon">📱</div>
-                    <div class="contact-link-text"><h4>Phone</h4><p>+91 9794734872</p></div>
-                </a>
-            </div>
+              </div>
+              <!-- EDIT: one line on what the video shows. -->
+              <figcaption>Demo: from a language-specified target to grasp execution.</figcaption>
+            </figure>
+
+            <dl class="brief project__body">
+              <div>
+                <dt>Problem</dt>
+                <dd>Picking a specified object out of clutter from the air: targets are often occluded, and grasps must be stable and reachable for an arm mounted on a hovering vehicle.</dd>
+              </div>
+              <div>
+                <dt>Approach</dt>
+                <dd>One framework that couples language-specified target understanding, active perception, 6-DoF grasp generation, motion planning, and closed-loop manipulation. A lightweight hybrid CNN–ViT predicts 6-DoF grasps in under 38&nbsp;ms, a hierarchical risk-aware decision layer filters them for kinematic reachability, and SAM&nbsp;3-based tracking with orbital search maneuvers resolves occlusions.</dd>
+              </div>
+              <div>
+                <dt>My role</dt>
+                <!-- EDIT: name the parts you built, e.g. "grasp network, decision layer, system integration, flight experiments". -->
+                <dd>First author. Led the system design, integration, and experiments.</dd>
+              </div>
+              <div>
+                <dt>Result</dt>
+                <!-- VERIFY: state the hardware setting and any success rate reported in the paper. -->
+                <dd>End-to-end autonomous aerial grasping in clutter, from a language-specified target to grasp execution.</dd>
+              </div>
+            </dl>
+
+            <footer class="project__foot">
+              <ul class="tags" role="list" aria-label="Topics">
+                <li>Aerial manipulation</li><li>Active perception</li><li>6-DoF grasping</li><li>Vision–language</li>
+              </ul>
+              <ul class="links" role="list">
+                <li><a href="https://arxiv.org/abs/2603.15097">Paper (arXiv)</a></li>
+                <li><a href="https://www.youtube.com/watch?v=aSCQm8HdasI">Video</a></li>
+                <!-- REPLACE (optional): <li><a href="…">Project page</a></li>
+                     <li><a href="https://github.com/AerialMechX/GraspCNN_model">Code</a></li>  (VERIFY it is the AeroGrab grasp network and is presentable) -->
+              </ul>
+            </footer>
+          </article>
+
+          <!-- RL + inner-loop dynamics estimator (IEEE CASE 2026) -->
+          <article class="project" id="rl-estimator" aria-labelledby="rl-estimator-title">
+            <header class="project__head">
+              <h3 id="rl-estimator-title" class="project__title">Whole-body reinforcement learning with an inner-loop dynamics estimator for aerial manipulation</h3>
+              <p class="meta"><span class="badge">IEEE CASE 2026</span><span>First author</span><span>Robotics Research Center, IIIT Hyderabad</span></p>
+            </header>
+
+            <figure class="media project__media">
+              <!-- REPLACE: assets/videos/rl-inner-loop.mp4 + assets/images/rl-inner-loop-poster.webp (e.g. the grasp-and-drop hardware run). -->
+              <div class="media__frame" data-video>
+                <video muted loop playsinline preload="none" controls width="1280" height="720"
+                       data-poster="assets/images/rl-inner-loop-poster.webp"
+                       aria-label="Hardware grasp-and-drop run on the 3-DoF aerial manipulator">
+                  <source src="assets/videos/rl-inner-loop.mp4" type="video/mp4">
+                </video>
+                <button class="media__play" type="button" aria-label="Play video"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
+                <button class="media__toggle" type="button" aria-label="Pause video"><svg class="icon icon--pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="icon icon--play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
+                <p class="media__empty">Hardware video coming soon</p>
+              </div>
+              <!-- EDIT -->
+              <figcaption>Grasp-and-drop on the 3-DoF aerial manipulator.</figcaption>
+            </figure>
+
+            <dl class="brief project__body">
+              <div>
+                <dt>Problem</dt>
+                <dd>Policies trained in simulation degrade on hardware when payload and vehicle–arm coupling differ from training, and in aerial manipulation both change every time the arm moves or grasps.</dd>
+              </div>
+              <div>
+                <dt>Approach</dt>
+                <!-- VERIFY: combines your CV (estimator-based inner loop) with your old site (PPO, adaptive INDI at 250 Hz). -->
+                <dd>Hierarchical control. A whole-body PPO policy, trained with randomized payload mass, inertia, and actuator properties, outputs thrust and body-rate commands. An adaptive INDI inner loop at 250&nbsp;Hz updates its control-effectiveness estimate online from filtered angular-acceleration feedback and rejects disturbances during manipulation.</dd>
+              </div>
+              <div>
+                <dt>My role</dt>
+                <!-- EDIT -->
+                <dd>First author. Designed the hierarchical architecture and training setup, and ran the hardware experiments.</dd>
+              </div>
+              <div>
+                <dt>Result</dt>
+                <dd>Validated in hardware on a 3-DoF aerial manipulator, including grasp-and-drop tasks with payload changes.</dd>
+              </div>
+            </dl>
+
+            <footer class="project__foot">
+              <ul class="tags" role="list" aria-label="Topics">
+                <li>Reinforcement learning</li><li>INDI</li><li>Sim-to-real</li><li>Aerial manipulation</li>
+              </ul>
+              <ul class="links" role="list">
+                <li><a href="https://arxiv.org/abs/2606.16621">Paper (arXiv)</a></li>
+                <li><a href="https://github.com/AerialMechX/RL-adaptive_Aerial_manipulation">Code</a></li>
+                <!-- REPLACE (optional): <li><a href="https://youtu.be/…">Video</a></li> -->
+              </ul>
+            </footer>
+          </article>
+
+          <!-- AERMANI-Diffusion (IFAC WC 2026) + related IROS 2026 paper -->
+          <article class="project" id="aermani" aria-labelledby="aermani-title">
+            <header class="project__head">
+              <h3 id="aermani-title" class="project__title">Learning the non-stationary dynamics of aerial manipulators</h3>
+              <p class="meta"><span class="badge">IFAC World Congress 2026</span><span>Co-first author</span><span>Robotics Research Center, IIIT Hyderabad</span></p>
+            </header>
+
+            <figure class="media project__media">
+              <!-- REPLACE: assets/videos/aermani-diffusion.mp4 + poster. A key paper figure also works: see README, "Use an image instead of a video". -->
+              <div class="media__frame" data-video>
+                <video muted loop playsinline preload="none" controls width="1280" height="720"
+                       data-poster="assets/images/aermani-diffusion-poster.webp"
+                       aria-label="Real-flight tracking test of the aerial manipulator">
+                  <source src="assets/videos/aermani-diffusion.mp4" type="video/mp4">
+                </video>
+                <button class="media__play" type="button" aria-label="Play video"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
+                <button class="media__toggle" type="button" aria-label="Pause video"><svg class="icon icon--pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="icon icon--play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
+                <p class="media__empty">Flight video coming soon</p>
+              </div>
+              <!-- EDIT -->
+              <figcaption>Real-flight tracking with abrupt payload changes.</figcaption>
+            </figure>
+
+            <dl class="brief project__body">
+              <div>
+                <dt>Problem</dt>
+                <dd>An aerial manipulator’s dynamics shift abruptly when it picks up a payload or reconfigures its arm, so a single fixed model fails exactly when accuracy matters most.</dd>
+              </div>
+              <div>
+                <dt>Approach</dt>
+                <dd>AERMANI-Diffusion, a regime-conditioned diffusion model of the robot’s residual dynamics that captures abrupt payload and configuration changes, used to improve prediction and closed-loop tracking.</dd>
+              </div>
+              <div>
+                <dt>My role</dt>
+                <!-- EDIT: add what you owned, e.g. "model design and real-flight experiments". -->
+                <dd>Co-first author, with equal contribution from Samaksh Ujjawal.</dd>
+              </div>
+              <div>
+                <dt>Result</dt>
+                <!-- VERIFY -->
+                <dd>Better dynamics prediction and closed-loop tracking in real-flight tests, including high-acceleration maneuvers.</dd>
+              </div>
+            </dl>
+
+            <footer class="project__foot">
+              <p class="related">Related, at IROS 2026: <a href="https://arxiv.org/abs/2603.11638">Learn Structure, Adapt on the Fly</a>, multi-scale residual learning with lightweight online adaptation to unseen payloads.</p>
+              <ul class="tags" role="list" aria-label="Topics">
+                <li>Dynamics learning</li><li>Diffusion models</li><li>Residual dynamics</li><li>Aerial manipulation</li>
+              </ul>
+              <ul class="links" role="list">
+                <li><a href="https://arxiv.org/abs/2512.10773">Paper (arXiv)</a></li>
+                <!-- REPLACE (optional): <li><a href="…">Video</a></li> -->
+              </ul>
+            </footer>
+          </article>
         </div>
+
+        <!-- Earlier projects: compact, text-only -->
+        <section class="earlier" aria-labelledby="earlier-title">
+          <h3 id="earlier-title" class="subhead">Earlier projects</h3>
+          <div class="earlier__grid">
+            <article class="mini">
+              <h4 class="mini__title">Sampling-based planning with real-time MPC for agile quadrotor flight</h4>
+              <p class="mini__when">2025</p>
+              <p>RRT finds collision-free routes, a trajectory module time-parameterizes them for aggressive flight, and a constrained MPC tracks them with thrust and body-rate commands. Warm starts and a simplified model keep the optimization real-time.</p>
+              <p class="mini__fact">100 Hz closed-loop MPC on hardware</p>
+              <!-- REPLACE (optional): <ul class="links" role="list"><li><a href="…">Video</a></li></ul> -->
+            </article>
+
+            <article class="mini">
+              <h4 class="mini__title">Autonomous ball catcher</h4>
+              <p class="mini__when">2025</p>
+              <p>A mobile robot that predicts where a thrown ball will land and drives there first. External cameras triangulate the ball, a physics-based fit with RANSAC predicts the landing point, and targets stream over UDP to a PID-controlled differential drive.</p>
+              <p class="mini__fact">30 Hz target streaming, Raspberry Pi and Arduino</p>
+              <ul class="links" role="list"><li><a href="https://github.com/AerialMechX/AerialMechX-Autonomous_ball_catcher">Code</a></li></ul>
+            </article>
+
+            <!-- OPTIONAL: this project is not in your current CV. Delete this article if you no longer want to show it. -->
+            <article class="mini">
+              <h4 class="mini__title">Distributed adaptive control for quadrotor formations</h4>
+              <p class="mini__when">2025</p>
+              <p>Adaptive formation control under strong, unknown inter-vehicle forces such as rotor downwash and drag, without prior knowledge of, or boundedness assumptions on, those forces.</p>
+              <p class="mini__fact">Uniform ultimate boundedness proven; tested in cooperative aerial transport</p>
+              <ul class="links" role="list"><li><a href="https://www.youtube.com/watch?v=RzWLFABjTLg">Video</a></li></ul>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+
+    <!-- ============================ Publications ============================ -->
+    <section id="publications" class="section" aria-labelledby="publications-title">
+      <div class="wrap">
+        <header class="section__head">
+          <h2 id="publications-title" class="section__title">Publications</h2>
+          <p class="section__lede">Five papers, three as first or co-first author. † marks equal contribution. Also on <a href="https://scholar.google.com/citations?user=wUdlS-EAAAAJ">Google Scholar</a>.</p>
+        </header>
+
+        <h3 class="pubs__year">2026</h3>
+        <ol class="pubs" role="list">
+          <li class="pub">
+            <p class="pub__venue"><abbr title="IEEE/RSJ International Conference on Intelligent Robots and Systems">IROS</abbr> 2026</p>
+            <div class="pub__main">
+              <h4 class="pub__title"><a href="https://arxiv.org/abs/2603.15097">AeroGrab: A Unified Framework for Aerial Grasping in Cluttered Environments</a></h4>
+              <p class="pub__authors"><strong>Shivansh P. Singh</strong>, Naveen Sudheer Nair, Samaksh Ujjawal, Sarthak Mishra, Soham Patil, Rishabh Dev Yadav, Spandan Roy</p>
+              <p class="pub__where">IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 <span class="pub__role">First author</span></p>
+              <ul class="pub__links" role="list">
+                <li><a href="https://arxiv.org/abs/2603.15097">arXiv</a></li>
+                <li><a href="https://www.youtube.com/watch?v=aSCQm8HdasI">Video</a></li>
+                <li><a href="#aerograb">Summary</a></li>
+                <li>
+                  <details class="bib">
+                    <summary>BibTeX</summary>
+<pre>@inproceedings{singh2026aerograb,
+  title     = {{AeroGrab}: A Unified Framework for Aerial Grasping in Cluttered Environments},
+  author    = {Singh, Shivansh P. and Nair, Naveen Sudheer and Ujjawal, Samaksh and Mishra, Sarthak and Patil, Soham and Yadav, Rishabh Dev and Roy, Spandan},
+  booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year      = {2026}
+}</pre>
+                  </details>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="pub">
+            <p class="pub__venue"><abbr title="IEEE International Conference on Automation Science and Engineering">IEEE CASE</abbr> 2026</p>
+            <div class="pub__main">
+              <h4 class="pub__title"><a href="https://arxiv.org/abs/2606.16621">Reinforcement Learning with Inner-Loop Dynamics Estimator for Aerial Manipulation under Uncertainty</a></h4>
+              <p class="pub__authors"><strong>Shivansh P. Singh</strong>, Samaksh Ujjawal, Ishita Chaudhary, V. R. Vasudevan, Rishabh Dev Yadav, Spandan Roy</p>
+              <p class="pub__where">IEEE International Conference on Automation Science and Engineering (CASE), 2026 <span class="pub__role">First author</span></p>
+              <ul class="pub__links" role="list">
+                <li><a href="https://arxiv.org/abs/2606.16621">arXiv</a></li>
+                <li><a href="https://github.com/AerialMechX/RL-adaptive_Aerial_manipulation">Code</a></li>
+                <li><a href="#rl-estimator">Summary</a></li>
+                <li>
+                  <details class="bib">
+                    <summary>BibTeX</summary>
+<pre>@inproceedings{singh2026rlestimator,
+  title     = {Reinforcement Learning with Inner-Loop Dynamics Estimator for Aerial Manipulation under Uncertainty},
+  author    = {Singh, Shivansh P. and Ujjawal, Samaksh and Chaudhary, Ishita and Vasudevan, V. R. and Yadav, Rishabh Dev and Roy, Spandan},
+  booktitle = {IEEE International Conference on Automation Science and Engineering (CASE)},
+  year      = {2026}
+}</pre>
+                  </details>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="pub">
+            <p class="pub__venue"><abbr title="International Federation of Automatic Control World Congress">IFAC WC</abbr> 2026</p>
+            <div class="pub__main">
+              <h4 class="pub__title"><a href="https://arxiv.org/abs/2512.10773">AERMANI-Diffusion: Regime-Conditioned Diffusion for Dynamics Learning in Aerial Manipulators</a></h4>
+              <p class="pub__authors">Samaksh Ujjawal<sup>†</sup>, <strong>Shivansh P. Singh</strong><sup>†</sup>, Naveen Sudheer Nair, Rishabh Dev Yadav, Wei Pan, Spandan Roy</p>
+              <p class="pub__where">23rd IFAC World Congress, 2026 <span class="pub__role">Co-first author</span></p>
+              <ul class="pub__links" role="list">
+                <li><a href="https://arxiv.org/abs/2512.10773">arXiv</a></li>
+                <li><a href="#aermani">Summary</a></li>
+                <li>
+                  <details class="bib">
+                    <summary>BibTeX</summary>
+<pre>@inproceedings{ujjawal2026aermani,
+  title     = {{AERMANI-Diffusion}: Regime-Conditioned Diffusion for Dynamics Learning in Aerial Manipulators},
+  author    = {Ujjawal, Samaksh and Singh, Shivansh P. and Nair, Naveen Sudheer and Yadav, Rishabh Dev and Pan, Wei and Roy, Spandan},
+  booktitle = {Proceedings of the 23rd IFAC World Congress},
+  year      = {2026}
+}</pre>
+                  </details>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="pub">
+            <p class="pub__venue"><abbr title="IEEE/RSJ International Conference on Intelligent Robots and Systems">IROS</abbr> 2026</p>
+            <div class="pub__main">
+              <h4 class="pub__title"><a href="https://arxiv.org/abs/2603.11638">Learn Structure, Adapt on the Fly: Multi-Scale Residual Learning and Online Adaptation for Aerial Manipulators</a></h4>
+              <p class="pub__authors">Samaksh Ujjawal, Naveen Sudheer Nair, <strong>Shivansh P. Singh</strong>, Rishabh Dev Yadav, Wei Pan, Spandan Roy</p>
+              <p class="pub__where">IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026</p>
+              <ul class="pub__links" role="list">
+                <li><a href="https://arxiv.org/abs/2603.11638">arXiv</a></li>
+                <li>
+                  <details class="bib">
+                    <summary>BibTeX</summary>
+<pre>@inproceedings{ujjawal2026learnstructure,
+  title     = {Learn Structure, Adapt on the Fly: Multi-Scale Residual Learning and Online Adaptation for Aerial Manipulators},
+  author    = {Ujjawal, Samaksh and Nair, Naveen Sudheer and Singh, Shivansh P. and Yadav, Rishabh Dev and Pan, Wei and Roy, Spandan},
+  booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year      = {2026}
+}</pre>
+                  </details>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+
+        <h3 class="pubs__year">2025</h3>
+        <ol class="pubs" role="list">
+          <li class="pub">
+            <p class="pub__venue"><abbr title="International Conference on Control, Automation and Systems">ICCAS</abbr> 2025</p>
+            <div class="pub__main">
+              <h4 class="pub__title"><a href="https://doi.org/10.23919/ICCAS66577.2025.11301223">Impedance and Stability Targeted Adaptation for Aerial Manipulator with Unknown Coupling Dynamics</a></h4>
+              <p class="pub__authors">Amitabh Sharma, Saksham Gupta, <strong>Shivansh P. Singh</strong>, Rishabh Dev Yadav, Hongyu Song, Wei Pan, Spandan Roy, Simone Baldi</p>
+              <p class="pub__where">25th International Conference on Control, Automation and Systems (ICCAS), 2025</p>
+              <ul class="pub__links" role="list">
+                <li><a href="https://doi.org/10.23919/ICCAS66577.2025.11301223">DOI</a></li>
+                <li>
+                  <details class="bib">
+                    <summary>BibTeX</summary>
+<!-- EDIT: for a published paper, prefer the exact BibTeX from IEEE Xplore (pages, publisher). -->
+<pre>@inproceedings{sharma2025impedance,
+  title     = {Impedance and Stability Targeted Adaptation for Aerial Manipulator with Unknown Coupling Dynamics},
+  author    = {Sharma, Amitabh and Gupta, Saksham and Singh, Shivansh P. and Yadav, Rishabh Dev and Song, Hongyu and Pan, Wei and Roy, Spandan and Baldi, Simone},
+  booktitle = {25th International Conference on Control, Automation and Systems (ICCAS)},
+  year      = {2025},
+  doi       = {10.23919/ICCAS66577.2025.11301223}
+}</pre>
+                  </details>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+
+    <!-- ======================= Experience & education ======================= -->
+    <section id="experience" class="section" aria-labelledby="experience-title">
+      <div class="wrap">
+        <header class="section__head">
+          <h2 id="experience-title" class="section__title">Experience and education</h2>
+        </header>
+
+        <ol class="timeline" role="list">
+          <li class="entry">
+            <p class="entry__when"><time datetime="2026-07">Jul</time>–<time datetime="2026-08">Aug 2026</time></p>
+            <div class="entry__main">
+              <h3 class="entry__role">Robotics Student Fellow</h3>
+              <p class="entry__org"><a href="https://asl.ethz.ch/">Autonomous Systems Lab (ASL)</a>, ETH Zürich, Switzerland</p>
+              <ul class="entry__points" role="list">
+                <li>Disturbance-aware latent world models for a tethered tilt-rotor omnidirectional aerial robot, targeting unmodeled aerodynamics, actuator coupling, and sim-to-real mismatch.</li>
+                <li>Built a sim-to-real pipeline combining physics-based domain randomization with JEPA-style latent dynamics, and profiled low-latency inference on NVIDIA Jetson. <a href="#world-models">Project summary</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="entry">
+            <p class="entry__when"><time datetime="2024-04">Apr 2024</time>–present</p>
+            <div class="entry__main">
+              <h3 class="entry__role">Research Assistant, Control Lab</h3>
+              <p class="entry__org"><a href="https://robotics.iiit.ac.in/">Robotics Research Center</a>, IIIT Hyderabad, India. Advisor: Prof. Spandan Roy</p>
+              <ul class="entry__points" role="list">
+                <li>Learning-enabled and adaptive control for aerial manipulators under vehicle–arm coupling, payload variation, contact, and configuration-dependent uncertainty.</li>
+                <li>Built ROS&nbsp;2 simulation-to-hardware pipelines for whole-body RL, residual dynamics learning, and adaptive and impedance control; ran real-world aerial grasping and manipulation experiments.</li>
+              </ul>
+            </div>
+          </li>
+          <li class="entry">
+            <p class="entry__when"><time datetime="2023-05">May 2023</time>–<time datetime="2024-03">Mar 2024</time></p>
+            <div class="entry__main">
+              <h3 class="entry__role">Robotics Engineer</h3>
+              <p class="entry__org">Arka Aerospace, Hyderabad, India</p>
+              <ul class="entry__points" role="list">
+                <li>AprilTag-based visual servoing for UAV precision landing with 2–3&nbsp;cm terminal accuracy.</li>
+                <li>Decentralized multi-UAV coordination and swarming for formation tasks.</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+
+        <h3 class="subhead subhead--list">Education</h3>
+        <ol class="timeline" role="list">
+          <li class="entry">
+            <p class="entry__when"><time datetime="2024">2024</time>–present</p>
+            <div class="entry__main">
+              <h4 class="entry__role">M.S. by Research, Electronics and Communication Engineering (Robotics and Control)</h4>
+              <p class="entry__org">International Institute of Information Technology, Hyderabad (IIIT-H)</p>
+              <p class="entry__note">CGPA 9.67/10. Advisor: Prof. Spandan Roy. Thesis direction: learning-based and adaptive control for aerial manipulation.</p>
+            </div>
+          </li>
+          <li class="entry">
+            <p class="entry__when"><time datetime="2019">2019</time>–<time datetime="2023">2023</time></p>
+            <div class="entry__main">
+              <h4 class="entry__role">B.Tech., Mechanical Engineering</h4>
+              <p class="entry__org">Bundelkhand Institute of Engineering and Technology (BIET), Jhansi</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+
+    <!-- ======================== Research interests ========================= -->
+    <section id="about" class="section" aria-labelledby="about-title">
+      <div class="wrap">
+        <header class="section__head">
+          <h2 id="about-title" class="section__title">Research interests</h2>
+        </header>
+
+        <div class="about">
+          <div class="about__text">
+            <p class="about__lead">My research asks how aerial robots can act reliably when their dynamics change mid-task: when they grasp a payload, make contact, or fly through disturbances that no first-principles model fully captures. I pair learned models with control structure and test the result on hardware.</p>
+
+            <div class="threads">
+              <div class="thread">
+                <h3 class="thread__title">Dynamics learning and world models</h3>
+                <p>Latent, residual, and diffusion-based models of non-stationary dynamics that transfer from simulation to real flight, and representations that expose physically meaningful quantities.</p>
+                <p class="thread__refs"><a href="#world-models">World models at ASL</a>, <a href="#aermani">AERMANI-Diffusion</a></p>
+              </div>
+              <div class="thread">
+                <h3 class="thread__title">Learning with control-theoretic structure</h3>
+                <p>Reinforcement learning and learned models combined with adaptive, INDI, impedance, and predictive control, so that learned components stay reliable under model mismatch.</p>
+                <p class="thread__refs"><a href="#rl-estimator">RL with an inner-loop estimator</a>, <a href="https://doi.org/10.23919/ICCAS66577.2025.11301223">impedance adaptation (ICCAS 2025)</a></p>
+              </div>
+              <div class="thread">
+                <h3 class="thread__title">Perception-driven aerial manipulation</h3>
+                <p>Active perception and 6-DoF grasping for aerial manipulators working in clutter.</p>
+                <p class="thread__refs"><a href="#aerograb">AeroGrab</a></p>
+              </div>
+            </div>
+
+            <p class="about__close">Longer term, I want aerial robots that can physically intervene in hazardous, unstructured environments, such as inspection sites and disaster zones, so that people don’t have to.</p>
+            <!-- EDIT: the directions you want to pursue in a PhD. -->
+            <p class="about__close">In a PhD, I want to work on world models that support control under distribution shift, fast online adaptation, and contact-rich aerial manipulation.</p>
+          </div>
+
+          <aside class="toolbox" aria-labelledby="toolbox-title">
+            <h3 id="toolbox-title" class="subhead">Toolbox</h3>
+            <dl>
+              <div><dt>Robot learning</dt><dd>PyTorch; RL (PPO, SAC); world models and JEPA-style objectives; diffusion models; residual dynamics</dd></div>
+              <div><dt>Control and estimation</dt><dd>MPC and MPPI; INDI; adaptive and impedance control; system identification; state estimation</dd></div>
+              <div><dt>Perception</dt><dd>RGB-D and visual-inertial odometry; multi-view geometry; 6-DoF grasp generation; visual servoing</dd></div>
+              <div><dt>Robot software</dt><dd>ROS&nbsp;2, PX4, ArduPilot, MAVROS, micro-ROS, Gazebo, Isaac Lab</dd></div>
+              <div><dt>Deployment</dt><dd>NVIDIA Jetson and CUDA inference; onboard real-time autonomy; aerial-robot hardware integration</dd></div>
+              <div><dt>Languages</dt><dd>Python, C++ (Eigen, Ceres), MATLAB, Bash</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================== Contact =============================== -->
+    <section id="contact" class="section contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <header class="section__head">
+          <h2 id="contact-title" class="section__title">Contact</h2>
+        </header>
+        <div class="contact__grid">
+          <p class="contact__lead">I’m applying to PhD programs and am open to research internships and collaborations in aerial robotics, robot learning, and learning-based control. Email is the best way to reach me.</p>
+          <dl class="contact__list">
+            <div><dt>Email</dt><dd><a href="mailto:shivansh.singh@research.iiit.ac.in">shivansh.singh@research.iiit.ac.in</a></dd></div>
+            <div><dt>Personal email</dt><dd><a href="mailto:shivansh2172@gmail.com">shivansh2172@gmail.com</a></dd></div>
+            <div><dt>Google Scholar</dt><dd><a href="https://scholar.google.com/citations?user=wUdlS-EAAAAJ">Publication profile</a></dd></div>
+            <div><dt>GitHub</dt><dd><a href="https://github.com/AerialMechX">github.com/AerialMechX</a></dd></div>
+            <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/shiva2023/">linkedin.com/in/shiva2023</a></dd></div>
+            <!-- REPLACE the date whenever you upload a new CV -->
+            <div><dt>CV</dt><dd><a href="assets/cv/Shivansh_Pratap_Singh_CV.pdf" type="application/pdf">PDF, updated August 2026</a></dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p>© 2026 Shivansh Pratap Singh</p>
+      <p>Last updated September 2026</p>
+      <p><a href="#main">Back to top</a></p>
     </div>
-</section>
-
-<footer>
-    <p>© 2025 Shivansh Pratap Singh &nbsp;·&nbsp; IIIT Hyderabad &nbsp;·&nbsp; Robotics Research</p>
-</footer>
-
-<script>
-    // ─── SPEED: Canvas starts only after full page has loaded ───
-    window.addEventListener('load', () => {
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let W, H, nodes = [];
-
-        function resize() {
-            W = canvas.width  = window.innerWidth;
-            H = canvas.height = window.innerHeight;
-        }
-
-        function initNodes() {
-            nodes = [];
-            // SPEED: reduced density vs original
-            const count = Math.floor((W * H) / 22000);
-            for (let i = 0; i < count; i++) {
-                nodes.push({
-                    x: Math.random() * W, y: Math.random() * H,
-                    vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-                    r: Math.random() * 1.4 + 0.4
-                });
-            }
-        }
-
-        // SPEED: avoid sqrt per pair — use squared distance comparison
-        const MAX_DIST = 130, MAX_DIST_SQ = MAX_DIST * MAX_DIST;
-
-        function drawFrame() {
-            ctx.clearRect(0, 0, W, H);
-            for (let i = 0; i < nodes.length; i++) {
-                const n = nodes[i];
-                n.x += n.vx; n.y += n.vy;
-                if (n.x < 0 || n.x > W) n.vx *= -1;
-                if (n.y < 0 || n.y > H) n.vy *= -1;
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const m = nodes[j];
-                    const dx = n.x - m.x, dy = n.y - m.y;
-                    const dSq = dx * dx + dy * dy;
-                    if (dSq < MAX_DIST_SQ) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(79,142,247,${(1 - Math.sqrt(dSq) / MAX_DIST) * 0.22})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y);
-                        ctx.stroke();
-                    }
-                }
-                ctx.beginPath();
-                ctx.fillStyle = 'rgba(79,142,247,0.55)';
-                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            requestAnimationFrame(drawFrame);
-        }
-
-        resize(); initNodes(); drawFrame();
-        window.addEventListener('resize', () => { resize(); initNodes(); });
-    });
-
-    // SPEED: passive scroll listener — doesn't block rendering
-    window.addEventListener('scroll', () => {
-        document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
-
-    // Scroll reveal
-    const revealEls = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
-        });
-    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-    revealEls.forEach(el => revealObserver.observe(el));
-
-    // Skill bars
-    const barObserver = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.querySelectorAll('.skill-bar-fill').forEach(b => { b.style.width = b.dataset.width + '%'; });
-                barObserver.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.25 });
-    document.querySelectorAll('.skills-panel').forEach(el => barObserver.observe(el));
-
-    // Project accordion
-    function toggleProject(el) {
-        const isOpen = el.classList.contains('open');
-        document.querySelectorAll('.project-item.open').forEach(p => p.classList.remove('open'));
-        if (!isOpen) el.classList.add('open');
-    }
-</script>
+  </footer>
 </body>
 </html>
