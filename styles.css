@@ -228,7 +228,6 @@ a:hover { color: var(--accent); text-decoration-color: currentColor; }
   margin-top: 1.5rem; max-width: 60ch;
   font-size: 1.0625rem; color: var(--ink-2);
 }
-.hero__status { margin-top: 1.25rem; font-weight: 600; }
 .hero__photo { margin-top: 1.5rem; width: 7.5rem; height: 7.5rem; object-fit: cover; border-radius: 50%; }
 
 .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }

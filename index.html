@@ -91,7 +91,7 @@
       </a>
       <nav class="site-nav" aria-label="Sections">
         <ul role="list">
-          <li><a href="#research">Research</a></li>
+          <li><a href="#research">Projects</a></li>
           <li><a href="#publications">Publications</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#about">About</a></li>
@@ -114,9 +114,6 @@
             <p>I’m a second-year M.S. by Research student at the Robotics Research Center, IIIT Hyderabad, advised by Prof. Spandan Roy. I build learned dynamics models and latent world models that work alongside nonlinear and adaptive controllers, and I test them on real aerial manipulators through payload changes, contact, and high-dynamic maneuvers.</p>
             <p>In summer 2026 I was a Robotics Student Fellow at the <a href="https://asl.ethz.ch/">Autonomous Systems Lab, ETH Zürich</a>. I have five papers: two at IROS 2026 and one each at the IFAC World Congress 2026, IEEE CASE 2026, and ICCAS 2025, three of them as first or co-first author.</p>
           </div>
-
-          <!-- EDIT: add your intended start term if you like, e.g. "…to PhD programs starting fall 2027 …" -->
-          <p class="hero__status">I’m applying to PhD programs and am open to research internships.</p>
 
           <ul class="actions" role="list">
             <li><a class="btn btn--primary" href="assets/cv/Shivansh_Pratap_Singh_CV.pdf" type="application/pdf"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg>CV</a></li>
@@ -201,12 +198,11 @@
     </section>
 
 
-    <!-- ========================= Selected research ========================= -->
+    <!-- ============================== Projects ============================== -->
     <section id="research" class="section" aria-labelledby="research-title">
       <div class="wrap">
         <header class="section__head">
-          <h2 id="research-title" class="section__title">Selected research</h2>
-          <p class="section__lede">Four projects, each summarized as the problem, the approach, my role, and the result.</p>
+          <h2 id="research-title" class="section__title">Projects</h2>
         </header>
       </div>
 
@@ -221,12 +217,10 @@
 
           <div class="feature__grid">
             <figure class="media">
-              <!-- REPLACE: your ETH clip. Export with tools/convert-media.sh → assets/videos/eth-world-model.mp4
-                   (+ poster assets/images/eth-world-model-poster.webp). Non-16:9 clip? add style="--ar: 4 / 3" to the frame. -->
               <div class="media__frame" data-video>
-                <video muted loop playsinline preload="none" controls width="1280" height="720"
+                <video muted loop playsinline preload="none" controls width="1920" height="1080"
                        data-poster="assets/images/eth-world-model-poster.webp"
-                       aria-label="Real-flight clip of the tethered tilt-rotor aerial robot">
+                       aria-label="JEPA-style latent training on simulation data, then real flight of the tethered tilt-rotor aerial robot beside plots of learned-residual versus nominal-model wrench estimates">
                   <!-- Optional WebM (VP9), often 20–40% smaller. Browsers use the first source they support.
                   <source src="assets/videos/eth-world-model.webm" type="video/webm"> -->
                   <source src="assets/videos/eth-world-model.mp4" type="video/mp4">
@@ -235,8 +229,7 @@
                 <button class="media__toggle" type="button" aria-label="Pause video"><svg class="icon icon--pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="icon icon--play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
                 <p class="media__empty">Flight video coming soon</p>
               </div>
-              <!-- EDIT: say what the clip shows, e.g. "Real flight with the tether attached; predicted vs. measured wrench overlaid." -->
-              <figcaption>Tethered tilt-rotor aerial robot used for the real-flight evaluation.</figcaption>
+              <figcaption>JEPA-style latent training on simulation data, then real-flight wrench evaluation of the learned residual against the nominal model.</figcaption>
             </figure>
 
             <ol class="steps" role="list">
@@ -347,6 +340,7 @@
               <ul class="links" role="list">
                 <li><a href="https://arxiv.org/abs/2603.15097">Paper (arXiv)</a></li>
                 <li><a href="https://www.youtube.com/watch?v=aSCQm8HdasI">Video</a></li>
+                <li><a href="assets/images/aerograb-poster.webp">Poster</a></li>
                 <!-- REPLACE (optional): <li><a href="…">Project page</a></li>
                      <li><a href="https://github.com/AerialMechX/GraspCNN_model">Code</a></li>  (VERIFY it is the AeroGrab grasp network and is presentable) -->
               </ul>
@@ -361,19 +355,17 @@
             </header>
 
             <figure class="media project__media">
-              <!-- REPLACE: assets/videos/rl-inner-loop.mp4 + assets/images/rl-inner-loop-poster.webp (e.g. the grasp-and-drop hardware run). -->
               <div class="media__frame" data-video>
-                <video muted loop playsinline preload="none" controls width="1280" height="720"
+                <video muted loop playsinline preload="none" controls width="1920" height="1080"
                        data-poster="assets/images/rl-inner-loop-poster.webp"
-                       aria-label="Hardware grasp-and-drop run on the 3-DoF aerial manipulator">
+                       aria-label="Hardware grasping flight, PPO training in Aerial Gym, the hierarchical control architecture, and grasp-and-drop runs with 200 g and 400 g payloads on the 3-DoF aerial manipulator">
                   <source src="assets/videos/rl-inner-loop.mp4" type="video/mp4">
                 </video>
                 <button class="media__play" type="button" aria-label="Play video"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
                 <button class="media__toggle" type="button" aria-label="Pause video"><svg class="icon icon--pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="icon icon--play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
                 <p class="media__empty">Hardware video coming soon</p>
               </div>
-              <!-- EDIT -->
-              <figcaption>Grasp-and-drop on the 3-DoF aerial manipulator.</figcaption>
+              <figcaption>Training in Aerial Gym, the control architecture, and grasp-and-drop runs on the 3-DoF aerial manipulator with 200&nbsp;g and 400&nbsp;g payloads.</figcaption>
             </figure>
 
             <dl class="brief project__body">
@@ -417,19 +409,11 @@
             </header>
 
             <figure class="media project__media">
-              <!-- REPLACE: assets/videos/aermani-diffusion.mp4 + poster. A key paper figure also works: see README, "Use an image instead of a video". -->
-              <div class="media__frame" data-video>
-                <video muted loop playsinline preload="none" controls width="1280" height="720"
-                       data-poster="assets/images/aermani-diffusion-poster.webp"
-                       aria-label="Real-flight tracking test of the aerial manipulator">
-                  <source src="assets/videos/aermani-diffusion.mp4" type="video/mp4">
-                </video>
-                <button class="media__play" type="button" aria-label="Play video"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
-                <button class="media__toggle" type="button" aria-label="Pause video"><svg class="icon icon--pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="icon icon--play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg></button>
-                <p class="media__empty">Flight video coming soon</p>
+              <div class="media__frame media__frame--figure" style="--ar: 2362 / 931">
+                <img src="assets/images/aermani-diffusion-poster.webp" width="2362" height="931" loading="lazy" decoding="async"
+                     alt="Left: the aerial manipulator flies a figure-eight, picking up a bottle mid-flight and dropping it into a box. Right: planned and executed 3D paths, which closely overlap.">
               </div>
-              <!-- EDIT -->
-              <figcaption>Real-flight tracking with abrupt payload changes.</figcaption>
+              <figcaption>Real flight with a payload pick-up and drop partway through the trajectory (left), and planned vs. executed path (right).</figcaption>
             </figure>
 
             <dl class="brief project__body">
@@ -519,6 +503,7 @@
               <ul class="pub__links" role="list">
                 <li><a href="https://arxiv.org/abs/2603.15097">arXiv</a></li>
                 <li><a href="https://www.youtube.com/watch?v=aSCQm8HdasI">Video</a></li>
+                <li><a href="assets/images/aerograb-poster.webp">Poster</a></li>
                 <li><a href="#aerograb">Summary</a></li>
                 <li>
                   <details class="bib">
@@ -734,8 +719,7 @@
             </div>
 
             <p class="about__close">Longer term, I want aerial robots that can physically intervene in hazardous, unstructured environments, such as inspection sites and disaster zones, so that people don’t have to.</p>
-            <!-- EDIT: the directions you want to pursue in a PhD. -->
-            <p class="about__close">In a PhD, I want to work on world models that support control under distribution shift, fast online adaptation, and contact-rich aerial manipulation.</p>
+            <p class="about__close">Next, I want to work on world models that support control under distribution shift, fast online adaptation, and contact-rich aerial manipulation.</p>
           </div>
 
           <aside class="toolbox" aria-labelledby="toolbox-title">
@@ -761,7 +745,7 @@
           <h2 id="contact-title" class="section__title">Contact</h2>
         </header>
         <div class="contact__grid">
-          <p class="contact__lead">I’m applying to PhD programs and am open to research internships and collaborations in aerial robotics, robot learning, and learning-based control. Email is the best way to reach me.</p>
+          <p class="contact__lead">I’m always happy to talk about aerial robotics, robot learning, and learning-based control. Email is the best way to reach me.</p>
           <dl class="contact__list">
             <div><dt>Email</dt><dd><a href="mailto:shivansh.singh@research.iiit.ac.in">shivansh.singh@research.iiit.ac.in</a></dd></div>
             <div><dt>Personal email</dt><dd><a href="mailto:shivansh2172@gmail.com">shivansh2172@gmail.com</a></dd></div>

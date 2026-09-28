@@ -26,19 +26,20 @@ robots.txt, sitemap.xml, .nojekyll
 
 ## Before you publish
 
-**Add three demo clips.** These are the only files the page expects that aren't included:
+**Project media.** Every project now has its media in place:
 
-| Project | Video | Poster |
-|---|---|---|
-| ETH world models | `assets/videos/eth-world-model.mp4` | `assets/images/eth-world-model-poster.webp` |
-| RL + inner-loop estimator | `assets/videos/rl-inner-loop.mp4` | `assets/images/rl-inner-loop-poster.webp` |
-| AERMANI-Diffusion | `assets/videos/aermani-diffusion.mp4` | `assets/images/aermani-diffusion-poster.webp` |
+| Project | Media |
+|---|---|
+| ETH world models | `assets/videos/eth-world-model.mp4` + poster `assets/images/eth-world-model-poster.webp` |
+| AeroGrab | YouTube video; conference poster `assets/images/aerograb-poster.webp` (4800 px wide, resized from the 14182 px original) |
+| RL + inner-loop estimator | `assets/videos/rl-inner-loop.mp4` + poster `assets/images/rl-inner-loop-poster.webp` |
+| AERMANI-Diffusion | figure `assets/images/aermani-diffusion-poster.webp` (no video yet) |
 
-Until a file exists, its frame shows a neutral grid and "video coming soon". AeroGrab uses your existing YouTube video and needs nothing.
+`rl-inner-loop.mp4` is 60 s and about 19 MB, well over the 4 MB target below. Shrink it with `tools/convert-media.sh <original> rl-inner-loop --crf 28`, run on your source file rather than the copy in `assets/videos/` (add `--start`/`--duration` to trim it to the hardware runs).
 
 **Search `index.html` for three markers:**
 
-- `EDIT`: wording only you can confirm. Your exact contribution on each project, the video captions, your PhD start term and directions, and your ETH supervisors.
+- `EDIT`: wording only you can confirm. Your exact contribution on each project and your ETH supervisors.
 - `VERIFY`: claims merged from your CV and your old site. The AeroGrab video ID and result, the PPO + 250 Hz INDI description, the AERMANI result, and whether 0.7 ms was measured on the Jetson.
 - `REPLACE`: optional links (project pages, code, extra videos), left as comments.
 
